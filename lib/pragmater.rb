@@ -2,3 +2,4 @@
 
 require "pragmater/formatter"
 require "pragmater/identity"
+require "pragmater/commenter"
