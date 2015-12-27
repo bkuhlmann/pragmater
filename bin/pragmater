@@ -1,0 +1,8 @@
+#!/usr/bin/ruby
+
+require "pragmater"
+require "pragmater/cli"
+require "pragmater/identity"
+
+Process.setproctitle Pragmater::Identity.version_label
+Pragmater::CLI.start
