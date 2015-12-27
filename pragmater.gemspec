@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["Brooke Kuhlmann"]
   spec.email = ["brooke@alchemists.io"]
   spec.homepage = "https://github.com/bkuhlmann/pragmater"
-  spec.summary = "TODO: Add gem summary here."
-  spec.description = "TODO: Add gem description here."
+  spec.summary = "A command line interface for adding pragma comments to source files."
+  spec.description = "A command line interface for adding pragma comments to source files."
   spec.license = "MIT"
 
   if ENV["RUBY_GEM_SECURITY"] == "enabled"
