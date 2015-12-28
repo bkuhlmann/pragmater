@@ -7,6 +7,9 @@ Style/NumericLiterals:
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
     "%r": "()"
+Style/RegexpLiteral:
+  Exclude:
+    - "lib/pragmater/formatter.rb"
 Style/SingleLineBlockParams:
   Enabled: false
 Style/SpaceInsideHashLiteralBraces:
