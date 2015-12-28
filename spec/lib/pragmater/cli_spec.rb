@@ -63,6 +63,64 @@ describe Pragmater::CLI do
       end
     end
 
+    shared_examples_for "a remove command" do
+      let(:tasks_dir) { File.join temp_dir, "tasks" }
+      let(:ruby_file) { File.join temp_dir, "test.rb" }
+      let(:rake_file) { File.join tasks_dir, "test.rake" }
+      let(:text_file) { File.join temp_dir, "test.txt" }
+      before do
+        FileUtils.mkdir tasks_dir
+        [ruby_file, rake_file, text_file].each do |file_path|
+          File.open(file_path, "w") { |file| file.write "# frozen_string_literal: true\n" }
+        end
+      end
+
+      context "with a single file", :temp_dir do
+        let(:options) { [ruby_file, "-c", "# frozen_string_literal: true"] }
+
+        it "adds pragma comment to ruby file" do
+          cli.call
+          expect(File.open(ruby_file, "r").to_a).to be_empty
+        end
+
+        it "prints that file was updated" do
+          expect(&cli).to output("Updated: #{ruby_file}.\n").to_stdout
+        end
+      end
+
+      context "with multiple files", :temp_dir do
+        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true"] }
+
+        it "adds pragma comment to selected files", :aggregate_failures do
+          cli.call
+
+          expect(File.open(ruby_file, "r").to_a).to be_empty
+          expect(File.open(rake_file, "r").to_a).to be_empty
+          expect(File.open(text_file, "r").to_a).to contain_exactly("# frozen_string_literal: true\n")
+        end
+
+        it "prints selected files were updated" do
+          expect(&cli).to output("Updated: #{ruby_file}.\nUpdated: #{rake_file}.\n").to_stdout
+        end
+      end
+
+      context "with multiple files and specific extensions", :temp_dir do
+        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-e", ".rb"] }
+
+        it "adds pragma comment to selected files", :aggregate_failures do
+          cli.call
+
+          expect(File.open(ruby_file, "r").to_a).to be_empty
+          expect(File.open(rake_file, "r").to_a).to contain_exactly("# frozen_string_literal: true\n")
+          expect(File.open(text_file, "r").to_a).to contain_exactly("# frozen_string_literal: true\n")
+        end
+
+        it "prints selected files were updated" do
+          expect(&cli).to output("Updated: #{ruby_file}.\n").to_stdout
+        end
+      end
+    end
+
     shared_examples_for "an edit command" do
       let(:file_path) { File.join ENV["HOME"], Pragmater::Identity.file_name }
 
@@ -95,6 +153,16 @@ describe Pragmater::CLI do
     describe "-a" do
       let(:command) { "-a" }
       it_behaves_like "an add command"
+    end
+
+    describe "--remove" do
+      let(:command) { "--remove" }
+      it_behaves_like "a remove command"
+    end
+
+    describe "-r" do
+      let(:command) { "-r" }
+      it_behaves_like "a remove command"
     end
 
     describe "--edit" do

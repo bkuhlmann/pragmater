@@ -21,9 +21,17 @@ module Pragmater
     desc "-a, [--add=ADD]", "Add pragma comments to source file(s)."
     map %w(-a --add) => :add
     method_option :comments, aliases: "-c", desc: "Pragma comments", type: :array, default: []
-    method_option :extensions, aliases: "-e", desc: "Pragma comments", type: :array, default: [".rb", ".rake"]
+    method_option :extensions, aliases: "-e", desc: "File extension whitelist", type: :array, default: [".rb", ".rake"]
     def add path
       write path, options[:comments], options[:extensions], :add
+    end
+
+    desc "-r, [--remove=REMOVE]", "Remove pragma comments from source file(s)."
+    map %w(-r --remove) => :remove
+    method_option :comments, aliases: "-c", desc: "Pragma comments", type: :array, default: []
+    method_option :extensions, aliases: "-e", desc: "File extension whitelist", type: :array, default: [".rb", ".rake"]
+    def remove path
+      write path, options[:comments], options[:extensions], :remove
     end
 
     desc "-e, [--edit]", "Edit #{Pragmater::Identity.label} settings in default editor."
