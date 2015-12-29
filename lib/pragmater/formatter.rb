@@ -16,14 +16,14 @@ module Pragmater
 
     def self.pragma_format
       /
-        \A  # Start of line.
-        \#  # Start of comment.
-        \s? # Space - optional.
-        \w+ # Key - 1 or more word characters only.
-        \:  # Key and value delimiter.
-        \s? # Space - optional.
-        .+  # Value - 1 or more characters.
-        \Z  # End of line.
+        \A       # Start of line.
+        \#       # Start of comment.
+        \s?      # Space - optional.
+        \w+      # Key - 1 or more word characters only.
+        \:       # Key and value delimiter.
+        \s?      # Space - optional.
+        [\w\-]+  # Value - 1 or more word or dash characters.
+        \Z       # End of line.
       /x
     end
 

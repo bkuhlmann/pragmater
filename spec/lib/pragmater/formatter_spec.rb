@@ -32,8 +32,16 @@ RSpec.describe Pragmater::Formatter do
       expect(described_class.pragma_format).to match("#frozen_string_literal:true")
     end
 
+    it "matches comment with numbers" do
+      expect(described_class.pragma_format).to match("# encoding: 1234")
+    end
+
     it "matches comment with dashes" do
       expect(described_class.pragma_format).to match("# encoding: ISO-8859-1")
+    end
+
+    it "matches comment with underscores" do
+      expect(described_class.pragma_format).to match("# encoding: ASCII_8BIT")
     end
 
     it "does not match shebangs" do
