@@ -13,11 +13,16 @@ module Pragmater
     end
 
     def add
-      write { (format(commenter.new(old_comments, new_comments).add) + file_lines_without_comments).join }
+      comments = format commenter.new(old_comments, new_comments).add
+      lines = comments + file_lines_without_comments
+      insert_spacing! lines, comments
+      write { lines.join }
     end
 
     def remove
-      write { (format(commenter.new(old_comments, new_comments).remove) + file_lines_without_comments).join }
+      lines = format(commenter.new(old_comments, new_comments).remove) + file_lines_without_comments
+      remove_spacing! lines
+      write { lines.join }
     end
 
     private
@@ -34,6 +39,16 @@ module Pragmater
 
     def format lines
       lines.map { |line| "#{line}\n" }
+    end
+
+    def insert_spacing! lines, comments
+      return if comments.empty?
+      return if lines[comments.size] == "\n"
+      lines.insert comments.size, "\n"
+    end
+
+    def remove_spacing! lines
+      lines.delete_at(0) if lines.first == "\n"
     end
 
     def write

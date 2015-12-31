@@ -10,27 +10,53 @@ RSpec.describe Pragmater::Writer, :temp_dir do
       let(:fixture_file_path) { File.join Dir.pwd, "spec", "fixtures", "with_comments.rb" }
       let(:comments) { "# frozen_string_literal: true" }
 
-      it "formats and adds pragma comments to top of file" do
+      it "formats, adds comments, and spacing to top of file" do
         subject.add
         expect(File.open(test_file_path, "r").to_a.join).to eq(
           "#! /usr/bin/ruby\n" \
           "# frozen_string_literal: true\n" \
-          "# encoding: UTF-8\n" \
           "\n" \
-          "# For testing purposes only.\n" \
-          "module Example\n" \
-          "end\n"
+          "puts RUBY_VERSION\n"
+        )
+      end
+    end
+
+    context "when file has comments and spacing" do
+      let(:fixture_file_path) { File.join Dir.pwd, "spec", "fixtures", "with_comments_and_spacing.rb" }
+      let(:comments) { "# frozen_string_literal: true" }
+
+      it "formats and adds comments with no extra spacing to top of file" do
+        subject.add
+        expect(File.open(test_file_path, "r").to_a.join).to eq(
+          "#! /usr/bin/ruby\n" \
+          "# frozen_string_literal: true\n" \
+          "\n" \
+          "puts RUBY_VERSION\n"
         )
       end
     end
 
     context "when file has no comments" do
-      let(:fixture_file_path) { File.join Dir.pwd, "spec", "fixtures", "without_comments.rb" }
+      let(:fixture_file_path) { File.join Dir.pwd, "spec", "fixtures", "with_nothing.rb" }
       let(:comments) { "# frozen_string_literal: true" }
 
-      it "adds formatted pragma comments to top of file" do
+      it "adds formatted comments to top of file" do
         subject.add
-        expect(File.open(test_file_path, "r").to_a).to contain_exactly("# frozen_string_literal: true\n")
+        expect(File.open(test_file_path, "r").to_a).to contain_exactly("# frozen_string_literal: true\n", "\n")
+      end
+    end
+
+    context "when duplicates exist" do
+      let(:fixture_file_path) { File.join Dir.pwd, "spec", "fixtures", "with_comments.rb" }
+      let(:comments) { "#! /usr/bin/ruby" }
+
+      it "does not add duplicates" do
+        subject.add
+        expect(File.open(test_file_path, "r").to_a.join).to eq(
+          "#! /usr/bin/ruby\n" \
+          "\n" \
+          "puts RUBY_VERSION\n"
+        )
       end
     end
   end
@@ -38,23 +64,26 @@ RSpec.describe Pragmater::Writer, :temp_dir do
   describe "#remove" do
     context "when file has comments" do
       let(:fixture_file_path) { File.join Dir.pwd, "spec", "fixtures", "with_comments.rb" }
-      let(:comments) { "# frozen_string_literal: true" }
+      let(:comments) { "#! /usr/bin/ruby" }
 
-      it "formats and removes pragma comments" do
+      it "formats and removes comments" do
         subject.remove
-        expect(File.open(test_file_path, "r").to_a.join).to eq(
-          "#! /usr/bin/ruby\n" \
-          "# encoding: UTF-8\n" \
-          "\n" \
-          "# For testing purposes only.\n" \
-          "module Example\n" \
-          "end\n"
-        )
+        expect(File.open(test_file_path, "r").to_a.join).to eq("puts RUBY_VERSION\n")
+      end
+    end
+
+    context "when file has comments and spacing" do
+      let(:fixture_file_path) { File.join Dir.pwd, "spec", "fixtures", "with_comments_and_spacing.rb" }
+      let(:comments) { "#! /usr/bin/ruby" }
+
+      it "formats, removes comments, and removes trailing space" do
+        subject.remove
+        expect(File.open(test_file_path, "r").to_a.join).to eq("puts RUBY_VERSION\n")
       end
     end
 
     context "when file has no comments" do
-      let(:fixture_file_path) { File.join Dir.pwd, "spec", "fixtures", "without_comments.rb" }
+      let(:fixture_file_path) { File.join Dir.pwd, "spec", "fixtures", "with_nothing.rb" }
       let(:comments) { "# frozen_string_literal: true" }
 
       it "does nothing" do
