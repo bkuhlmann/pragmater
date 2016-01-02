@@ -21,17 +21,17 @@ module Pragmater
     desc "-a, [--add=ADD]", "Add pragma comments to source file(s)."
     map %w(-a --add) => :add
     method_option :comments, aliases: "-c", desc: "Pragma comments", type: :array, default: []
-    method_option :extensions, aliases: "-e", desc: "File extension whitelist", type: :array, default: [".rb", ".rake"]
+    method_option :whitelist, aliases: "-w", desc: "File extension whitelist", type: :array, default: [".rb", ".rake"]
     def add path
-      write path, options[:comments], options[:extensions], :add
+      write path, options[:comments], options[:whitelist], :add
     end
 
     desc "-r, [--remove=REMOVE]", "Remove pragma comments from source file(s)."
     map %w(-r --remove) => :remove
     method_option :comments, aliases: "-c", desc: "Pragma comments", type: :array, default: []
-    method_option :extensions, aliases: "-e", desc: "File extension whitelist", type: :array, default: [".rb", ".rake"]
+    method_option :whitelist, aliases: "-w", desc: "File extension whitelist", type: :array, default: [".rb", ".rake"]
     def remove path
-      write path, options[:comments], options[:extensions], :remove
+      write path, options[:comments], options[:whitelist], :remove
     end
 
     desc "-e, [--edit]", "Edit #{Pragmater::Identity.label} settings in default editor."
@@ -61,14 +61,14 @@ module Pragmater
       say "Updated: #{path}."
     end
 
-    def write path, comments, extensions, action
+    def write path, comments, whitelist, action
       pathname = Pathname path
 
       case
         when pathname.file?
           update_file pathname, comments, action
         when pathname.directory?
-          files = Pathname.glob %(#{pathname}/**/*{#{extensions.join ","}})
+          files = Pathname.glob %(#{pathname}/**/*{#{whitelist.join ","}})
           files.each { |file_path| update_file file_path, comments, action }
         else
           error "Invalid path: #{path}."
