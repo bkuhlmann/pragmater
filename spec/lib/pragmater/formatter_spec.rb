@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Pragmater::Formatter do
+RSpec.describe Pragmater::Formatter do
   describe ".shebang_format" do
     it "matches formatted comment" do
       expect(described_class.shebang_format).to match("#! /usr/bin/ruby")

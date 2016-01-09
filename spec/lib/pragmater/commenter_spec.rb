@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Pragmater::Commenter do
+RSpec.describe Pragmater::Commenter do
   let(:older) { [] }
   let(:newer) { [] }
   subject { described_class.new older, newer }

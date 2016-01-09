@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Pragmater::Writer, :temp_dir do
+RSpec.describe Pragmater::Writer, :temp_dir do
   let(:test_file_path) { File.join temp_dir, "test.rb" }
   subject { described_class.new test_file_path, comments }
   before { FileUtils.cp fixture_file_path, test_file_path }

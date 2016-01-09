@@ -1,7 +1,7 @@
 require "spec_helper"
 require "pragmater/cli"
 
-describe Pragmater::CLI do
+RSpec.describe Pragmater::CLI do
   describe ".start" do
     let(:options) { [] }
     let(:command_line) { Array(command).concat options }
