@@ -16,6 +16,7 @@ module Pragmater
 
     def initialize args = [], options = {}, config = {}
       super args, options, config
+      @configuration = Configuration.new Identity.file_name
     end
 
     desc "-a, [--add=ADD]", "Add pragma comments to source file(s)."
@@ -23,7 +24,8 @@ module Pragmater
     method_option :comments, aliases: "-c", desc: "Pragma comments", type: :array, default: []
     method_option :whitelist, aliases: "-w", desc: "File extension whitelist", type: :array, default: [".rb", ".rake"]
     def add path
-      write path, options[:comments], options[:whitelist], :add
+      settings = configuration.merge add: {comments: options[:comments], whitelist: options[:whitelist]}
+      write path, settings, :add
     end
 
     desc "-r, [--remove=REMOVE]", "Remove pragma comments from source file(s)."
@@ -31,7 +33,8 @@ module Pragmater
     method_option :comments, aliases: "-c", desc: "Pragma comments", type: :array, default: []
     method_option :whitelist, aliases: "-w", desc: "File extension whitelist", type: :array, default: [".rb", ".rake"]
     def remove path
-      write path, options[:comments], options[:whitelist], :remove
+      settings = configuration.merge remove: {comments: options[:comments], whitelist: options[:whitelist]}
+      write path, settings, :remove
     end
 
     desc "-e, [--edit]", "Edit #{Pragmater::Identity.label} settings in default editor."
@@ -56,23 +59,31 @@ module Pragmater
 
     private
 
+    attr_reader :configuration
+
     def update_file path, comments, action
       Writer.new(path, comments).public_send action
       say "Updated: #{path}."
     end
 
-    def write path, comments, whitelist, action
-      pathname = Pathname path
-
+    def update_files path, comments, whitelist, action
       case
-        when pathname.file?
-          update_file pathname, comments, action
-        when pathname.directory?
-          files = Pathname.glob %(#{pathname}/**/*{#{whitelist.join ","}})
+        when path.file?
+          update_file path, comments, action
+        when path.directory?
+          files = Pathname.glob %(#{path}/**/*{#{whitelist.join ","}})
           files.each { |file_path| update_file file_path, comments, action }
         else
           error "Invalid path: #{path}."
       end
+    end
+
+    def write path, settings, action
+      pathname = Pathname path
+      comments = Array settings.dig(action).dig(:comments)
+      whitelist = Array settings.dig(action).dig(:whitelist)
+
+      update_files pathname, comments, whitelist, action
     end
   end
 end
