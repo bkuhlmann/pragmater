@@ -30,7 +30,7 @@ module Pragmater
     attr_reader :file_path, :file_lines, :new_comments, :old_comments, :formatter, :commenter
 
     def file_comments
-      file_lines.select { |line| line =~ formatter.shebang_format || line =~ formatter.pragma_format }
+      file_lines.select { |line| line =~ formatter.valid_formats }
     end
 
     def file_lines_without_comments

@@ -22,7 +22,7 @@ module Pragmater
     attr_reader :older, :newer, :formatter
 
     def filter comments
-      Array(comments).select { |comment| comment =~ formatter.shebang_format || comment =~ formatter.pragma_format }
+      Array(comments).select { |comment| comment =~ formatter.valid_formats }
     end
 
     def format comments
