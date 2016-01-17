@@ -8,7 +8,7 @@ RSpec.describe Pragmater::Commenter do
   subject { described_class.new older, newer }
 
   describe "#add" do
-    context "with a single new comment" do
+    context "with single newer comment" do
       let(:newer) { "# frozen_string_literal: true" }
 
       it "answers array of added comments" do
@@ -16,7 +16,7 @@ RSpec.describe Pragmater::Commenter do
       end
     end
 
-    context "with multiple new comments" do
+    context "with multiple newer comments" do
       let(:newer) { ["# encoding: UTF-8", "# frozen_string_literal: true"] }
 
       it "answers array of added comments" do
@@ -24,7 +24,7 @@ RSpec.describe Pragmater::Commenter do
       end
     end
 
-    context "with a single old comment" do
+    context "with single older comment" do
       let(:older) { "# encoding: UTF-8" }
 
       it "answers array of added comments" do
@@ -32,7 +32,7 @@ RSpec.describe Pragmater::Commenter do
       end
     end
 
-    context "with multiple old comments" do
+    context "with multiple older comments" do
       let(:older) { ["# encoding: UTF-8", "# frozen_string_literal: true"] }
 
       it "answers array of added comments" do
@@ -40,7 +40,7 @@ RSpec.describe Pragmater::Commenter do
       end
     end
 
-    context "with multiple old and new comments" do
+    context "with multiple older and newer comments" do
       let(:older) { ["# frozen_string_literal: true", "# example: test"] }
       let(:newer) { ["# encoding: UTF-8", "# coding: UTF-8"] }
 
@@ -71,7 +71,7 @@ RSpec.describe Pragmater::Commenter do
       end
     end
 
-    context "with empty old and new comments" do
+    context "with empty older and newer comments" do
       it "answers empty array" do
         expect(subject.add).to be_empty
       end
@@ -105,7 +105,7 @@ RSpec.describe Pragmater::Commenter do
       end
     end
 
-    context "with new, invalid, comments" do
+    context "with newer, invalid, comments" do
       let(:older) { "# bogus" }
       let(:newer) { "# bogus" }
 
