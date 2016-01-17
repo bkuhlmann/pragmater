@@ -33,7 +33,7 @@ RSpec.describe Pragmater::CLI do
       end
 
       context "with multiple files", :temp_dir do
-        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true"] }
+        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", ".rb", ".rake"] }
 
         it "adds pragma comment to selected files", :aggregate_failures do
           cli.call
@@ -91,7 +91,7 @@ RSpec.describe Pragmater::CLI do
       end
 
       context "with multiple files", :temp_dir do
-        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true"] }
+        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", ".rb", ".rake"] }
 
         it "adds pragma comment to selected files", :aggregate_failures do
           cli.call

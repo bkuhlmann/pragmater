@@ -22,7 +22,7 @@ module Pragmater
     desc "-a, [--add=ADD]", "Add pragma comments to source file(s)."
     map %w(-a --add) => :add
     method_option :comments, aliases: "-c", desc: "Pragma comments", type: :array, default: []
-    method_option :whitelist, aliases: "-w", desc: "File extension whitelist", type: :array, default: [".rb", ".rake"]
+    method_option :whitelist, aliases: "-w", desc: "File extension whitelist", type: :array, default: []
     def add path
       settings = configuration.merge add: {comments: options[:comments], whitelist: options[:whitelist]}
       write path, settings, :add
@@ -31,7 +31,7 @@ module Pragmater
     desc "-r, [--remove=REMOVE]", "Remove pragma comments from source file(s)."
     map %w(-r --remove) => :remove
     method_option :comments, aliases: "-c", desc: "Pragma comments", type: :array, default: []
-    method_option :whitelist, aliases: "-w", desc: "File extension whitelist", type: :array, default: [".rb", ".rake"]
+    method_option :whitelist, aliases: "-w", desc: "File extension whitelist", type: :array, default: []
     def remove path
       settings = configuration.merge remove: {comments: options[:comments], whitelist: options[:whitelist]}
       write path, settings, :remove
@@ -61,6 +61,11 @@ module Pragmater
 
     attr_reader :configuration
 
+    def whitelisted_files path, whitelist
+      file_filter = whitelist.empty? ? %(#{path}/**/*) : %(#{path}/**/*{#{whitelist.join ","}})
+      Pathname.glob(file_filter).select(&:file?)
+    end
+
     def update_file path, comments, action
       Writer.new(path, comments).public_send action
       say "Updated: #{path}."
@@ -71,8 +76,7 @@ module Pragmater
         when path.file?
           update_file path, comments, action
         when path.directory?
-          files = Pathname.glob %(#{path}/**/*{#{whitelist.join ","}})
-          files.each { |file_path| update_file file_path, comments, action }
+          whitelisted_files(path, whitelist).each { |file_path| update_file file_path, comments, action }
         else
           error "Invalid path: #{path}."
       end
