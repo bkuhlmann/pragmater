@@ -31,34 +31,34 @@ module Pragmater
       Regexp.union shebang_format, pragma_format
     end
 
-    def initialize comment
-      @comment = comment
+    def initialize string
+      @string = string
     end
 
     def format_shebang
-      return comment unless comment =~ self.class.shebang_format
+      return string unless string =~ self.class.shebang_format
 
-      _, path = comment.split "!"
+      _, path = string.split "!"
       "#! #{path.strip}"
     end
 
     def format_pragma
-      return comment unless comment =~ self.class.pragma_format
+      return string unless string =~ self.class.pragma_format
 
-      key, value = comment.split ":"
+      key, value = string.split ":"
       "# #{key.gsub(/\#\s?/, "")}: #{value.strip}"
     end
 
     def format
-      case comment
+      case string
         when self.class.shebang_format then format_shebang
         when self.class.pragma_format then format_pragma
-        else comment
+        else string
       end
     end
 
     private
 
-    attr_reader :comment
+    attr_reader :string
   end
 end

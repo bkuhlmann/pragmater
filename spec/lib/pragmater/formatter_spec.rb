@@ -34,15 +34,15 @@ RSpec.describe Pragmater::Formatter do
       expect(described_class.pragma_format).to match("#frozen_string_literal:true")
     end
 
-    it "matches comment with numbers" do
+    it "matches with numbers" do
       expect(described_class.pragma_format).to match("# encoding: 1234")
     end
 
-    it "matches comment with dashes" do
+    it "matches with dashes" do
       expect(described_class.pragma_format).to match("# encoding: ISO-8859-1")
     end
 
-    it "matches comment with underscores" do
+    it "matches with underscores" do
       expect(described_class.pragma_format).to match("# encoding: ASCII_8BIT")
     end
 
@@ -70,10 +70,10 @@ RSpec.describe Pragmater::Formatter do
   end
 
   describe "#format_shebang" do
-    subject { described_class.new comment }
+    subject { described_class.new string }
 
     context "with formatted shebang" do
-      let(:comment) { "#! /usr/bin/ruby" }
+      let(:string) { "#! /usr/bin/ruby" }
 
       it "answers formatted shebang" do
         expect(subject.format_shebang).to eq("#! /usr/bin/ruby")
@@ -81,27 +81,27 @@ RSpec.describe Pragmater::Formatter do
     end
 
     context "with unformatted shebang" do
-      let(:comment) { "#!/usr/bin/ruby" }
+      let(:string) { "#!/usr/bin/ruby" }
 
       it "answers formatted shebang" do
         expect(subject.format_shebang).to eq("#! /usr/bin/ruby")
       end
     end
 
-    context "with comment that doesn't look like a shebang" do
-      let(:comment) { "# Test." }
+    context "with string that doesn't look like a shebang" do
+      let(:string) { "# Test." }
 
-      it "answers original comment" do
+      it "answers original string" do
         expect(subject.format_shebang).to eq("# Test.")
       end
     end
   end
 
   describe "#format_pragma" do
-    subject { described_class.new comment }
+    subject { described_class.new string }
 
     context "with formatted pragma" do
-      let(:comment) { "# frozen_string_literal: true" }
+      let(:string) { "# frozen_string_literal: true" }
 
       it "answers formatted pragma" do
         expect(subject.format_pragma).to eq("# frozen_string_literal: true")
@@ -109,27 +109,27 @@ RSpec.describe Pragmater::Formatter do
     end
 
     context "with unformatted pragma" do
-      let(:comment) { "#frozen_string_literal:true" }
+      let(:string) { "#frozen_string_literal:true" }
 
       it "answers formatted pragma" do
         expect(subject.format_pragma).to eq("# frozen_string_literal: true")
       end
     end
 
-    context "with comment that doesn't look like a pragma" do
-      let(:comment) { "# Test." }
+    context "with string that doesn't look like a pragma" do
+      let(:string) { "# Test." }
 
-      it "answers original comment" do
+      it "answers original string" do
         expect(subject.format_pragma).to eq("# Test.")
       end
     end
   end
 
   describe "#format" do
-    subject { described_class.new comment }
+    subject { described_class.new string }
 
     context "when shebang" do
-      let(:comment) { "#! /usr/bin/ruby" }
+      let(:string) { "#! /usr/bin/ruby" }
 
       it "answers shebang" do
         expect(subject.format).to eq("#! /usr/bin/ruby")
@@ -137,17 +137,17 @@ RSpec.describe Pragmater::Formatter do
     end
 
     context "when pragma" do
-      let(:comment) { "# frozen_string_literal: true" }
+      let(:string) { "# frozen_string_literal: true" }
 
       it "answers pragma" do
         expect(subject.format).to eq("# frozen_string_literal: true")
       end
     end
 
-    context "when other" do
-      let(:comment) { "# Some random comment." }
+    context "when normal comment" do
+      let(:string) { "# Some random comment." }
 
-      it "answers pragma" do
+      it "answers normal comment" do
         expect(subject.format).to eq("# Some random comment.")
       end
     end
