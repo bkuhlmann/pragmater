@@ -55,6 +55,20 @@ RSpec.describe Pragmater::Formatter do
     end
   end
 
+  describe ".valid_formats" do
+    it "match shebang format" do
+      expect(described_class.valid_formats).to match("#! /usr/bin/ruby")
+    end
+
+    it "match frozen string literal format" do
+      expect(described_class.valid_formats).to match("# frozen_string_literal: true")
+    end
+
+    it "does not match general comments" do
+      expect(described_class.valid_formats).to_not match("# A example comment.")
+    end
+  end
+
   describe "#format_shebang" do
     subject { described_class.new comment }
 

@@ -27,6 +27,10 @@ module Pragmater
       /x
     end
 
+    def self.valid_formats
+      Regexp.union shebang_format, pragma_format
+    end
+
     def initialize comment
       @comment = comment
     end
