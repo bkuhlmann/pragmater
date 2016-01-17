@@ -63,6 +63,14 @@ RSpec.describe Pragmater::Commenter do
       end
     end
 
+    context "with newer, invalid, comments" do
+      let(:newer) { "# bogus" }
+
+      it "answers empty array" do
+        expect(subject.add).to be_empty
+      end
+    end
+
     context "with empty old and new comments" do
       it "answers empty array" do
         expect(subject.add).to be_empty
@@ -91,6 +99,15 @@ RSpec.describe Pragmater::Commenter do
 
     context "with empty older comments and array of newer comments" do
       let(:newer) { "# encoding: UTF-8" }
+
+      it "answers empty array" do
+        expect(subject.remove).to be_empty
+      end
+    end
+
+    context "with new, invalid, comments" do
+      let(:older) { "# bogus" }
+      let(:newer) { "# bogus" }
 
       it "answers empty array" do
         expect(subject.remove).to be_empty
