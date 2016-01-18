@@ -15,7 +15,7 @@ A command line interface for adding [directive pragma](https://en.wikipedia.org/
     # encoding: UTF-8
 
 With the release of [Ruby 2.3.0](https://www.ruby-lang.org/en/news/2015/12/25/ruby-2-3-0-released), support for frozen
-strings are now supported via a pragma comment. This gems provides a easy way to add pragma comments to single or
+strings are now supported via a pragma comment. This gems provides an easy way to add pragma comments to single or
 multiple Ruby source files in order to benefit from improved memory and concurrency performance.
 
 <!-- Tocer[start]: Auto-generated, don't remove. -->
@@ -27,6 +27,8 @@ multiple Ruby source files in order to benefit from improved memory and concurre
 - [Setup](#setup)
 - [Usage](#usage)
   - [Command Line Interface (CLI)](#command-line-interface-cli)
+  - [Customization](#customization)
+  - [Frozen String Literals](#frozen-string-literals)
 - [Tests](#tests)
 - [Versioning](#versioning)
 - [Code of Conduct](#code-of-conduct)
@@ -41,9 +43,11 @@ multiple Ruby source files in order to benefit from improved memory and concurre
 
 - Supports adding a pragma comment or multiple pragma comments to single or multiple source files.
 - Supports removing a pragma comment or multiple pragma comments from single or multiple source files.
-- Supports whitelist filtering. Defaults to `*.rb` and `*.rake` files.
+- Supports whitelist filtering. Defaults to any file.
 - Ensures duplicate pragma comments never exist.
 - Ensures pragma commments are always properly formatted.
+
+[![asciicast](https://asciinema.org/a/34038.png)](https://asciinema.org/a/34038)
 
 # Requirements
 
@@ -75,12 +79,64 @@ From the command line, type: `pragmater help`
     pragmater -r, [--remove=REMOVE]  # Remove pragma comments from source file(s).
     pragmater -v, [--version]        # Show Pragmater version.
 
-Both the `--add` and `--remove` options provide the ability to supply specific pragma comments and/or whitelisted file
-extensions:
+Both the `--add` and `--remove` options provide the ability to supply specific pragma comments and/or whitelisted files:
 
-    -c, [--comments=one two three]    # Pragma comments
-    -e, [--extensions=one two three]  # File extension whitelist
-                                      # Default: [".rb", ".rake"]
+    -c, [--comments=one two three]   # Pragma comments
+    -w, [--whitelist=one two three]  # File extension whitelist
+
+## Customization
+
+Should the default settings not be desired, customization is allowed via the `.pragmaterrc` file. The `.pragmaterrc`
+can be created at a global and/or local level. Example:
+
+- Global: `~/.pragmaterrc`
+- Local: `<project repository root>/.pragmaterrc`
+
+Order of precedence for any setting is resolved as follows (with the last taking top priority):
+
+0. Global `~/.pragmaterrc`.
+0. Local project repository `.pragmaterrc`.
+0. CLI option (i.e. `--add` or `--remove` command options).
+
+Any setting provided to the CLI during runtime would trump a local/global setting and a local setting would trump a
+global setting. The global setting is the weakest of all but great for situations where custom settings should be
+applied to *all* projects. It is important to note that local settings completely trump any global settings -- there is
+no inheritance when local *and* global settings exist at the same time.
+
+The `.pragmaterrc` uses the following default settings:
+
+    :add:
+      :comments: []
+      :whitelist: []
+    :remove:
+      :comments: []
+      :whitelist: []
+
+Each `.pragmaterrc` setting can be configured as follows:
+
+- `add`: Defines global/local comments and/or whitelists when adding pragma comments. The `comments` and `whitelist`
+  options can be either a single string or an array of values.
+- `remove`: Defines global/local comments and/or whitelists when removing pragma comments. The `comments` and
+  `whitelist` options can be either a single string or an array of values.
+
+## Frozen String Literals
+
+With Ruby 2.3.0, support of frozen string literals are now supported. These comments are meant to be placed at the top
+of each source file. Example:
+
+    # frozen_string_literal: true
+
+This is great for *selective* enablement of frozen string literals but might be too much work for some (even with the
+aid of this gem). As an alternative, frozen string literals can be enabled via the following Ruby command line option:
+
+    --enable=frozen-string-literal
+
+It is important to note that once enabled, it freezes strings program-wide -- It's an all or nothing option.
+
+Regardless of whether you leverage the capabilities of this gem or the Ruby command line option mentioned above, the
+following Ruby command line option is available to aid debugging and tracking down frozen string literal issues:
+
+    --debug=frozen-string-literal
 
 # Tests
 
