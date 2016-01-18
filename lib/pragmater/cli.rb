@@ -68,7 +68,7 @@ module Pragmater
 
     def update_file path, comments, action
       Writer.new(path, comments).public_send action
-      say "Updated: #{path}."
+      info "Updated: #{path}."
     end
 
     def update_files path, comments, whitelist, action
