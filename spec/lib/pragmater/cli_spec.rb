@@ -33,7 +33,7 @@ RSpec.describe Pragmater::CLI do
 
         it "adds pragma comment to ruby file" do
           cli.call
-          expect(File.open(ruby_file, "r").to_a).to contain_exactly("# frozen_string_literal: true\n", "\n")
+          expect(File.open(ruby_file, "r").to_a).to contain_exactly("# frozen_string_literal: true\n")
         end
 
         it "prints that file was updated" do
@@ -47,8 +47,8 @@ RSpec.describe Pragmater::CLI do
         it "adds pragma comment to selected files", :aggregate_failures do
           cli.call
 
-          expect(File.open(ruby_file, "r").to_a).to contain_exactly("# frozen_string_literal: true\n", "\n")
-          expect(File.open(rake_file, "r").to_a).to contain_exactly("# frozen_string_literal: true\n", "\n")
+          expect(File.open(ruby_file, "r").to_a).to contain_exactly("# frozen_string_literal: true\n")
+          expect(File.open(rake_file, "r").to_a).to contain_exactly("# frozen_string_literal: true\n")
           expect(File.open(text_file, "r").to_a).to be_empty
         end
 
@@ -63,7 +63,7 @@ RSpec.describe Pragmater::CLI do
         it "adds pragma comment to selected files", :aggregate_failures do
           cli.call
 
-          expect(File.open(ruby_file, "r").to_a).to contain_exactly("# frozen_string_literal: true\n", "\n")
+          expect(File.open(ruby_file, "r").to_a).to contain_exactly("# frozen_string_literal: true\n")
           expect(File.open(rake_file, "r").to_a).to be_empty
           expect(File.open(text_file, "r").to_a).to be_empty
         end

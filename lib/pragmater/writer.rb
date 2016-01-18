@@ -43,6 +43,7 @@ module Pragmater
 
     def insert_spacing! lines, comments
       return if comments.empty?
+      return if lines.size == 1
       return if lines[comments.size] == "\n"
       lines.insert comments.size, "\n"
     end

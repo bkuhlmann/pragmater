@@ -44,7 +44,7 @@ RSpec.describe Pragmater::Writer, :temp_dir do
 
       it "adds formatted comments to top of file" do
         subject.add
-        expect(File.open(test_file_path, "r").to_a).to contain_exactly("# frozen_string_literal: true\n", "\n")
+        expect(File.open(test_file_path, "r").to_a).to contain_exactly("# frozen_string_literal: true\n")
       end
     end
 
