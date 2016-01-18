@@ -69,6 +69,10 @@ module Pragmater
     def update_file path, comments, action
       Writer.new(path, comments).public_send action
       info "Updated: #{path}."
+    rescue ArgumentError => error
+      formatted_message = error.message
+      formatted_message[0] = formatted_message[0].capitalize
+      error "#{formatted_message}: #{path}."
     end
 
     def update_files path, comments, whitelist, action

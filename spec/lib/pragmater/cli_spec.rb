@@ -9,6 +9,15 @@ RSpec.describe Pragmater::CLI do
     let(:command_line) { Array(command).concat options }
     let(:cli) { -> { described_class.start command_line } }
 
+    shared_examples_for "an invalid file" do
+      let(:corrupt_file_path) { File.join Dir.pwd, "spec", "fixtures", "corrupt.file" }
+      let(:options) { [corrupt_file_path, "-c", ""] }
+
+      it "prints error", :temp_dir do
+        expect(&cli).to output(/error\s+Invalid\spath\:\s#{corrupt_file_path}\./).to_stdout
+      end
+    end
+
     shared_examples_for "an add command" do
       let(:tasks_dir) { File.join temp_dir, "tasks" }
       let(:ruby_file) { File.join temp_dir, "test.rb" }
@@ -63,6 +72,8 @@ RSpec.describe Pragmater::CLI do
           expect(&cli).to output(/info\s+Updated\:\s#{ruby_file}\.\n/).to_stdout
         end
       end
+
+      it_behaves_like "an invalid file"
     end
 
     shared_examples_for "a remove command" do
@@ -121,6 +132,8 @@ RSpec.describe Pragmater::CLI do
           expect(&cli).to output(/info\s+Updated\:\s#{ruby_file}\.\n/).to_stdout
         end
       end
+
+      it_behaves_like "an invalid file"
     end
 
     shared_examples_for "an edit command" do
