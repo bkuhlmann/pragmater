@@ -37,7 +37,7 @@ RSpec.describe Pragmater::CLI do
         end
 
         it "prints that file was updated" do
-          expect(&cli).to output(/info\s+Updated\:\s#{ruby_file}\.\n/).to_stdout
+          expect(&cli).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
         end
       end
 
@@ -53,7 +53,8 @@ RSpec.describe Pragmater::CLI do
         end
 
         it "prints selected files were updated" do
-          expect(&cli).to output(/info\s+Updated\:\s#{ruby_file}\.\n\s+info\s+Updated\:\s#{rake_file}\.\n/).to_stdout
+          pattern = /info\s+Processed\:\s#{ruby_file}\.\n\s+info\s+Processed\:\s#{rake_file}\.\n/
+          expect(&cli).to output(pattern).to_stdout
         end
       end
 
@@ -69,7 +70,7 @@ RSpec.describe Pragmater::CLI do
         end
 
         it "prints selected files were updated" do
-          expect(&cli).to output(/info\s+Updated\:\s#{ruby_file}\.\n/).to_stdout
+          expect(&cli).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
         end
       end
 
@@ -97,7 +98,7 @@ RSpec.describe Pragmater::CLI do
         end
 
         it "prints that file was updated" do
-          expect(&cli).to output(/info\s+Updated\:\s#{ruby_file}\.\n/).to_stdout
+          expect(&cli).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
         end
       end
 
@@ -113,7 +114,8 @@ RSpec.describe Pragmater::CLI do
         end
 
         it "prints selected files were updated" do
-          expect(&cli).to output(/info\s+Updated\:\s#{ruby_file}\.\n\s+info\s+Updated\:\s#{rake_file}\.\n/).to_stdout
+          pattern = /info\s+Processed\:\s#{ruby_file}\.\n\s+info\s+Processed\:\s#{rake_file}\.\n/
+          expect(&cli).to output(pattern).to_stdout
         end
       end
 
@@ -129,7 +131,7 @@ RSpec.describe Pragmater::CLI do
         end
 
         it "prints selected files were updated" do
-          expect(&cli).to output(/info\s+Updated\:\s#{ruby_file}\.\n/).to_stdout
+          expect(&cli).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
         end
       end
 
