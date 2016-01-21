@@ -1,3 +1,7 @@
+# v1.1.0 (2016-01-20)
+
+- Fixed gem secure install issues.
+
 # v1.0.0 (2016-01-18)
 
 - Fixed CLI info output to match error output format.

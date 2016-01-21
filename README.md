@@ -7,8 +7,8 @@
 [![Travis CI Status](https://secure.travis-ci.org/bkuhlmann/pragmater.svg)](https://travis-ci.org/bkuhlmann/pragmater)
 [![Patreon](https://img.shields.io/badge/patreon-donate-brightgreen.svg)](https://www.patreon.com/bkuhlmann)
 
-A command line interface for adding [directive pragma](https://en.wikipedia.org/wiki/Directive_(programming)) comments
-(a.k.a. *magic comments*) to source files. Examples:
+A command line interface for managing/formatting source file [directive
+pragma](https://en.wikipedia.org/wiki/Directive_(programming)) comments (a.k.a. *magic comments*). Examples:
 
     #! /usr/bin/ruby
     # frozen_string_literal: true
@@ -45,7 +45,7 @@ multiple Ruby source files in order to benefit from improved memory and concurre
 - Supports removing a pragma comment or multiple pragma comments from single or multiple source files.
 - Supports whitelist filtering. Defaults to any file.
 - Ensures duplicate pragma comments never exist.
-- Ensures pragma commments are always properly formatted.
+- Ensures pragma comments are always properly formatted.
 
 [![asciicast](https://asciinema.org/a/34038.png)](https://asciinema.org/a/34038)
 
