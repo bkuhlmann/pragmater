@@ -10,6 +10,8 @@ Style/PercentLiteralDelimiters:
 Style/RegexpLiteral:
   Exclude:
     - "lib/pragmater/formatter.rb"
+Style/SignalException:
+  EnforcedStyle: semantic
 Style/SingleLineBlockParams:
   Enabled: false
 Style/SpaceInsideHashLiteralBraces:
