@@ -57,7 +57,7 @@ multiple Ruby source files in order to benefit from improved memory and concurre
 
 For a secure install, type the following (recommended):
 
-    gem cert --add <(curl -Ls https://www.alchemists.io/gem-public.pem)
+    gem cert --add <(curl --location --silent https://www.alchemists.io/gem-public.pem)
     gem install pragmater --trust-policy MediumSecurity
 
 NOTE: A HighSecurity trust policy would be best but MediumSecurity enables signed gem verification while
