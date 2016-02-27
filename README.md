@@ -23,6 +23,7 @@ multiple Ruby source files in order to benefit from improved memory and concurre
 # Table of Contents
 
 - [Features](#features)
+- [Screencasts](#screencasts)
 - [Requirements](#requirements)
 - [Setup](#setup)
 - [Usage](#usage)
@@ -46,6 +47,8 @@ multiple Ruby source files in order to benefit from improved memory and concurre
 - Supports whitelist filtering. Defaults to any file.
 - Ensures duplicate pragma comments never exist.
 - Ensures pragma comments are always properly formatted.
+
+# Screencasts
 
 [![asciicast](https://asciinema.org/a/34038.png)](https://asciinema.org/a/34038)
 
