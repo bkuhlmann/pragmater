@@ -37,7 +37,7 @@ module Pragmater
       write path, settings, :remove
     end
 
-    desc "-e, [--edit]", "Edit #{Pragmater::Identity.label} settings in default editor."
+    desc "-e, [--edit]", "Edit gem settings in default editor."
     map %w(-e --edit) => :edit
     def edit
       resource_file = File.join ENV["HOME"], Pragmater::Identity.file_name
@@ -45,7 +45,7 @@ module Pragmater
       `#{editor} #{resource_file}`
     end
 
-    desc "-v, [--version]", "Show #{Pragmater::Identity.label} version."
+    desc "-v, [--version]", "Show gem version."
     map %w(-v --version) => :version
     def version
       say Pragmater::Identity.version_label
