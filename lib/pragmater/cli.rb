@@ -20,7 +20,7 @@ module Pragmater
     end
 
     desc "-a, [--add=ADD]", "Add pragma comments to source file(s)."
-    map %w(-a --add) => :add
+    map %w[-a --add] => :add
     method_option :comments, aliases: "-c", desc: "Pragma comments", type: :array, default: []
     method_option :whitelist, aliases: "-w", desc: "File extension whitelist", type: :array, default: []
     def add path
@@ -29,7 +29,7 @@ module Pragmater
     end
 
     desc "-r, [--remove=REMOVE]", "Remove pragma comments from source file(s)."
-    map %w(-r --remove) => :remove
+    map %w[-r --remove] => :remove
     method_option :comments, aliases: "-c", desc: "Pragma comments", type: :array, default: []
     method_option :whitelist, aliases: "-w", desc: "File extension whitelist", type: :array, default: []
     def remove path
@@ -38,7 +38,7 @@ module Pragmater
     end
 
     desc "-e, [--edit]", "Edit gem settings in default editor."
-    map %w(-e --edit) => :edit
+    map %w[-e --edit] => :edit
     def edit
       resource_file = File.join ENV["HOME"], Pragmater::Identity.file_name
       info "Editing: #{resource_file}..."
@@ -46,15 +46,15 @@ module Pragmater
     end
 
     desc "-v, [--version]", "Show gem version."
-    map %w(-v --version) => :version
+    map %w[-v --version] => :version
     def version
       say Pragmater::Identity.version_label
     end
 
     desc "-h, [--help=HELP]", "Show this message or get help for a command."
-    map %w(-h --help) => :help
+    map %w[-h --help] => :help
     def help task = nil
-      say && super
+      say and super
     end
 
     private

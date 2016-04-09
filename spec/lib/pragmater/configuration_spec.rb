@@ -164,7 +164,9 @@ RSpec.describe Pragmater::Configuration, :temp_dir do
       }
       settings = subject.merge add: {whitelist: [".gemspec"]}
 
-      expect(settings).to eq(modified_settings)
+      ClimateControl.modify HOME: temp_dir do
+        expect(settings).to eq(modified_settings)
+      end
     end
   end
 end
