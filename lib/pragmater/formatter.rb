@@ -4,14 +4,7 @@ module Pragmater
   # Formats pragma comments in a consistent manner.
   class Formatter
     def self.shebang_format
-      %r(
-        \A       # Start of line.
-        \#       # Start of comment.
-        \!       # Bang.
-        \s?      # Space - optional.
-        \/.*ruby # Absolute path to Ruby program.
-        \Z       # End of line.
-      )
+      %r(\A\#\!\s?\/.*ruby\Z)
     end
 
     def self.pragma_format
