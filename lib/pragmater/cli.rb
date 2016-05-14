@@ -76,13 +76,12 @@ module Pragmater
     end
 
     def update_files path, comments, whitelist, action
-      case
-        when path.file?
-          update_file path, comments, action
-        when path.directory?
-          whitelisted_files(path, whitelist).each { |file_path| update_file file_path, comments, action }
-        else
-          error "Invalid path: #{path}."
+      if path.file?
+        update_file path, comments, action
+      elsif path.directory?
+        whitelisted_files(path, whitelist).each { |file_path| update_file file_path, comments, action }
+      else
+        error "Invalid path: #{path}."
       end
     end
 
