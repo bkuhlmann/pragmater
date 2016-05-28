@@ -14,9 +14,9 @@ pragma](https://en.wikipedia.org/wiki/Directive_(programming)) comments (a.k.a. 
     # frozen_string_literal: true
     # encoding: UTF-8
 
-With the release of [Ruby 2.3.0](https://www.ruby-lang.org/en/news/2015/12/25/ruby-2-3-0-released), support for frozen
-strings are now supported via a pragma comment. This gems provides an easy way to add pragma comments to single or
-multiple Ruby source files in order to benefit from improved memory and concurrency performance.
+With [Ruby 2.3.0](https://www.ruby-lang.org/en/news/2015/12/25/ruby-2-3-0-released), frozen strings are supported via a
+pragma comment. This gem provides an easy way to add pragma comments to single or multiple Ruby source files in order
+to benefit from improved memory and concurrency performance.
 
 <!-- Tocer[start]: Auto-generated, don't remove. -->
 
@@ -30,6 +30,7 @@ multiple Ruby source files in order to benefit from improved memory and concurre
   - [Command Line Interface (CLI)](#command-line-interface-cli)
   - [Customization](#customization)
   - [Frozen String Literals](#frozen-string-literals)
+  - [Available Comments](#available-comments)
 - [Tests](#tests)
 - [Versioning](#versioning)
 - [Code of Conduct](#code-of-conduct)
@@ -124,8 +125,8 @@ Each `.pragmaterrc` setting can be configured as follows:
 
 ## Frozen String Literals
 
-With Ruby 2.3.0, support of frozen string literals are now supported. These comments are meant to be placed at the top
-of each source file. Example:
+With Ruby 2.3.0, support for frozen strings was added. These comments are meant to be placed at the top of each source
+file. Example:
 
     # frozen_string_literal: true
 
@@ -140,6 +141,18 @@ Regardless of whether you leverage the capabilities of this gem or the Ruby comm
 following Ruby command line option is available to aid debugging and tracking down frozen string literal issues:
 
     --debug=frozen-string-literal
+
+## Available Comments
+
+With Ruby 2.3 and higher, the following comments are available:
+
+- `# encoding:` Defaults to `UTF-8` but any supported encoding can be used. For a list of values, launch an IRB session
+  and run `Encoding.name_list`.
+- `# coding:` The shorthand for `# encoding:`. Supports the same values as mentioned above.
+- `# frozen_string_literal:` Defaults to `false` but can take either `true` or `false` as a value. When enabled, Ruby
+  will throw errors when strings are used in a mutable fashion.
+- `# warn_indent:` Defaults to `false` but can take either `true` or `false` as a value. When enabled, and running Ruby
+  with the `-w` option, it'll throw warnings for code that isn't indented by two spaces.
 
 # Tests
 
