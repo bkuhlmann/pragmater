@@ -1,3 +1,12 @@
+# v1.3.0 (2016-06-16)
+
+- Fixed CLI help documentation.
+- Fixed CLI invalid path error message.
+- Added README documentation for available pragma comments.
+- Updated README documentation (minor tweaks and clarifications).
+- Updated to Gemsmith 7.7.0.
+- Updated to Ruby 2.3.1.
+
 # v1.2.0 (2016-04-24)
 
 - Fixed Rubocop Style/RegexpLiteral issues.
