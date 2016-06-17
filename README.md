@@ -47,7 +47,7 @@ to benefit from improved memory and concurrency performance.
 - Supports removing a pragma comment or multiple pragma comments from single or multiple source files.
 - Supports whitelist filtering. Defaults to any file.
 - Ensures duplicate pragma comments never exist.
-- Ensures pragma comments are always properly formatted.
+- Ensures pragma comments are consistently formatted.
 
 # Screencasts
 
@@ -83,10 +83,12 @@ From the command line, type: `pragmater help`
     pragmater -r, [--remove=REMOVE]  # Remove pragma comments from source file(s).
     pragmater -v, [--version]        # Show gem version.
 
-Both the `--add` and `--remove` options provide the ability to supply specific pragma comments and/or whitelisted files:
+Both the `--add` and `--remove` commands support options for specifying pragma comments and/or whitelisted files
+(viewable by running `pragmater --help --add` or `pragmater --help --remove`):
 
     -c, [--comments=one two three]   # Pragma comments
     -w, [--whitelist=one two three]  # File extension whitelist
+
 
 ## Customization
 
@@ -135,7 +137,7 @@ aid of this gem). As an alternative, frozen string literals can be enabled via t
 
     --enable=frozen-string-literal
 
-It is important to note that once enabled, it freezes strings program-wide -- It's an all or nothing option.
+It is important to note that, once enabled, it freezes strings program-wide -- It's an all or nothing option.
 
 Regardless of whether you leverage the capabilities of this gem or the Ruby command line option mentioned above, the
 following Ruby command line option is available to aid debugging and tracking down frozen string literal issues:
