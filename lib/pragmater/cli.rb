@@ -19,7 +19,7 @@ module Pragmater
       @configuration = Configuration.new Identity.file_name
     end
 
-    desc "-a, [--add=ADD]", "Add pragma comments to source file(s)."
+    desc "-a, [--add=PATH]", "Add pragma comments to source file(s)."
     map %w[-a --add] => :add
     method_option :comments, aliases: "-c", desc: "Pragma comments", type: :array, default: []
     method_option :whitelist, aliases: "-w", desc: "File extension whitelist", type: :array, default: []
@@ -28,7 +28,7 @@ module Pragmater
       write path, settings, :add
     end
 
-    desc "-r, [--remove=REMOVE]", "Remove pragma comments from source file(s)."
+    desc "-r, [--remove=PATH]", "Remove pragma comments from source file(s)."
     map %w[-r --remove] => :remove
     method_option :comments, aliases: "-c", desc: "Pragma comments", type: :array, default: []
     method_option :whitelist, aliases: "-w", desc: "File extension whitelist", type: :array, default: []
@@ -51,7 +51,7 @@ module Pragmater
       say Pragmater::Identity.version_label
     end
 
-    desc "-h, [--help=HELP]", "Show this message or get help for a command."
+    desc "-h, [--help=COMMAND]", "Show this message or get help for a command."
     map %w[-h --help] => :help
     def help task = nil
       say and super
