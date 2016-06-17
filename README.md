@@ -77,18 +77,17 @@ For an insecure install, type the following (not recommended):
 
 From the command line, type: `pragmater help`
 
-    pragmater -a, [--add=ADD]        # Add pragma comments to source file(s).
-    pragmater -e, [--edit]           # Edit gem settings in default editor.
-    pragmater -h, [--help=HELP]      # Show this message or get help for a command.
-    pragmater -r, [--remove=REMOVE]  # Remove pragma comments from source file(s).
-    pragmater -v, [--version]        # Show gem version.
+    pragmater -a, [--add=PATH]      # Add pragma comments to source file(s).
+    pragmater -e, [--edit]          # Edit gem settings in default editor.
+    pragmater -h, [--help=COMMAND]  # Show this message or get help for a command.
+    pragmater -r, [--remove=PATH]   # Remove pragma comments from source file(s).
+    pragmater -v, [--version]       # Show gem version.
 
 Both the `--add` and `--remove` commands support options for specifying pragma comments and/or whitelisted files
 (viewable by running `pragmater --help --add` or `pragmater --help --remove`):
 
     -c, [--comments=one two three]   # Pragma comments
     -w, [--whitelist=one two three]  # File extension whitelist
-
 
 ## Customization
 
