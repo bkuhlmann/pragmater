@@ -81,7 +81,7 @@ module Pragmater
       elsif path.directory?
         whitelisted_files(path, whitelist).each { |file_path| update_file file_path, comments, action }
       else
-        error "Invalid path: #{path}."
+        error %(Invalid source path: "#{path}".)
       end
     end
 

@@ -14,7 +14,7 @@ RSpec.describe Pragmater::CLI do
       let(:options) { [corrupt_file_path, "-c", ""] }
 
       it "prints error", :temp_dir do
-        expect(&cli).to output(/error\s+Invalid\spath\:\s#{corrupt_file_path}\./).to_stdout
+        expect(&cli).to output(/error\s+Invalid\ssource\spath\:\s\"#{corrupt_file_path}\"\./).to_stdout
       end
     end
 
