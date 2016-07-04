@@ -1,3 +1,7 @@
+AllCops:
+  Exclude:
+    - "spec/fixtures/**/*"
+    - "vendor/**/*"
 Style/AndOr:
   EnforcedStyle: conditionals
 Style/CaseIndentation:
