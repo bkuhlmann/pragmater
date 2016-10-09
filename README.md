@@ -55,7 +55,7 @@ to benefit from improved memory and concurrency performance.
 
 # Requirements
 
-0. [MRI 2.3.x](https://www.ruby-lang.org)
+0. [Ruby 2.3.x](https://www.ruby-lang.org)
 
 # Setup
 
