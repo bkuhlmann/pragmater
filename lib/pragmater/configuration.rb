@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require "refinements/hash_extensions"
+require "refinements/hashes"
 
 module Pragmater
   # Default gem configuration with support for custom settings.
   class Configuration
-    using Refinements::HashExtensions
+    using Refinements::Hashes
     attr_reader :settings
 
     def self.defaults
