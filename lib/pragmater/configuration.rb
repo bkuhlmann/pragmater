@@ -6,7 +6,6 @@ module Pragmater
   # Default gem configuration with support for custom settings.
   class Configuration
     using Refinements::Hashes
-    attr_reader :settings
 
     def initialize file_name = Identity.file_name, defaults: {}
       @file_name = file_name
@@ -35,14 +34,16 @@ module Pragmater
     end
 
     def merge custom_settings
-      custom_settings[:add].delete_if { |_, value| value.empty? } if custom_settings.key?(:add)
-      custom_settings[:remove].delete_if { |_, value| value.empty? } if custom_settings.key?(:remove)
       settings.deep_merge custom_settings
+    end
+
+    def to_h
+      settings
     end
 
     private
 
-    attr_reader :file_name, :defaults
+    attr_reader :file_name, :defaults, :settings
 
     def load_settings
       yaml = YAML.load_file computed_file_path

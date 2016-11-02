@@ -151,7 +151,7 @@ RSpec.describe Pragmater::Configuration, :temp_dir do
     end
   end
 
-  describe "#settings" do
+  describe "#to_h" do
     let(:global_file) { File.join temp_dir, file_name }
     let(:local_dir) { File.join temp_dir, "local" }
     let(:local_file) { File.join local_dir, file_name }
@@ -162,15 +162,9 @@ RSpec.describe Pragmater::Configuration, :temp_dir do
     context "when using global path" do
       before { File.open(global_file, "w") { |file| file << global_defaults.to_yaml } }
 
-      it "answers global settings" do
-        modified_settings = {
-          remove: {
-            comments: "# encoding: UTF-8"
-          }
-        }
-
+      it "answers global hash" do
         ClimateControl.modify HOME: temp_dir do
-          expect(subject.settings).to eq(modified_settings)
+          expect(subject.to_h).to eq(global_defaults)
         end
       end
     end
@@ -182,16 +176,10 @@ RSpec.describe Pragmater::Configuration, :temp_dir do
         File.open(local_file, "w") { |file| file << local_defaults.to_yaml }
       end
 
-      it "answers local settings" do
-        modified_settings = {
-          add: {
-            comments: "#! /usr/bin/ruby"
-          }
-        }
-
+      it "answers local hash" do
         ClimateControl.modify HOME: temp_dir do
           Dir.chdir local_dir do
-            expect(subject.settings).to eq(modified_settings)
+            expect(subject.to_h).to eq(local_defaults)
           end
         end
       end
@@ -200,18 +188,14 @@ RSpec.describe Pragmater::Configuration, :temp_dir do
     context "when configuration file doesn't exist" do
       it "answers default settings" do
         ClimateControl.modify HOME: temp_dir do
-          expect(subject.settings).to eq({})
+          expect(subject.to_h).to eq({})
         end
       end
     end
 
-    context "when using custom default settings" do
+    context "when using custom defaults" do
       let :defaults do
         {
-          add: {
-            comments: "#! /usr/bin/ruby",
-            whitelist: []
-          },
           remove: {
             comments: "# frozen_string_literal: true",
             whitelist: []
@@ -221,12 +205,8 @@ RSpec.describe Pragmater::Configuration, :temp_dir do
       subject { described_class.new file_name, defaults: defaults }
       before { File.open(global_file, "w") { |file| file << global_defaults.to_yaml } }
 
-      it "answers merged settings with file taking precedence over defaults" do
-        modified_settings = {
-          add: {
-            comments: "#! /usr/bin/ruby",
-            whitelist: []
-          },
+      it "answers merged hash with globals taking precedence over defaults" do
+        modified_hash = {
           remove: {
             comments: "# encoding: UTF-8",
             whitelist: []
@@ -234,7 +214,7 @@ RSpec.describe Pragmater::Configuration, :temp_dir do
         }
 
         ClimateControl.modify HOME: temp_dir do
-          expect(subject.settings).to eq(modified_settings)
+          expect(subject.to_h).to eq(modified_hash)
         end
       end
     end
