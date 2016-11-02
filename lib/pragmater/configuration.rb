@@ -36,7 +36,15 @@ module Pragmater
     end
 
     def computed_file_path
-      File.exist?(local_file_path) ? local_file_path : global_file_path
+      local? ? local_file_path : global_file_path
+    end
+
+    def local?
+      File.exist? local_file_path
+    end
+
+    def global?
+      File.exist? global_file_path
     end
 
     def merge custom_settings
