@@ -8,20 +8,7 @@ module Pragmater
     using Refinements::Hashes
     attr_reader :settings
 
-    def self.defaults
-      {
-        add: {
-          comments: "",
-          whitelist: []
-        },
-        remove: {
-          comments: "",
-          whitelist: []
-        }
-      }
-    end
-
-    def initialize file_name = Identity.file_name, defaults: self.class.defaults
+    def initialize file_name = Identity.file_name, defaults: {}
       @file_name = file_name
       @defaults = defaults
       @settings = defaults.deep_merge load_settings

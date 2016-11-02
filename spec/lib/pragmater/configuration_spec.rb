@@ -80,23 +80,73 @@ RSpec.describe Pragmater::Configuration, :temp_dir do
   end
 
   describe "#merge" do
-    subject { described_class.new }
-
-    it "merges custom settings" do
-      modified_settings = {
-        add: {
-          comments: "",
-          whitelist: [".gemspec"]
-        },
-        remove: {
-          comments: "",
-          whitelist: []
+    context "with default settings" do
+      let :custom_settings do
+        {
+          add: {
+            comments: "encoding: UTF-8",
+            whitelist: [".gemspec"]
+          }
         }
-      }
+      end
+      let :merged_settings do
+        {
+          add: {
+            comments: "encoding: UTF-8",
+            whitelist: [".gemspec"]
+          }
+        }
+      end
+      subject { described_class.new }
 
-      ClimateControl.modify HOME: temp_dir do
-        settings = subject.merge add: {whitelist: [".gemspec"]}
-        expect(settings).to eq(modified_settings)
+      it "merges custom settings" do
+        ClimateControl.modify HOME: temp_dir do
+          expect(subject.merge(custom_settings)).to eq(merged_settings)
+        end
+      end
+    end
+
+    context "with custom settings" do
+      let :default_settings do
+        {
+          add: {
+            comments: "",
+            whitelist: []
+          },
+          remove: {
+            comments: "",
+            whitelist: []
+          }
+        }
+      end
+      let :custom_settings do
+        {
+          add: {
+            whitelist: [".gemspec"]
+          },
+          remove: {
+            comments: "# encoding: UTF-8"
+          }
+        }
+      end
+
+      subject { described_class.new defaults: default_settings }
+
+      it "merges custom settings" do
+        modified_settings = {
+          add: {
+            comments: "",
+            whitelist: [".gemspec"]
+          },
+          remove: {
+            comments: "# encoding: UTF-8",
+            whitelist: []
+          }
+        }
+
+        ClimateControl.modify HOME: temp_dir do
+          expect(subject.merge(custom_settings)).to eq(modified_settings)
+        end
       end
     end
   end
@@ -114,13 +164,8 @@ RSpec.describe Pragmater::Configuration, :temp_dir do
 
       it "answers global settings" do
         modified_settings = {
-          add: {
-            comments: "",
-            whitelist: []
-          },
           remove: {
-            comments: "# encoding: UTF-8",
-            whitelist: []
+            comments: "# encoding: UTF-8"
           }
         }
 
@@ -140,12 +185,7 @@ RSpec.describe Pragmater::Configuration, :temp_dir do
       it "answers local settings" do
         modified_settings = {
           add: {
-            comments: "#! /usr/bin/ruby",
-            whitelist: []
-          },
-          remove: {
-            comments: "",
-            whitelist: []
+            comments: "#! /usr/bin/ruby"
           }
         }
 
@@ -160,7 +200,7 @@ RSpec.describe Pragmater::Configuration, :temp_dir do
     context "when configuration file doesn't exist" do
       it "answers default settings" do
         ClimateControl.modify HOME: temp_dir do
-          expect(subject.settings).to eq(described_class.defaults)
+          expect(subject.settings).to eq({})
         end
       end
     end

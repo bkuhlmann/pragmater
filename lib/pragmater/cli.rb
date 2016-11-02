@@ -16,7 +16,7 @@ module Pragmater
 
     def initialize args = [], options = {}, config = {}
       super args, options, config
-      @configuration = Configuration.new Identity.file_name
+      @configuration = Configuration.new Identity.file_name, defaults: defaults
     end
 
     desc "-a, [--add=PATH]", "Add pragma comments to source file(s)."
@@ -94,6 +94,19 @@ module Pragmater
       whitelist = Array settings.dig(action).dig(:whitelist)
 
       update_files pathname, comments, whitelist, action
+    end
+
+    def defaults
+      {
+        add: {
+          comments: "",
+          whitelist: []
+        },
+        remove: {
+          comments: "",
+          whitelist: []
+        }
+      }
     end
 
     def print_config_info
