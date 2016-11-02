@@ -150,6 +150,18 @@ RSpec.describe Pragmater::CLI do
       end
     end
 
+    shared_examples_for "a config command", :temp_dir do
+      let(:global_configuration_path) { File.join ENV["HOME"], Pragmater::Identity.file_name }
+
+      context "with no options" do
+        it "prints configuration file path" do
+          ClimateControl.modify HOME: temp_dir do
+            expect(&cli).to output(/Local or global gem configuration not defined/).to_stdout
+          end
+        end
+      end
+    end
+
     shared_examples_for "a version command" do
       it "prints version" do
         expect(&cli).to output(/#{Pragmater::Identity.label}\s#{Pragmater::Identity.version}\n/).to_stdout
@@ -190,6 +202,16 @@ RSpec.describe Pragmater::CLI do
     describe "-e" do
       let(:command) { "-e" }
       it_behaves_like "an edit command"
+    end
+
+    describe "--config" do
+      let(:command) { "--config" }
+      it_behaves_like "a config command"
+    end
+
+    describe "-c" do
+      let(:command) { "-c" }
+      it_behaves_like "a config command"
     end
 
     describe "--version" do
