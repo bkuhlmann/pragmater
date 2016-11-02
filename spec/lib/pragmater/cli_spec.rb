@@ -138,18 +138,6 @@ RSpec.describe Pragmater::CLI do
       it_behaves_like "an invalid file"
     end
 
-    shared_examples_for "an edit command" do
-      let(:file_path) { File.join ENV["HOME"], Pragmater::Identity.file_name }
-
-      it "edits resource file", :temp_dir do
-        ClimateControl.modify EDITOR: %(printf "%s\n") do
-          Dir.chdir(temp_dir) do
-            expect(&cli).to output(/info\s+Editing\:\s#{file_path}\.\.\./).to_stdout
-          end
-        end
-      end
-    end
-
     shared_examples_for "a config command", :temp_dir do
       let(:global_configuration_path) { File.join ENV["HOME"], Pragmater::Identity.file_name }
 
@@ -192,16 +180,6 @@ RSpec.describe Pragmater::CLI do
     describe "-r" do
       let(:command) { "-r" }
       it_behaves_like "a remove command"
-    end
-
-    describe "--edit" do
-      let(:command) { "--edit" }
-      it_behaves_like "an edit command"
-    end
-
-    describe "-e" do
-      let(:command) { "-e" }
-      it_behaves_like "an edit command"
     end
 
     describe "--config" do

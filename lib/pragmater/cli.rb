@@ -37,14 +37,6 @@ module Pragmater
       write path, settings, :remove
     end
 
-    desc "-e, [--edit]", "Edit gem settings in default editor."
-    map %w[-e --edit] => :edit
-    def edit
-      resource_file = File.join ENV["HOME"], Pragmater::Identity.file_name
-      info "Editing: #{resource_file}..."
-      `#{editor} #{resource_file}`
-    end
-
     desc "-c, [--config]", "Show/manage gem configuration."
     map %w[-c --config] => :config
     method_option :edit, aliases: "-e", desc: "Edit gem configuration.", type: :boolean, default: false
