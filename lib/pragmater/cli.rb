@@ -38,14 +38,14 @@ module Pragmater
       write path, settings, :remove
     end
 
-    desc "-c, [--config]", "Show/manage gem configuration."
+    desc "-c, [--config]", "Manage gem configuration."
     map %w[-c --config] => :config
     method_option :edit, aliases: "-e", desc: "Edit gem configuration.", type: :boolean, default: false
+    method_option :info, aliases: "-i", desc: "Print gem configuration info.", type: :boolean, default: false
     def config
-      if options[:edit]
-        `#{editor} #{configuration.computed_file_path}`
-      else
-        print_config_info
+      if options.edit? then `#{editor} #{configuration.computed_path}`
+      elsif options.info? then say("Using: #{configuration.computed_path}.")
+      else help(:config)
       end
     end
 
@@ -108,13 +108,6 @@ module Pragmater
           whitelist: []
         }
       }
-    end
-
-    def print_config_info
-      if configuration.local? then say("Using local configuration: #{configuration.computed_file_path}.")
-      elsif configuration.global? then say("Using global configuration: #{configuration.computed_file_path}.")
-      else say("Local or global gem configuration not defined, using defaults instead.")
-      end
     end
   end
 end
