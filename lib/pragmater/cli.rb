@@ -5,6 +5,7 @@ require "pathname"
 require "thor"
 require "thor/actions"
 require "thor_plus/actions"
+require "runcom"
 
 module Pragmater
   # The Command Line Interface (CLI) for the gem.
@@ -16,7 +17,7 @@ module Pragmater
 
     def initialize args = [], options = {}, config = {}
       super args, options, config
-      @configuration = Configuration.new Identity.file_name, defaults: defaults
+      @configuration = ::Runcom::Configuration.new file_name: Identity.file_name, defaults: defaults
     end
 
     desc "-a, [--add=PATH]", "Add pragma comments to source file(s)."
