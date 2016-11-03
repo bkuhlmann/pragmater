@@ -10,7 +10,6 @@ end
 require "pry"
 require "pry-byebug"
 require "pry-state"
-require "climate_control"
 require "pragmater"
 
 Dir[File.join(File.dirname(__FILE__), "support/shared_contexts/**/*.rb")].each { |file| require file }
