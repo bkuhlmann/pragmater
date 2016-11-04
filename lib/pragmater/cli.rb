@@ -15,9 +15,22 @@ module Pragmater
 
     package_name Pragmater::Identity.version_label
 
+    def self.defaults
+      {
+        add: {
+          comments: "",
+          whitelist: []
+        },
+        remove: {
+          comments: "",
+          whitelist: []
+        }
+      }
+    end
+
     def initialize args = [], options = {}, config = {}
       super args, options, config
-      @configuration = ::Runcom::Configuration.new file_name: Identity.file_name, defaults: defaults
+      @configuration = ::Runcom::Configuration.new file_name: Identity.file_name, defaults: self.class.defaults
     end
 
     desc "-a, [--add=PATH]", "Add pragma comments to source file(s)."
@@ -95,19 +108,6 @@ module Pragmater
       whitelist = Array settings.dig(action).dig(:whitelist)
 
       update_files pathname, comments, whitelist, action
-    end
-
-    def defaults
-      {
-        add: {
-          comments: "",
-          whitelist: []
-        },
-        remove: {
-          comments: "",
-          whitelist: []
-        }
-      }
     end
   end
 end
