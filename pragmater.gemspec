@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = "~> 2.3"
   spec.add_dependency "thor", "~> 0.19"
   spec.add_dependency "thor_plus", "~> 4.0"
-  spec.add_dependency "runcom", "~> 0.1"
+  spec.add_dependency "runcom", "~> 0.2"
   spec.add_development_dependency "rake", "~> 11.0"
   # spec.add_development_dependency "gemsmith", "~> 7.7"
   spec.add_development_dependency "pry", "~> 0.10"

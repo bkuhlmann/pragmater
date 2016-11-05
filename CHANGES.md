@@ -1,3 +1,35 @@
+# v2.0.0 (2016-11-05)
+
+- Fixed Rakefile to safely load Gemsmith tasks.
+- Added CLI `--config` option.
+- Added Runcom gem.
+- Added `--config` `--info` option.
+- Added ability to question configuration for global and local file usage.
+- Added frozen string literal pragma.
+- Updated README to mention "Ruby" instead of "MRI".
+- Updated README versioning documentation.
+- Updated RSpec temp directory to use Bundler root path.
+- Updated Rubocop configuration to exclude fixtures.
+- Updated gemspec with conservative versions.
+- Updated to RSpec 3.5.0.
+- Updated to Refinements 3.0.0.
+- Updated to Rubocop 0.44.
+- Updated to Thor+ 4.0.0.
+- Removed CHANGELOG.md (use CHANGES.md instead).
+- Removed CLI `--edit` option.
+- Removed Climate Control gem.
+- Removed Rake console task.
+- Removed Refinements gem.
+- Removed `Pragmater::Configuration`.
+- Removed gemspec description.
+- Removed rb-fsevent development dependency from gemspec.
+- Removed terminal notifier gems from gemspec.
+- Refactored CLI defaults as a class method.
+- Refactored RSpec spec helper configuration.
+- Refactored `Configuration` to answer hash.
+- Refactored default configuration settings to CLI.
+- Refactored gemspec to use default security keys.
+
 # v1.3.0 (2016-06-16)
 
 - Fixed CLI help documentation.
