@@ -5,11 +5,11 @@ require "spec_helper"
 RSpec.describe Pragmater::Formatter do
   describe ".shebang_format" do
     it "matches formatted comment" do
-      expect(described_class.shebang_format).to match("#! /usr/bin/ruby")
+      expect(described_class.shebang_format).to match("#! /usr/bin/env ruby")
     end
 
     it "matches unformatted comment" do
-      expect(described_class.shebang_format).to match("#!/usr/bin/ruby")
+      expect(described_class.shebang_format).to match("#!/usr/bin/env ruby")
     end
 
     it "matches minimal path" do
@@ -17,7 +17,7 @@ RSpec.describe Pragmater::Formatter do
     end
 
     it "does not match when space exists between comment and bang symbol" do
-      expect(described_class.shebang_format).to_not match("# ! /usr/bin/ruby")
+      expect(described_class.shebang_format).to_not match("# ! /usr/bin/env ruby")
     end
 
     it "does not match normal comments" do
@@ -57,7 +57,7 @@ RSpec.describe Pragmater::Formatter do
 
   describe ".valid_formats" do
     it "match shebang format" do
-      expect(described_class.valid_formats).to match("#! /usr/bin/ruby")
+      expect(described_class.valid_formats).to match("#! /usr/bin/env ruby")
     end
 
     it "match frozen string literal format" do
@@ -73,18 +73,18 @@ RSpec.describe Pragmater::Formatter do
     subject { described_class.new string }
 
     context "with formatted shebang" do
-      let(:string) { "#! /usr/bin/ruby" }
+      let(:string) { "#! /usr/bin/env ruby" }
 
       it "answers formatted shebang" do
-        expect(subject.format_shebang).to eq("#! /usr/bin/ruby")
+        expect(subject.format_shebang).to eq("#! /usr/bin/env ruby")
       end
     end
 
     context "with unformatted shebang" do
-      let(:string) { "#!/usr/bin/ruby" }
+      let(:string) { "#!/usr/bin/env ruby" }
 
       it "answers formatted shebang" do
-        expect(subject.format_shebang).to eq("#! /usr/bin/ruby")
+        expect(subject.format_shebang).to eq("#! /usr/bin/env ruby")
       end
     end
 
@@ -129,10 +129,10 @@ RSpec.describe Pragmater::Formatter do
     subject { described_class.new string }
 
     context "when shebang" do
-      let(:string) { "#! /usr/bin/ruby" }
+      let(:string) { "#! /usr/bin/env ruby" }
 
       it "answers shebang" do
-        expect(subject.format).to eq("#! /usr/bin/ruby")
+        expect(subject.format).to eq("#! /usr/bin/env ruby")
       end
     end
 

@@ -11,7 +11,7 @@ A command line interface for managing/formatting source file
 [directive pragma](https://en.wikipedia.org/wiki/Directive_(programming)) comments
 (a.k.a. *magic comments*). Examples:
 
-    #! /usr/bin/ruby
+    #! /usr/bin/env ruby
     # frozen_string_literal: true
     # encoding: UTF-8
 
