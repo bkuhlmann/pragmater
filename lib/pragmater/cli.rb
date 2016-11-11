@@ -15,8 +15,8 @@ module Pragmater
 
     package_name Pragmater::Identity.version_label
 
-    def self.defaults
-      {
+    def self.configuration
+      Runcom::Configuration.new file_name: Identity.file_name, defaults: {
         add: {
           comments: "",
           whitelist: []
@@ -30,7 +30,6 @@ module Pragmater
 
     def initialize args = [], options = {}, config = {}
       super args, options, config
-      @configuration = ::Runcom::Configuration.new file_name: Identity.file_name, defaults: self.class.defaults
     end
 
     desc "-a, [--add=PATH]", "Add pragma comments to source file(s)."
@@ -38,7 +37,7 @@ module Pragmater
     method_option :comments, aliases: "-c", desc: "Pragma comments", type: :array, default: []
     method_option :whitelist, aliases: "-w", desc: "File extension whitelist", type: :array, default: []
     def add path
-      settings = configuration.merge add: {comments: options[:comments], whitelist: options[:whitelist]}
+      settings = self.class.configuration.merge add: {comments: options[:comments], whitelist: options[:whitelist]}
       write path, settings, :add
     end
 
@@ -47,7 +46,7 @@ module Pragmater
     method_option :comments, aliases: "-c", desc: "Pragma comments", type: :array, default: []
     method_option :whitelist, aliases: "-w", desc: "File extension whitelist", type: :array, default: []
     def remove path
-      settings = configuration.merge remove: {comments: options[:comments], whitelist: options[:whitelist]}
+      settings = self.class.configuration.merge remove: {comments: options[:comments], whitelist: options[:whitelist]}
       write path, settings, :remove
     end
 
@@ -56,8 +55,10 @@ module Pragmater
     method_option :edit, aliases: "-e", desc: "Edit gem configuration.", type: :boolean, default: false
     method_option :info, aliases: "-i", desc: "Print gem configuration info.", type: :boolean, default: false
     def config
-      if options.edit? then `#{editor} #{configuration.computed_path}`
-      elsif options.info? then say("Using: #{configuration.computed_path}.")
+      path = self.class.configuration.computed_path
+
+      if options.edit? then `#{editor} #{path}`
+      elsif options.info? then say("Using: #{path}.")
       else help(:config)
       end
     end
@@ -75,8 +76,6 @@ module Pragmater
     end
 
     private
-
-    attr_reader :configuration
 
     def whitelisted_files path, whitelist
       file_filter = whitelist.empty? ? %(#{path}/**/*) : %(#{path}/**/*{#{whitelist.join ","}})

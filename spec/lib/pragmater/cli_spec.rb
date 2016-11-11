@@ -7,7 +7,12 @@ RSpec.describe Pragmater::CLI do
   describe ".start" do
     let(:options) { [] }
     let(:command_line) { Array(command).concat options }
-    let(:cli) { -> { described_class.start command_line } }
+    let :cli do
+      lambda do
+        load "pragmater/cli.rb" # Ensures clean Thor `.method_option` evaluation per spec.
+        described_class.start command_line
+      end
+    end
 
     shared_examples_for "an invalid file" do
       let(:corrupt_file_path) { File.join Dir.pwd, "spec", "fixtures", "corrupt.file" }
