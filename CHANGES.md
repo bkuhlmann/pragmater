@@ -1,3 +1,7 @@
+# v2.1.1 (2016-11-13)
+
+- Fixed gem requirements order.
+
 # v2.1.0 (2016-11-13)
 
 - Fixed Ruby pragma.
