@@ -1,10 +1,10 @@
 PATH
   remote: .
   specs:
-    pragmater (2.0.0)
-      runcom (~> 0.2)
+    pragmater (2.1.0)
+      runcom (~> 0.3)
       thor (~> 0.19)
-      thor_plus (~> 4.0)
+      thor_plus (~> 4.1)
 
 GEM
   remote: https://rubygems.org/
@@ -94,7 +94,7 @@ GEM
       codeclimate-engine-rb (~> 0.4.0)
       parser (~> 2.3.1, >= 2.3.1.2)
       rainbow (~> 2.0)
-    refinements (3.0.0)
+    refinements (3.1.0)
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
@@ -116,8 +116,8 @@ GEM
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.8.1)
     ruby_dep (1.5.0)
-    runcom (0.2.0)
-      refinements (~> 3.0)
+    runcom (0.3.0)
+      refinements (~> 3.1)
     shellany (0.0.1)
     simplecov (0.12.0)
       docile (~> 1.1.0)
@@ -126,7 +126,7 @@ GEM
     simplecov-html (0.10.0)
     slop (3.6.0)
     thor (0.19.1)
-    thor_plus (4.0.0)
+    thor_plus (4.1.0)
       thor (~> 0.19)
     thread_safe (0.3.5)
     tocer (3.0.0)
@@ -135,7 +135,7 @@ GEM
       thor (~> 0.19)
       thor_plus (~> 4.0)
     unicode-display_width (1.1.1)
-    versionaire (2.0.0)
+    versionaire (2.1.0)
     virtus (1.0.5)
       axiom-types (~> 0.1)
       coercible (~> 1.0)

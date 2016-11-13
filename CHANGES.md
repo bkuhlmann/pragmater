@@ -1,3 +1,14 @@
+# v2.1.0 (2016-11-13)
+
+- Fixed Ruby pragma.
+- Added Code Climate engine support.
+- Added Reek support.
+- Updated `--config` command to use computed path.
+- Updated to Code Climate Test Reporter 1.0.0.
+- Updated to Gemsmith 8.0.0.
+- Removed CLI defaults (using configuration instead).
+- Refactored source requirements.
+
 # v2.0.0 (2016-11-05)
 
 - Fixed Rakefile to safely load Gemsmith tasks.
