@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "spec_helper"
-require "pragmater/cli"
 
 RSpec.describe Pragmater::CLI do
   describe ".start" do
