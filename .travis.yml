@@ -2,9 +2,6 @@ language: ruby
 env:
   global:
   - secure: q0Iz2A3al4RG1ONh+HWOUy6e8Fm21LlUjlAQw4UxqiLgA3V8IjulW85LgoGCJBuuyb1aBpJuawBk7Vc3n048icZ2O8epHw/l803DOqOovwEiDY+5/AepPK4yX3FmZy95pxLsUyxutcqvHTfROXD4C7TKLefpI68b8mTXVDxnHrbPe5xClBwZL8Cz2YCNM8etnCrr0Oe38PjHh63jw4SdVUWMWsj0BJL6tSJ86eagae2HoTKG/3YwBCPWsxEYm1VxOiB+644iVWNqYVQK70CtCGvn8t2ix6aV7H04fxWU+weNkzBiX+Hcos6+VYaVZFYrfgOWjd+5kkCrWSDU/EuwJuwNkWWRMW51myTSwvltQZcZ0TSUNT2UZj7vloPEk7I5dOhM8jTirVyUwm/76xq7i9FbNYfdoS2noExVeON0+olztwiN518sjhjbApnDJa94ESIbeF25Q/dQ4+IfeV9Jy5q8AfgPYzhRkrP9QHWZikkJl8BZIIxPRSNJfQf6aDT8MgS2HGmbzzr3o36ZN+6R5IZEvBJRxMrW153OPTSaj0wnFiOGM/dw/8jq+sRxCrsfiikxhXosOv/tzAnPXlQ1XpaL4C/o3O5B0vMAwEMS5SDXWwTC6KE9/m7eY4HLUUAHpQOxERVCeWpy/SpNHOI3niV6AihnQuZr+pb93RvH3rI=
-rvm:
-- 2.3.0
-script: bundle exec rake
 after_script: bundle exec codeclimate-test-reporter
 notifications:
   email: false
