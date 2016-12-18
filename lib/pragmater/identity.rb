@@ -12,7 +12,7 @@ module Pragmater
     end
 
     def self.version
-      "2.1.1"
+      "2.2.0"
     end
 
     def self.version_label
