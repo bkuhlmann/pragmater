@@ -29,14 +29,14 @@ module Pragmater
     end
 
     def format_shebang
-      return string unless string =~ self.class.shebang_format
+      return string unless string.match?(self.class.shebang_format)
 
       _, path = string.split "!"
       "#! #{path.strip}"
     end
 
     def format_pragma
-      return string unless string =~ self.class.pragma_format
+      return string unless string.match?(self.class.pragma_format)
 
       key, value = string.split ":"
       "# #{key.gsub(/\#\s?/, "")}: #{value.strip}"
