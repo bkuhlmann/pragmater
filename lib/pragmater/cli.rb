@@ -96,6 +96,7 @@ module Pragmater
       error "#{formatted_message}: #{path}."
     end
 
+    # rubocop:disable Metrics/ParameterLists
     def update_files path, comments, whitelist, action
       if path.file?
         update_file path, comments, action

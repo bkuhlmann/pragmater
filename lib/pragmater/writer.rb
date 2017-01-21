@@ -3,6 +3,7 @@
 module Pragmater
   # Writes formatted pragma comments to source file.
   class Writer
+    # rubocop:disable Metrics/ParameterLists
     def initialize file_path, new_comments, formatter: Formatter, commenter: Commenter
       @file_path = file_path
       @file_lines = File.open(file_path).to_a
