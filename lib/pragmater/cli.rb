@@ -8,6 +8,7 @@ require "runcom"
 
 module Pragmater
   # The Command Line Interface (CLI) for the gem.
+  # rubocop:disable Metrics/ClassLength
   class CLI < Thor
     include Thor::Actions
     include ThorPlus::Actions
@@ -33,19 +34,43 @@ module Pragmater
 
     desc "-a, [--add=PATH]", "Add pragma comments to source file(s)."
     map %w[-a --add] => :add
-    method_option :comments, aliases: "-c", desc: "Pragma comments", type: :array, default: []
-    method_option :whitelist, aliases: "-w", desc: "File extension whitelist", type: :array, default: []
+    method_option :comments,
+                  aliases: "-c",
+                  desc: "Pragma comments",
+                  type: :array,
+                  default: []
+    method_option :whitelist,
+                  aliases: "-w",
+                  desc: "File extension whitelist",
+                  type: :array,
+                  default: []
     def add path
-      settings = self.class.configuration.merge add: {comments: options[:comments], whitelist: options[:whitelist]}
+      settings = self.class.configuration.merge add: {
+        comments: options[:comments],
+        whitelist: options[:whitelist]
+      }
+
       write path, settings, :add
     end
 
     desc "-r, [--remove=PATH]", "Remove pragma comments from source file(s)."
     map %w[-r --remove] => :remove
-    method_option :comments, aliases: "-c", desc: "Pragma comments", type: :array, default: []
-    method_option :whitelist, aliases: "-w", desc: "File extension whitelist", type: :array, default: []
+    method_option :comments,
+                  aliases: "-c",
+                  desc: "Pragma comments",
+                  type: :array,
+                  default: []
+    method_option :whitelist,
+                  aliases: "-w",
+                  desc: "File extension whitelist",
+                  type: :array,
+                  default: []
     def remove path
-      settings = self.class.configuration.merge remove: {comments: options[:comments], whitelist: options[:whitelist]}
+      settings = self.class.configuration.merge remove: {
+        comments: options[:comments],
+        whitelist: options[:whitelist]
+      }
+
       write path, settings, :remove
     end
 
@@ -101,7 +126,9 @@ module Pragmater
       if path.file?
         update_file path, comments, action
       elsif path.directory?
-        whitelisted_files(path, whitelist).each { |file_path| update_file file_path, comments, action }
+        whitelisted_files(path, whitelist).each do |file_path|
+          update_file file_path, comments, action
+        end
       else
         error %(Invalid source path: "#{path}".)
       end

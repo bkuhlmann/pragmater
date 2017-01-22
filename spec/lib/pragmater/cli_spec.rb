@@ -18,7 +18,8 @@ RSpec.describe Pragmater::CLI do
       let(:options) { [corrupt_file_path, "-c", ""] }
 
       it "prints error", :temp_dir do
-        expect(&cli).to output(/error\s+Invalid\ssource\spath\:\s\"#{corrupt_file_path}\"\./).to_stdout
+        pattern = /error\s+Invalid\ssource\spath\:\s\"#{corrupt_file_path}\"\./
+        expect(&cli).to output(pattern).to_stdout
       end
     end
 
@@ -37,7 +38,10 @@ RSpec.describe Pragmater::CLI do
 
         it "adds pragma comment to ruby file" do
           cli.call
-          expect(File.open(ruby_file, "r").to_a).to contain_exactly("# frozen_string_literal: true\n")
+
+          expect(File.open(ruby_file, "r").to_a).to contain_exactly(
+            "# frozen_string_literal: true\n"
+          )
         end
 
         it "prints that file was updated" do
@@ -51,8 +55,14 @@ RSpec.describe Pragmater::CLI do
         it "adds pragma comment to selected files", :aggregate_failures do
           cli.call
 
-          expect(File.open(ruby_file, "r").to_a).to contain_exactly("# frozen_string_literal: true\n")
-          expect(File.open(rake_file, "r").to_a).to contain_exactly("# frozen_string_literal: true\n")
+          expect(File.open(ruby_file, "r").to_a).to contain_exactly(
+            "# frozen_string_literal: true\n"
+          )
+
+          expect(File.open(rake_file, "r").to_a).to contain_exactly(
+            "# frozen_string_literal: true\n"
+          )
+
           expect(File.open(text_file, "r").to_a).to be_empty
         end
 
@@ -68,7 +78,10 @@ RSpec.describe Pragmater::CLI do
         it "adds pragma comment to selected files", :aggregate_failures do
           cli.call
 
-          expect(File.open(ruby_file, "r").to_a).to contain_exactly("# frozen_string_literal: true\n")
+          expect(File.open(ruby_file, "r").to_a).to contain_exactly(
+            "# frozen_string_literal: true\n"
+          )
+
           expect(File.open(rake_file, "r").to_a).to be_empty
           expect(File.open(text_file, "r").to_a).to be_empty
         end
@@ -114,7 +127,10 @@ RSpec.describe Pragmater::CLI do
 
           expect(File.open(ruby_file, "r").to_a).to be_empty
           expect(File.open(rake_file, "r").to_a).to be_empty
-          expect(File.open(text_file, "r").to_a).to contain_exactly("# frozen_string_literal: true\n")
+
+          expect(File.open(text_file, "r").to_a).to contain_exactly(
+            "# frozen_string_literal: true\n"
+          )
         end
 
         it "prints selected files were updated" do
@@ -130,8 +146,14 @@ RSpec.describe Pragmater::CLI do
           cli.call
 
           expect(File.open(ruby_file, "r").to_a).to be_empty
-          expect(File.open(rake_file, "r").to_a).to contain_exactly("# frozen_string_literal: true\n")
-          expect(File.open(text_file, "r").to_a).to contain_exactly("# frozen_string_literal: true\n")
+
+          expect(File.open(rake_file, "r").to_a).to contain_exactly(
+            "# frozen_string_literal: true\n"
+          )
+
+          expect(File.open(text_file, "r").to_a).to contain_exactly(
+            "# frozen_string_literal: true\n"
+          )
         end
 
         it "prints selected files were updated" do
@@ -165,13 +187,15 @@ RSpec.describe Pragmater::CLI do
 
     shared_examples_for "a version command" do
       it "prints version" do
-        expect(&cli).to output(/#{Pragmater::Identity.label}\s#{Pragmater::Identity.version}\n/).to_stdout
+        pattern = /#{Pragmater::Identity.label}\s#{Pragmater::Identity.version}\n/
+        expect(&cli).to output(pattern).to_stdout
       end
     end
 
     shared_examples_for "a help command" do
       it "prints usage" do
-        expect(&cli).to output(/#{Pragmater::Identity.label}\s#{Pragmater::Identity.version}\scommands:\n/).to_stdout
+        pattern = /#{Pragmater::Identity.label}\s#{Pragmater::Identity.version}\scommands:\n/
+        expect(&cli).to output(pattern).to_stdout
       end
     end
 

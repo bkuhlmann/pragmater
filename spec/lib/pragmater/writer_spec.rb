@@ -24,7 +24,10 @@ RSpec.describe Pragmater::Writer, :temp_dir do
     end
 
     context "when file has comments and spacing" do
-      let(:fixture_file_path) { File.join Dir.pwd, "spec", "fixtures", "with_comments_and_spacing.rb" }
+      let :fixture_file_path do
+        File.join Dir.pwd, "spec", "fixtures", "with_comments_and_spacing.rb"
+      end
+
       let(:comments) { "# frozen_string_literal: true" }
 
       it "formats and adds comments with no extra spacing to top of file" do
@@ -44,7 +47,10 @@ RSpec.describe Pragmater::Writer, :temp_dir do
 
       it "adds formatted comments to top of file" do
         subject.add
-        expect(File.open(test_file_path, "r").to_a).to contain_exactly("# frozen_string_literal: true\n")
+
+        expect(File.open(test_file_path, "r").to_a).to contain_exactly(
+          "# frozen_string_literal: true\n"
+        )
       end
     end
 
@@ -75,7 +81,10 @@ RSpec.describe Pragmater::Writer, :temp_dir do
     end
 
     context "when file has comments and spacing" do
-      let(:fixture_file_path) { File.join Dir.pwd, "spec", "fixtures", "with_comments_and_spacing.rb" }
+      let :fixture_file_path do
+        File.join Dir.pwd, "spec", "fixtures", "with_comments_and_spacing.rb"
+      end
+
       let(:comments) { "#! /usr/bin/env ruby" }
 
       it "formats, removes comments, and removes trailing space" do
