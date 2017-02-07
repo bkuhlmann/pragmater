@@ -6,7 +6,7 @@ module Pragmater
     # rubocop:disable Metrics/ParameterLists
     def initialize file_path, new_comments, formatter: Formatter, commenter: Commenter
       @file_path = file_path
-      @file_lines = File.open(file_path).to_a
+      @file_lines = File.open(file_path, &:to_a)
       @formatter = formatter
       @commenter = commenter
       @old_comments = file_comments

@@ -39,9 +39,9 @@ RSpec.describe Pragmater::CLI do
         it "adds pragma comment to ruby file" do
           cli.call
 
-          expect(File.open(ruby_file, "r").to_a).to contain_exactly(
-            "# frozen_string_literal: true\n"
-          )
+          File.open ruby_file, "r" do |file|
+            expect(file.to_a).to contain_exactly("# frozen_string_literal: true\n")
+          end
         end
 
         it "prints that file was updated" do
@@ -55,15 +55,15 @@ RSpec.describe Pragmater::CLI do
         it "adds pragma comment to selected files", :aggregate_failures do
           cli.call
 
-          expect(File.open(ruby_file, "r").to_a).to contain_exactly(
-            "# frozen_string_literal: true\n"
-          )
+          File.open ruby_file, "r" do |file|
+            expect(file.to_a).to contain_exactly("# frozen_string_literal: true\n")
+          end
 
-          expect(File.open(rake_file, "r").to_a).to contain_exactly(
-            "# frozen_string_literal: true\n"
-          )
+          File.open rake_file, "r" do |file|
+            expect(file.to_a).to contain_exactly("# frozen_string_literal: true\n")
+          end
 
-          expect(File.open(text_file, "r").to_a).to be_empty
+          File.open(text_file, "r") { |file| expect(file.to_a).to be_empty }
         end
 
         it "prints selected files were updated" do
@@ -78,12 +78,12 @@ RSpec.describe Pragmater::CLI do
         it "adds pragma comment to selected files", :aggregate_failures do
           cli.call
 
-          expect(File.open(ruby_file, "r").to_a).to contain_exactly(
-            "# frozen_string_literal: true\n"
-          )
+          File.open ruby_file, "r" do |file|
+            expect(file.to_a).to contain_exactly("# frozen_string_literal: true\n")
+          end
 
-          expect(File.open(rake_file, "r").to_a).to be_empty
-          expect(File.open(text_file, "r").to_a).to be_empty
+          File.open(rake_file, "r") { |file| expect(file.to_a).to be_empty }
+          File.open(text_file, "r") { |file| expect(file.to_a).to be_empty }
         end
 
         it "prints selected files were updated" do
@@ -111,7 +111,7 @@ RSpec.describe Pragmater::CLI do
 
         it "adds pragma comment to ruby file" do
           cli.call
-          expect(File.open(ruby_file, "r").to_a).to be_empty
+          File.open(ruby_file, "r") { |file| expect(file.to_a).to be_empty }
         end
 
         it "prints that file was updated" do
@@ -125,12 +125,11 @@ RSpec.describe Pragmater::CLI do
         it "adds pragma comment to selected files", :aggregate_failures do
           cli.call
 
-          expect(File.open(ruby_file, "r").to_a).to be_empty
-          expect(File.open(rake_file, "r").to_a).to be_empty
-
-          expect(File.open(text_file, "r").to_a).to contain_exactly(
-            "# frozen_string_literal: true\n"
-          )
+          File.open(ruby_file, "r") { |file| expect(file.to_a).to be_empty }
+          File.open(rake_file, "r") { |file| expect(file.to_a).to be_empty }
+          File.open text_file, "r" do |file|
+            expect(file.to_a).to contain_exactly("# frozen_string_literal: true\n")
+          end
         end
 
         it "prints selected files were updated" do
@@ -145,15 +144,15 @@ RSpec.describe Pragmater::CLI do
         it "adds pragma comment to selected files", :aggregate_failures do
           cli.call
 
-          expect(File.open(ruby_file, "r").to_a).to be_empty
+          File.open(ruby_file, "r") { |file| expect(file.to_a).to be_empty }
 
-          expect(File.open(rake_file, "r").to_a).to contain_exactly(
-            "# frozen_string_literal: true\n"
-          )
+          File.open rake_file, "r" do |file|
+            expect(file.to_a).to contain_exactly("# frozen_string_literal: true\n")
+          end
 
-          expect(File.open(text_file, "r").to_a).to contain_exactly(
-            "# frozen_string_literal: true\n"
-          )
+          File.open text_file, "r" do |file|
+            expect(file.to_a).to contain_exactly("# frozen_string_literal: true\n")
+          end
         end
 
         it "prints selected files were updated" do

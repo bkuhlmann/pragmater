@@ -14,12 +14,15 @@ RSpec.describe Pragmater::Writer, :temp_dir do
 
       it "formats, adds comments, and spacing to top of file" do
         subject.add
-        expect(File.open(test_file_path, "r").to_a.join).to eq(
-          "#! /usr/bin/env ruby\n" \
-          "# frozen_string_literal: true\n" \
-          "\n" \
-          "puts RUBY_VERSION\n"
-        )
+
+        File.open test_file_path, "r" do |file|
+          expect(file.to_a.join).to eq(
+            "#! /usr/bin/env ruby\n" \
+            "# frozen_string_literal: true\n" \
+            "\n" \
+            "puts RUBY_VERSION\n"
+          )
+        end
       end
     end
 
@@ -32,12 +35,15 @@ RSpec.describe Pragmater::Writer, :temp_dir do
 
       it "formats and adds comments with no extra spacing to top of file" do
         subject.add
-        expect(File.open(test_file_path, "r").to_a.join).to eq(
-          "#! /usr/bin/env ruby\n" \
-          "# frozen_string_literal: true\n" \
-          "\n" \
-          "puts RUBY_VERSION\n"
-        )
+
+        File.open test_file_path, "r" do |file|
+          expect(file.to_a.join).to eq(
+            "#! /usr/bin/env ruby\n" \
+            "# frozen_string_literal: true\n" \
+            "\n" \
+            "puts RUBY_VERSION\n"
+          )
+        end
       end
     end
 
@@ -48,9 +54,9 @@ RSpec.describe Pragmater::Writer, :temp_dir do
       it "adds formatted comments to top of file" do
         subject.add
 
-        expect(File.open(test_file_path, "r").to_a).to contain_exactly(
-          "# frozen_string_literal: true\n"
-        )
+        File.open test_file_path, "r" do |file|
+          expect(file.to_a).to contain_exactly("# frozen_string_literal: true\n")
+        end
       end
     end
 
@@ -60,11 +66,14 @@ RSpec.describe Pragmater::Writer, :temp_dir do
 
       it "does not add duplicates" do
         subject.add
-        expect(File.open(test_file_path, "r").to_a.join).to eq(
-          "#! /usr/bin/env ruby\n" \
-          "\n" \
-          "puts RUBY_VERSION\n"
-        )
+
+        File.open test_file_path, "r" do |file|
+          expect(file.to_a.join).to eq(
+            "#! /usr/bin/env ruby\n" \
+            "\n" \
+            "puts RUBY_VERSION\n"
+          )
+        end
       end
     end
   end
@@ -76,7 +85,10 @@ RSpec.describe Pragmater::Writer, :temp_dir do
 
       it "formats and removes comments" do
         subject.remove
-        expect(File.open(test_file_path, "r").to_a.join).to eq("puts RUBY_VERSION\n")
+
+        File.open test_file_path, "r" do |file|
+          expect(file.to_a.join).to eq("puts RUBY_VERSION\n")
+        end
       end
     end
 
@@ -89,7 +101,10 @@ RSpec.describe Pragmater::Writer, :temp_dir do
 
       it "formats, removes comments, and removes trailing space" do
         subject.remove
-        expect(File.open(test_file_path, "r").to_a.join).to eq("puts RUBY_VERSION\n")
+
+        File.open test_file_path, "r" do |file|
+          expect(file.to_a.join).to eq("puts RUBY_VERSION\n")
+        end
       end
     end
 
@@ -99,7 +114,7 @@ RSpec.describe Pragmater::Writer, :temp_dir do
 
       it "does nothing" do
         subject.remove
-        expect(File.open(test_file_path, "r").to_a).to be_empty
+        File.open(test_file_path, "r") { |file| expect(file.to_a).to be_empty }
       end
     end
   end
