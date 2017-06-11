@@ -4,7 +4,7 @@
 [![Code Climate GPA](https://codeclimate.com/github/bkuhlmann/pragmater.svg)](https://codeclimate.com/github/bkuhlmann/pragmater)
 [![Code Climate Coverage](https://codeclimate.com/github/bkuhlmann/pragmater/coverage.svg)](https://codeclimate.com/github/bkuhlmann/pragmater)
 [![Gemnasium Status](https://gemnasium.com/bkuhlmann/pragmater.svg)](https://gemnasium.com/bkuhlmann/pragmater)
-[![Travis CI Status](https://secure.travis-ci.org/bkuhlmann/pragmater.svg)](https://travis-ci.org/bkuhlmann/pragmater)
+[![Circle CI Status](https://circleci.com/gh/bkuhlmann/pragmater.svg?style=svg)](https://circleci.com/gh/bkuhlmann/pragmater)
 [![Patreon](https://img.shields.io/badge/patreon-donate-brightgreen.svg)](https://www.patreon.com/bkuhlmann)
 
 A command line interface for managing/formatting source file
