@@ -18,9 +18,5 @@ module Pragmater
     def self.version_label
       "#{label} #{version}"
     end
-
-    def self.file_name
-      ".#{name}rc"
-    end
   end
 end

@@ -16,7 +16,7 @@ module Pragmater
     package_name Identity.version_label
 
     def self.configuration
-      Runcom::Configuration.new file_name: Identity.file_name, defaults: {
+      Runcom::Configuration.new project_name: Identity.name, defaults: {
         add: {
           comments: "",
           whitelist: []
@@ -74,7 +74,7 @@ module Pragmater
       write path, settings, :remove
     end
 
-    desc "-c, [--config]", %(Manage gem configuration ("#{configuration.computed_path}").)
+    desc "-c, [--config]", "Manage gem configuration."
     map %w[-c --config] => :config
     method_option :edit,
                   aliases: "-e",
@@ -85,10 +85,11 @@ module Pragmater
                   desc: "Print gem configuration.",
                   type: :boolean, default: false
     def config
-      path = self.class.configuration.computed_path
+      path = self.class.configuration.path
 
       if options.edit? then `#{editor} #{path}`
-      elsif options.info? then say(path)
+      elsif options.info?
+        path ? say(path) : say("Configuration doesn't exist.")
       else help(:config)
       end
     end
