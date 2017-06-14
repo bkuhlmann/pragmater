@@ -93,25 +93,14 @@ whitelisted files (viewable by running `pragmater --help --add` or `pragmater --
 
 ## Customization
 
-Should the default settings not be desired, customization is allowed via the `.pragmaterrc` file.
-The `.pragmaterrc` can be created at a global and/or local level. Example:
+This gem can be configured via a global configuration:
 
-- Global: `~/.pragmaterrc`
-- Local: `<project repository root>/.pragmaterrc`
+    ~/.config/pragmater/configuration.yml
 
-Order of precedence for any setting is resolved as follows (with the last taking top priority):
+It can also be configured via [XDG environment variables](https://github.com/bkuhlmann/runcom#xdg)
+as provided by the [Runcom](https://github.com/bkuhlmann/runcom) gem.
 
-0. Global `~/.pragmaterrc`.
-0. Local project repository `.pragmaterrc`.
-0. CLI option (i.e. `--add` or `--remove` command options).
-
-Any setting provided to the CLI during runtime would trump a local/global setting and a local
-setting would trump a global setting. The global setting is the weakest of all but great for
-situations where custom settings should be applied to *all* projects. It is important to note that
-local settings completely trump any global settings -- there is no inheritance when local *and*
-global settings exist at the same time.
-
-The `.pragmaterrc` uses the following default settings:
+The default configuration is as follows:
 
     :add:
       :comments: []
@@ -120,7 +109,10 @@ The `.pragmaterrc` uses the following default settings:
       :comments: []
       :whitelist: []
 
-Each `.pragmaterrc` setting can be configured as follows:
+Feel free to take this default configuration, modify, and save as your own custom
+`configuration.yml`.
+
+The `configuration.yml` file can be configured as follows:
 
 - `add`: Defines global/local comments and/or whitelists when adding pragma comments. The `comments`
   and `whitelist` options can be either a single string or an array of values.
