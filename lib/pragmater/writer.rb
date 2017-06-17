@@ -43,10 +43,13 @@ module Pragmater
     end
 
     def insert_spacing! lines, comments
+      comment_count = comments.size
+
       return if comments.empty?
       return if lines.size == 1
-      return if lines[comments.size] == "\n"
-      lines.insert comments.size, "\n"
+      return if lines[comment_count] == "\n"
+
+      lines.insert comment_count, "\n"
     end
 
     def remove_spacing! lines

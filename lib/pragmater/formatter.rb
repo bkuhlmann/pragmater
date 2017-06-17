@@ -43,9 +43,11 @@ module Pragmater
     end
 
     def format
+      klass = self.class
+
       case string
-        when self.class.shebang_format then format_shebang
-        when self.class.pragma_format then format_pragma
+        when klass.shebang_format then format_shebang
+        when klass.pragma_format then format_pragma
         else string
       end
     end
