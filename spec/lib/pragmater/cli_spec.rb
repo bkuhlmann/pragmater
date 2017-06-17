@@ -13,16 +13,6 @@ RSpec.describe Pragmater::CLI do
       end
     end
 
-    shared_examples_for "an invalid file" do
-      let(:corrupt_file_path) { File.join Dir.pwd, "spec", "fixtures", "corrupt.file" }
-      let(:options) { [corrupt_file_path, "-c", ""] }
-
-      it "prints error", :temp_dir do
-        pattern = /error\s+Invalid\ssource\spath\:\s\"#{corrupt_file_path}\"\./
-        expect(&cli).to output(pattern).to_stdout
-      end
-    end
-
     shared_examples_for "an add command" do
       let(:tasks_dir) { File.join temp_dir, "tasks" }
       let(:ruby_file) { File.join temp_dir, "test.rb" }
@@ -34,13 +24,13 @@ RSpec.describe Pragmater::CLI do
       end
 
       context "with a single file", :temp_dir do
-        let(:options) { [ruby_file, "-c", "# frozen_string_literal: true"] }
+        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", "test.rb"] }
 
         it "adds pragma comment to ruby file" do
           cli.call
 
           File.open ruby_file, "r" do |file|
-            expect(file.to_a).to contain_exactly("# frozen_string_literal: true\n")
+            expect(file.readlines).to contain_exactly("# frozen_string_literal: true\n")
           end
         end
 
@@ -50,20 +40,22 @@ RSpec.describe Pragmater::CLI do
       end
 
       context "with multiple files", :temp_dir do
-        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", ".rb", ".rake"] }
+        let :options do
+          [temp_dir, "-c", "# frozen_string_literal: true", "-w", "*.rb", "**/*.rake"]
+        end
 
         it "adds pragma comment to selected files", :aggregate_failures do
           cli.call
 
           File.open ruby_file, "r" do |file|
-            expect(file.to_a).to contain_exactly("# frozen_string_literal: true\n")
+            expect(file.readlines).to contain_exactly("# frozen_string_literal: true\n")
           end
 
           File.open rake_file, "r" do |file|
-            expect(file.to_a).to contain_exactly("# frozen_string_literal: true\n")
+            expect(file.readlines).to contain_exactly("# frozen_string_literal: true\n")
           end
 
-          File.open(text_file, "r") { |file| expect(file.to_a).to be_empty }
+          File.open(text_file, "r") { |file| expect(file.readlines).to be_empty }
         end
 
         it "prints selected files were updated" do
@@ -73,25 +65,23 @@ RSpec.describe Pragmater::CLI do
       end
 
       context "with multiple files and whitelisted extensions", :temp_dir do
-        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", ".rb"] }
+        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", "*.rb"] }
 
         it "adds pragma comment to selected files", :aggregate_failures do
           cli.call
 
           File.open ruby_file, "r" do |file|
-            expect(file.to_a).to contain_exactly("# frozen_string_literal: true\n")
+            expect(file.readlines).to contain_exactly("# frozen_string_literal: true\n")
           end
 
-          File.open(rake_file, "r") { |file| expect(file.to_a).to be_empty }
-          File.open(text_file, "r") { |file| expect(file.to_a).to be_empty }
+          File.open(rake_file, "r") { |file| expect(file.readlines).to be_empty }
+          File.open(text_file, "r") { |file| expect(file.readlines).to be_empty }
         end
 
         it "prints selected files were updated" do
           expect(&cli).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
         end
       end
-
-      it_behaves_like "an invalid file"
     end
 
     shared_examples_for "a remove command" do
@@ -107,11 +97,11 @@ RSpec.describe Pragmater::CLI do
       end
 
       context "with a single file", :temp_dir do
-        let(:options) { [ruby_file, "-c", "# frozen_string_literal: true"] }
+        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", "test.rb"] }
 
         it "adds pragma comment to ruby file" do
           cli.call
-          File.open(ruby_file, "r") { |file| expect(file.to_a).to be_empty }
+          File.open(ruby_file, "r") { |file| expect(file.readlines).to be_empty }
         end
 
         it "prints that file was updated" do
@@ -120,15 +110,17 @@ RSpec.describe Pragmater::CLI do
       end
 
       context "with multiple files", :temp_dir do
-        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", ".rb", ".rake"] }
+        let :options do
+          [temp_dir, "-c", "# frozen_string_literal: true", "-w", "*.rb", "**/*.rake"]
+        end
 
-        it "adds pragma comment to selected files", :aggregate_failures do
+        it "removes pragma comment to selected files", :aggregate_failures do
           cli.call
 
-          File.open(ruby_file, "r") { |file| expect(file.to_a).to be_empty }
-          File.open(rake_file, "r") { |file| expect(file.to_a).to be_empty }
+          File.open(ruby_file, "r") { |file| expect(file.readlines).to be_empty }
+          File.open(rake_file, "r") { |file| expect(file.readlines).to be_empty }
           File.open text_file, "r" do |file|
-            expect(file.to_a).to contain_exactly("# frozen_string_literal: true\n")
+            expect(file.readlines).to contain_exactly("# frozen_string_literal: true\n")
           end
         end
 
@@ -139,19 +131,19 @@ RSpec.describe Pragmater::CLI do
       end
 
       context "with multiple files and whitelisted extensions", :temp_dir do
-        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", ".rb"] }
+        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", "*.rb"] }
 
-        it "adds pragma comment to selected files", :aggregate_failures do
+        it "removes pragma comment from selected files", :aggregate_failures do
           cli.call
 
-          File.open(ruby_file, "r") { |file| expect(file.to_a).to be_empty }
+          File.open(ruby_file, "r") { |file| expect(file.readlines).to be_empty }
 
           File.open rake_file, "r" do |file|
-            expect(file.to_a).to contain_exactly("# frozen_string_literal: true\n")
+            expect(file.readlines).to contain_exactly("# frozen_string_literal: true\n")
           end
 
           File.open text_file, "r" do |file|
-            expect(file.to_a).to contain_exactly("# frozen_string_literal: true\n")
+            expect(file.readlines).to contain_exactly("# frozen_string_literal: true\n")
           end
         end
 
@@ -159,8 +151,6 @@ RSpec.describe Pragmater::CLI do
           expect(&cli).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
         end
       end
-
-      it_behaves_like "an invalid file"
     end
 
     shared_examples_for "a config command", :temp_dir do

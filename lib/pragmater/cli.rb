@@ -8,7 +8,6 @@ require "runcom"
 
 module Pragmater
   # The Command Line Interface (CLI) for the gem.
-  # rubocop:disable Metrics/ClassLength
   class CLI < Thor
     include Thor::Actions
     include ThorPlus::Actions
@@ -41,16 +40,20 @@ module Pragmater
                   default: []
     method_option :whitelist,
                   aliases: "-w",
-                  desc: "File extension whitelist",
+                  desc: "File whitelist",
                   type: :array,
                   default: []
-    def add path
+    def add path = "."
       settings = self.class.configuration.merge add: {
         comments: options[:comments],
         whitelist: options[:whitelist]
       }
 
-      write path, settings, :add
+      runner = Runner.new path,
+                          comments: settings.dig(:add, :comments),
+                          whitelist: settings.dig(:add, :whitelist)
+
+      runner.run(action: :add) { |file| info "Processed: #{file}." }
     end
 
     desc "-r, [--remove=PATH]", "Remove pragma comments from source file(s)."
@@ -62,16 +65,20 @@ module Pragmater
                   default: []
     method_option :whitelist,
                   aliases: "-w",
-                  desc: "File extension whitelist",
+                  desc: "File whitelist",
                   type: :array,
                   default: []
-    def remove path
+    def remove path = "."
       settings = self.class.configuration.merge remove: {
         comments: options[:comments],
         whitelist: options[:whitelist]
       }
 
-      write path, settings, :remove
+      runner = Runner.new path,
+                          comments: settings.dig(:remove, :comments),
+                          whitelist: settings.dig(:remove, :whitelist)
+
+      runner.run(action: :remove) { |file| info "Processed: #{file}." }
     end
 
     desc "-c, [--config]", "Manage gem configuration."
@@ -104,43 +111,6 @@ module Pragmater
     map %w[-h --help] => :help
     def help task = nil
       say and super
-    end
-
-    private
-
-    def whitelisted_files path, whitelist
-      file_filter = whitelist.empty? ? %(#{path}/**/*) : %(#{path}/**/*{#{whitelist.join ","}})
-      Pathname.glob(file_filter).select(&:file?)
-    end
-
-    def update_file path, comments, action
-      Writer.new(path, comments).public_send action
-      info "Processed: #{path}."
-    rescue ArgumentError => error
-      formatted_message = error.message
-      formatted_message[0] = formatted_message[0].capitalize
-      error "#{formatted_message}: #{path}."
-    end
-
-    # rubocop:disable Metrics/ParameterLists
-    def update_files path, comments, whitelist, action
-      if path.file?
-        update_file path, comments, action
-      elsif path.directory?
-        whitelisted_files(path, whitelist).each do |file_path|
-          update_file file_path, comments, action
-        end
-      else
-        error %(Invalid source path: "#{path}".)
-      end
-    end
-
-    def write path, settings, action
-      pathname = Pathname path
-      comments = Array settings.dig(action).dig(:comments)
-      whitelist = Array settings.dig(action).dig(:whitelist)
-
-      update_files pathname, comments, whitelist, action
     end
   end
 end
