@@ -1,3 +1,17 @@
+# v4.0.0 (2017-06-17)
+
+- Fixed Reek DuplicateMethodCall issue.
+- Fixed reading of lines within writer.
+- Added Circle CI support.
+- Added executable permission to Ruby script fixtures.
+- Added runner.
+- Updated README usage configuration documenation.
+- Updated to Rubocop 0.49.0.
+- Updated to Runcom 1.1.0.
+- Removed Travis CI support.
+- Refactored CLI to use runner.
+- Refactored Reek issues.
+
 # v3.1.0 (2017-05-06)
 
 - Fixed Rubocop Style/AutoResourceCleanup issues.

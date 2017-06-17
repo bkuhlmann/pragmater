@@ -89,7 +89,7 @@ Both the `--add` and `--remove` commands support options for specifying pragma c
 whitelisted files (viewable by running `pragmater --help --add` or `pragmater --help --remove`):
 
     -c, [--comments=one two three]   # Pragma comments
-    -w, [--whitelist=one two three]  # File extension whitelist
+    -w, [--whitelist=one two three]  # File whitelist
 
 ## Customization
 
