@@ -2,6 +2,8 @@
 
 module Pragmater
   # Writes formatted pragma comments to source file.
+  # :reek:TooManyInstanceVariables
+  # :reek:PrimaDonnaMethod
   class Writer
     # rubocop:disable Metrics/ParameterLists
     def initialize file_path, new_comments, formatter: Formatter, commenter: Commenter
@@ -38,10 +40,12 @@ module Pragmater
       file_lines.reject { |line| old_comments.include? line }
     end
 
+    # :reek:UtilityFunction
     def format lines
       lines.map { |line| "#{line}\n" }
     end
 
+    # :reek:UtilityFunction
     def insert_spacing! lines, comments
       comment_count = comments.size
 
@@ -52,6 +56,7 @@ module Pragmater
       lines.insert comment_count, "\n"
     end
 
+    # :reek:UtilityFunction
     def remove_spacing! lines
       lines.delete_at(0) if lines.first == "\n"
     end
