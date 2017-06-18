@@ -6,12 +6,7 @@ RSpec.describe Pragmater::CLI do
   describe ".start" do
     let(:options) { [] }
     let(:command_line) { Array(command).concat options }
-    let :cli do
-      lambda do
-        load "pragmater/cli.rb" # Ensures clean Thor `.method_option` evaluation per spec.
-        described_class.start command_line
-      end
-    end
+    let(:cli) { described_class.start command_line }
 
     shared_examples_for "an add command" do
       let(:tasks_dir) { File.join temp_dir, "tasks" }
@@ -27,7 +22,7 @@ RSpec.describe Pragmater::CLI do
         let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", "test.rb"] }
 
         it "adds pragma comment to ruby file" do
-          cli.call
+          cli
 
           File.open ruby_file, "r" do |file|
             expect(file.readlines).to contain_exactly("# frozen_string_literal: true\n")
@@ -35,7 +30,8 @@ RSpec.describe Pragmater::CLI do
         end
 
         it "prints that file was updated" do
-          expect(&cli).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
+          result = -> { cli }
+          expect(&result).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
         end
       end
 
@@ -45,7 +41,7 @@ RSpec.describe Pragmater::CLI do
         end
 
         it "adds pragma comment to selected files", :aggregate_failures do
-          cli.call
+          cli
 
           File.open ruby_file, "r" do |file|
             expect(file.readlines).to contain_exactly("# frozen_string_literal: true\n")
@@ -60,7 +56,9 @@ RSpec.describe Pragmater::CLI do
 
         it "prints selected files were updated" do
           pattern = /info\s+Processed\:\s#{ruby_file}\.\n\s+info\s+Processed\:\s#{rake_file}\.\n/
-          expect(&cli).to output(pattern).to_stdout
+          result = -> { cli }
+
+          expect(&result).to output(pattern).to_stdout
         end
       end
 
@@ -68,7 +66,7 @@ RSpec.describe Pragmater::CLI do
         let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", "*.rb"] }
 
         it "adds pragma comment to selected files", :aggregate_failures do
-          cli.call
+          cli
 
           File.open ruby_file, "r" do |file|
             expect(file.readlines).to contain_exactly("# frozen_string_literal: true\n")
@@ -79,7 +77,8 @@ RSpec.describe Pragmater::CLI do
         end
 
         it "prints selected files were updated" do
-          expect(&cli).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
+          result = -> { cli }
+          expect(&result).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
         end
       end
     end
@@ -100,12 +99,13 @@ RSpec.describe Pragmater::CLI do
         let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", "test.rb"] }
 
         it "adds pragma comment to ruby file" do
-          cli.call
+          cli
           File.open(ruby_file, "r") { |file| expect(file.readlines).to be_empty }
         end
 
         it "prints that file was updated" do
-          expect(&cli).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
+          result = -> { cli }
+          expect(&result).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
         end
       end
 
@@ -115,7 +115,7 @@ RSpec.describe Pragmater::CLI do
         end
 
         it "removes pragma comment to selected files", :aggregate_failures do
-          cli.call
+          cli
 
           File.open(ruby_file, "r") { |file| expect(file.readlines).to be_empty }
           File.open(rake_file, "r") { |file| expect(file.readlines).to be_empty }
@@ -126,7 +126,9 @@ RSpec.describe Pragmater::CLI do
 
         it "prints selected files were updated" do
           pattern = /info\s+Processed\:\s#{ruby_file}\.\n\s+info\s+Processed\:\s#{rake_file}\.\n/
-          expect(&cli).to output(pattern).to_stdout
+          result = -> { cli }
+
+          expect(&result).to output(pattern).to_stdout
         end
       end
 
@@ -134,7 +136,7 @@ RSpec.describe Pragmater::CLI do
         let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", "*.rb"] }
 
         it "removes pragma comment from selected files", :aggregate_failures do
-          cli.call
+          cli
 
           File.open(ruby_file, "r") { |file| expect(file.readlines).to be_empty }
 
@@ -148,7 +150,8 @@ RSpec.describe Pragmater::CLI do
         end
 
         it "prints selected files were updated" do
-          expect(&cli).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
+          result = -> { cli }
+          expect(&result).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
         end
       end
     end
@@ -156,7 +159,8 @@ RSpec.describe Pragmater::CLI do
     shared_examples_for "a config command", :temp_dir do
       context "with no options" do
         it "prints help text" do
-          expect(&cli).to output(/Manage gem configuration./).to_stdout
+          result = -> { cli }
+          expect(&result).to output(/Manage gem configuration./).to_stdout
         end
       end
     end
@@ -164,14 +168,18 @@ RSpec.describe Pragmater::CLI do
     shared_examples_for "a version command" do
       it "prints version" do
         pattern = /#{Pragmater::Identity.label}\s#{Pragmater::Identity.version}\n/
-        expect(&cli).to output(pattern).to_stdout
+        result = -> { cli }
+
+        expect(&result).to output(pattern).to_stdout
       end
     end
 
     shared_examples_for "a help command" do
       it "prints usage" do
         pattern = /#{Pragmater::Identity.label}\s#{Pragmater::Identity.version}\scommands:\n/
-        expect(&cli).to output(pattern).to_stdout
+        result = -> { cli }
+
+        expect(&result).to output(pattern).to_stdout
       end
     end
 
