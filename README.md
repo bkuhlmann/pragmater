@@ -21,28 +21,28 @@ or multiple Ruby source files in order to benefit from improved memory and concu
 
 <!-- Tocer[start]: Auto-generated, don't remove. -->
 
-# Table of Contents
+## Table of Contents
 
-- [Features](#features)
-- [Screencasts](#screencasts)
-- [Requirements](#requirements)
-- [Setup](#setup)
-- [Usage](#usage)
-  - [Command Line Interface (CLI)](#command-line-interface-cli)
-  - [Customization](#customization)
-  - [Frozen String Literals](#frozen-string-literals)
-  - [Available Comments](#available-comments)
-- [Tests](#tests)
-- [Versioning](#versioning)
-- [Code of Conduct](#code-of-conduct)
-- [Contributions](#contributions)
-- [License](#license)
-- [History](#history)
-- [Credits](#credits)
+  - [Features](#features)
+  - [Screencasts](#screencasts)
+  - [Requirements](#requirements)
+  - [Setup](#setup)
+  - [Usage](#usage)
+    - [Command Line Interface (CLI)](#command-line-interface-cli)
+    - [Customization](#customization)
+    - [Frozen String Literals](#frozen-string-literals)
+    - [Available Comments](#available-comments)
+  - [Tests](#tests)
+  - [Versioning](#versioning)
+  - [Code of Conduct](#code-of-conduct)
+  - [Contributions](#contributions)
+  - [License](#license)
+  - [History](#history)
+  - [Credits](#credits)
 
 <!-- Tocer[finish]: Auto-generated, don't remove. -->
 
-# Features
+## Features
 
 - Supports adding a pragma comment or multiple pragma comments to single or multiple source files.
 - Supports removing a pragma comment(s) from single or multiple source files.
@@ -50,15 +50,15 @@ or multiple Ruby source files in order to benefit from improved memory and concu
 - Ensures duplicate pragma comments never exist.
 - Ensures pragma comments are consistently formatted.
 
-# Screencasts
+## Screencasts
 
 [![asciicast](https://asciinema.org/a/91755.png)](https://asciinema.org/a/91755)
 
-# Requirements
+## Requirements
 
 0. [Ruby 2.4.x](https://www.ruby-lang.org)
 
-# Setup
+## Setup
 
 For a secure install, type the following (recommended):
 
@@ -73,9 +73,9 @@ For an insecure install, type the following (not recommended):
 
     gem install pragmater
 
-# Usage
+## Usage
 
-## Command Line Interface (CLI)
+### Command Line Interface (CLI)
 
 From the command line, type: `pragmater help`
 
@@ -91,7 +91,7 @@ whitelisted files (viewable by running `pragmater --help --add` or `pragmater --
     -c, [--comments=one two three]   # Pragma comments
     -w, [--whitelist=one two three]  # File whitelist
 
-## Customization
+### Customization
 
 This gem can be configured via a global configuration:
 
@@ -119,7 +119,7 @@ The `configuration.yml` file can be configured as follows:
 - `remove`: Defines global/local comments and/or whitelists when removing pragma comments. The
   `comments` and `whitelist` options can be either a single string or an array of values.
 
-## Frozen String Literals
+### Frozen String Literals
 
 With Ruby 2.3.0, support for frozen strings was added. These comments are meant to be placed at the
 top of each source file. Example:
@@ -141,7 +141,7 @@ down frozen string literal issues:
 
     --debug=frozen-string-literal
 
-## Available Comments
+### Available Comments
 
 With Ruby 2.3 and higher, the following comments are available:
 
@@ -154,13 +154,13 @@ With Ruby 2.3 and higher, the following comments are available:
   enabled, and running Ruby with the `-w` option, it'll throw warnings for code that isn't indented
   by two spaces.
 
-# Tests
+## Tests
 
 To test, run:
 
     bundle exec rake
 
-# Versioning
+## Versioning
 
 Read [Semantic Versioning](http://semver.org) for details. Briefly, it means:
 
@@ -168,26 +168,26 @@ Read [Semantic Versioning](http://semver.org) for details. Briefly, it means:
 - Minor (x.Y.z) - Incremented for new, backwards compatible, public API enhancements/fixes.
 - Patch (x.y.Z) - Incremented for small, backwards compatible, bug fixes.
 
-# Code of Conduct
+## Code of Conduct
 
 Please note that this project is released with a [CODE OF CONDUCT](CODE_OF_CONDUCT.md). By
 participating in this project you agree to abide by its terms.
 
-# Contributions
+## Contributions
 
 Read [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-# License
+## License
 
 Copyright (c) 2015 [Alchemists](https://www.alchemists.io).
 Read [LICENSE](LICENSE.md) for details.
 
-# History
+## History
 
 Read [CHANGES](CHANGES.md) for details.
 Built with [Gemsmith](https://github.com/bkuhlmann/gemsmith).
 
-# Credits
+## Credits
 
 Developed by [Brooke Kuhlmann](https://www.alchemists.io) at
 [Alchemists](https://www.alchemists.io).
