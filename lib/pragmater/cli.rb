@@ -3,14 +3,12 @@
 require "pathname"
 require "thor"
 require "thor/actions"
-require "thor_plus/actions"
 require "runcom"
 
 module Pragmater
   # The Command Line Interface (CLI) for the gem.
   class CLI < Thor
     include Thor::Actions
-    include ThorPlus::Actions
 
     package_name Identity.version_label
 
@@ -53,7 +51,7 @@ module Pragmater
                           comments: settings.dig(:add, :comments),
                           whitelist: settings.dig(:add, :whitelist)
 
-      runner.run(action: :add) { |file| info "Processed: #{file}." }
+      runner.run(action: :add) { |file| say_status :info, "Processed: #{file}.", :green }
     end
 
     desc "-r, [--remove=PATH]", "Remove pragma comments from source file(s)."
@@ -78,7 +76,7 @@ module Pragmater
                           comments: settings.dig(:remove, :comments),
                           whitelist: settings.dig(:remove, :whitelist)
 
-      runner.run(action: :remove) { |file| info "Processed: #{file}." }
+      runner.run(action: :remove) { |file| say_status :info, "Processed: #{file}.", :green }
     end
 
     desc "-c, [--config]", "Manage gem configuration."
@@ -94,7 +92,7 @@ module Pragmater
     def config
       path = self.class.configuration.path
 
-      if options.edit? then `#{editor} #{path}`
+      if options.edit? then `#{ENV["EDITOR"]} #{path}`
       elsif options.info?
         path ? say(path) : say("Configuration doesn't exist.")
       else help(:config)
