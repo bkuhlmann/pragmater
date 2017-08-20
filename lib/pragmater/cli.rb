@@ -27,6 +27,9 @@ module Pragmater
 
     def initialize args = [], options = {}, config = {}
       super args, options, config
+      @configuration = self.class.configuration
+    rescue Runcom::Errors::Base => error
+      abort error.message
     end
 
     desc "-a, [--add=PATH]", "Add pragma comments to source file(s)."
@@ -42,7 +45,7 @@ module Pragmater
                   type: :array,
                   default: []
     def add path = "."
-      settings = self.class.configuration.merge add: {
+      settings = configuration.merge add: {
         comments: options[:comments],
         whitelist: options[:whitelist]
       }
@@ -67,7 +70,7 @@ module Pragmater
                   type: :array,
                   default: []
     def remove path = "."
-      settings = self.class.configuration.merge remove: {
+      settings = configuration.merge remove: {
         comments: options[:comments],
         whitelist: options[:whitelist]
       }
@@ -90,7 +93,7 @@ module Pragmater
                   desc: "Print gem configuration.",
                   type: :boolean, default: false
     def config
-      path = self.class.configuration.path
+      path = configuration.path
 
       if options.edit? then `#{ENV["EDITOR"]} #{path}`
       elsif options.info?
@@ -110,5 +113,9 @@ module Pragmater
     def help task = nil
       say and super
     end
+
+    private
+
+    attr_reader :configuration
   end
 end
