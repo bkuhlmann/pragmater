@@ -10,6 +10,7 @@ module Pragmater
       @whitelist = Array whitelist
       @writer = writer
     end
+    # rubocop:enable Metrics/ParameterLists
 
     def files
       return [] unless path.exist? && path.directory? && !whitelist.empty?

@@ -14,6 +14,7 @@ module Pragmater
       @old_comments = file_comments
       @new_comments = new_comments
     end
+    # rubocop:enable Metrics/ParameterLists
 
     def add
       comments = format commenter.new(old_comments, new_comments).add
