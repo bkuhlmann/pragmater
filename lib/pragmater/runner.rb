@@ -4,17 +4,17 @@ module Pragmater
   # Adds/removes pragma comments for files in given path.
   class Runner
     # rubocop:disable Metrics/ParameterLists
-    def initialize path = ".", comments: [], whitelist: [], writer: Writer
+    def initialize path = ".", comments: [], includes: [], writer: Writer
       @path = Pathname path
       @comments = Array comments
-      @whitelist = Array whitelist
+      @includes = Array includes
       @writer = writer
     end
     # rubocop:enable Metrics/ParameterLists
 
     def files
-      return [] unless path.exist? && path.directory? && !whitelist.empty?
-      Pathname.glob(%(#{path}/{#{whitelist.join ","}})).select(&:file?)
+      return [] unless path.exist? && path.directory? && !includes.empty?
+      Pathname.glob(%(#{path}/{#{includes.join ","}})).select(&:file?)
     end
 
     def run action:
@@ -26,6 +26,6 @@ module Pragmater
 
     private
 
-    attr_reader :path, :comments, :whitelist, :writer
+    attr_reader :path, :comments, :includes, :writer
   end
 end

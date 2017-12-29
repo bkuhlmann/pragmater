@@ -16,11 +16,11 @@ module Pragmater
       Runcom::Configuration.new project_name: Identity.name, defaults: {
         add: {
           comments: "",
-          whitelist: []
+          includes: []
         },
         remove: {
           comments: "",
-          whitelist: []
+          includes: []
         }
       }
     end
@@ -39,20 +39,20 @@ module Pragmater
                   desc: "Pragma comments",
                   type: :array,
                   default: []
-    method_option :whitelist,
+    method_option :includes,
                   aliases: "-w",
-                  desc: "File whitelist",
+                  desc: "File include list",
                   type: :array,
                   default: []
     def add path = "."
       settings = configuration.merge add: {
         comments: options[:comments],
-        whitelist: options[:whitelist]
+        includes: options[:includes]
       }
 
       runner = Runner.new path,
                           comments: settings.dig(:add, :comments),
-                          whitelist: settings.dig(:add, :whitelist)
+                          includes: settings.dig(:add, :includes)
 
       runner.run(action: :add) { |file| say_status :info, "Processed: #{file}.", :green }
     end
@@ -64,20 +64,20 @@ module Pragmater
                   desc: "Pragma comments",
                   type: :array,
                   default: []
-    method_option :whitelist,
+    method_option :includes,
                   aliases: "-w",
-                  desc: "File whitelist",
+                  desc: "File include list",
                   type: :array,
                   default: []
     def remove path = "."
       settings = configuration.merge remove: {
         comments: options[:comments],
-        whitelist: options[:whitelist]
+        includes: options[:includes]
       }
 
       runner = Runner.new path,
                           comments: settings.dig(:remove, :comments),
-                          whitelist: settings.dig(:remove, :whitelist)
+                          includes: settings.dig(:remove, :includes)
 
       runner.run(action: :remove) { |file| say_status :info, "Processed: #{file}.", :green }
     end

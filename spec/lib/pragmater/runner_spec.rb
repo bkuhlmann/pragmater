@@ -5,14 +5,14 @@ require "spec_helper"
 RSpec.describe Pragmater::Runner, :temp_dir do
   let(:path) { "." }
   let(:comments) { [] }
-  let(:whitelist) { [] }
+  let(:includes) { [] }
 
   describe "#files" do
     let(:tasks_dir) { File.join temp_dir, "tasks" }
     let(:ruby_file) { File.join temp_dir, "test.rb" }
     let(:rake_file) { File.join tasks_dir, "test.rake" }
     let(:text_file) { File.join temp_dir, "test.txt" }
-    subject { described_class.new path, comments: comments, whitelist: whitelist }
+    subject { described_class.new path, comments: comments, includes: includes }
 
     before do
       FileUtils.mkdir tasks_dir
@@ -35,8 +35,8 @@ RSpec.describe Pragmater::Runner, :temp_dir do
       end
     end
 
-    context "with whitelist only" do
-      let(:whitelist) { ["*.rb"] }
+    context "with includes only" do
+      let(:includes) { ["*.rb"] }
 
       it "answers files with matching extensions" do
         Dir.chdir temp_dir do
@@ -45,18 +45,18 @@ RSpec.describe Pragmater::Runner, :temp_dir do
       end
     end
 
-    context "with path and whitelist string" do
+    context "with path and includes string" do
       let(:path) { temp_dir }
-      let(:whitelist) { "*.rb" }
+      let(:includes) { "*.rb" }
 
       it "answers files with matching extensions" do
         expect(subject.files).to contain_exactly(Pathname("#{temp_dir}/test.rb"))
       end
     end
 
-    context "with path and whitelist array" do
+    context "with path and includes array" do
       let(:path) { temp_dir }
-      let(:whitelist) { ["*.rb"] }
+      let(:includes) { ["*.rb"] }
 
       it "answers files with matching extensions" do
         expect(subject.files).to contain_exactly(Pathname("#{temp_dir}/test.rb"))
@@ -71,27 +71,27 @@ RSpec.describe Pragmater::Runner, :temp_dir do
       end
     end
 
-    context "with path and invalid whitelist" do
+    context "with path and invalid includes" do
       let(:path) { temp_dir }
-      let(:whitelist) { ["bogus", "~#}*^"] }
+      let(:includes) { ["bogus", "~#}*^"] }
 
       it "answers empty array" do
         expect(subject.files).to be_empty
       end
     end
 
-    context "with path and whitelist without wildcards" do
+    context "with path and includes without wildcards" do
       let(:path) { temp_dir }
-      let(:whitelist) { [".rb"] }
+      let(:includes) { [".rb"] }
 
       it "answers empty array" do
         expect(subject.files).to be_empty
       end
     end
 
-    context "with path and recursive whitelist" do
+    context "with path and recursive includes" do
       let(:path) { temp_dir }
-      let(:whitelist) { ["**/*.rake"] }
+      let(:includes) { ["**/*.rake"] }
       let(:nested_file) { Pathname File.join(tasks_dir, "nested", "nested.rake") }
 
       before do
@@ -111,7 +111,7 @@ RSpec.describe Pragmater::Runner, :temp_dir do
   describe "#run" do
     let(:writer_class) { class_spy Pragmater::Writer }
     let(:writer_instance) { instance_spy Pragmater::Writer }
-    subject { described_class.new temp_dir, whitelist: whitelist, writer: writer_class }
+    subject { described_class.new temp_dir, includes: includes, writer: writer_class }
 
     context "without files" do
       let(:action) { :add }
@@ -123,7 +123,7 @@ RSpec.describe Pragmater::Runner, :temp_dir do
     end
 
     context "with files" do
-      let(:whitelist) { ["*.rb"] }
+      let(:includes) { ["*.rb"] }
       let(:action) { :remove }
       let(:test_file) { Pathname "#{temp_dir}/test.rb" }
 

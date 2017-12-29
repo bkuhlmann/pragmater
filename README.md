@@ -46,7 +46,7 @@ or multiple Ruby source files in order to benefit from improved memory and concu
 
 - Supports adding a pragma comment or multiple pragma comments to single or multiple source files.
 - Supports removing a pragma comment(s) from single or multiple source files.
-- Supports whitelist filtering. Defaults to any file.
+- Supports file list filtering. Defaults to any file.
 - Ensures duplicate pragma comments never exist.
 - Ensures pragma comments are consistently formatted.
 
@@ -77,10 +77,10 @@ From the command line, type: `pragmater help`
     pragmater -v, [--version]       # Show gem version.
 
 Both the `--add` and `--remove` commands support options for specifying pragma comments and/or
-whitelisted files (viewable by running `pragmater --help --add` or `pragmater --help --remove`):
+included files (viewable by running `pragmater --help --add` or `pragmater --help --remove`):
 
     -c, [--comments=one two three]   # Pragma comments
-    -w, [--whitelist=one two three]  # File whitelist
+    -w, [--includes=one two three]   # File include list
 
 ### Customization
 
@@ -95,20 +95,20 @@ The default configuration is as follows:
 
     :add:
       :comments: []
-      :whitelist: []
+      :includes: []
     :remove:
       :comments: []
-      :whitelist: []
+      :includes: []
 
 Feel free to take this default configuration, modify, and save as your own custom
 `configuration.yml`.
 
 The `configuration.yml` file can be configured as follows:
 
-- `add`: Defines global/local comments and/or whitelists when adding pragma comments. The `comments`
-  and `whitelist` options can be either a single string or an array of values.
-- `remove`: Defines global/local comments and/or whitelists when removing pragma comments. The
-  `comments` and `whitelist` options can be either a single string or an array of values.
+- `add`: Defines global/local comments and/or file include lists when adding pragma comments. The
+  `comments` and `includes` options can be either a single string or an array of values.
+- `remove`: Defines global/local comments and/or file include lists when removing pragma comments.
+  The `comments` and `includes` options can be either a single string or an array of values.
 
 ### Frozen String Literals
 

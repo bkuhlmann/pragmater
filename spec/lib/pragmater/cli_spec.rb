@@ -62,7 +62,7 @@ RSpec.describe Pragmater::CLI do
         end
       end
 
-      context "with multiple files and whitelisted extensions", :temp_dir do
+      context "with multiple files and included extensions", :temp_dir do
         let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", "*.rb"] }
 
         it "adds pragma comment to selected files", :aggregate_failures do
@@ -132,7 +132,7 @@ RSpec.describe Pragmater::CLI do
         end
       end
 
-      context "with multiple files and whitelisted extensions", :temp_dir do
+      context "with multiple files and included extensions", :temp_dir do
         let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", "*.rb"] }
 
         it "removes pragma comment from selected files", :aggregate_failures do
