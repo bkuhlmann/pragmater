@@ -56,7 +56,7 @@ or multiple Ruby source files in order to benefit from improved memory and concu
 
 ## Requirements
 
-0. [Ruby 2.4.x](https://www.ruby-lang.org)
+0. [Ruby 2.5.x](https://www.ruby-lang.org)
 
 ## Setup
 
