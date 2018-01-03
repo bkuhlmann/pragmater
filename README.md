@@ -5,7 +5,6 @@
 [![Code Climate Test Coverage](https://api.codeclimate.com/v1/badges/f0971ab6985309ce4db4/test_coverage)](https://codeclimate.com/github/bkuhlmann/pragmater/test_coverage)
 [![Gemnasium Status](https://gemnasium.com/bkuhlmann/pragmater.svg)](https://gemnasium.com/bkuhlmann/pragmater)
 [![Circle CI Status](https://circleci.com/gh/bkuhlmann/pragmater.svg?style=svg)](https://circleci.com/gh/bkuhlmann/pragmater)
-[![Patreon](https://img.shields.io/badge/patreon-donate-brightgreen.svg)](https://www.patreon.com/bkuhlmann)
 
 A command line interface for managing/formatting source file
 [directive pragma](https://en.wikipedia.org/wiki/Directive_(programming)) comments
