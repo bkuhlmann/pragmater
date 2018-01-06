@@ -19,7 +19,7 @@ RSpec.describe Pragmater::CLI do
       end
 
       context "with a single file", :temp_dir do
-        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", "test.rb"] }
+        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-i", "test.rb"] }
 
         it "adds pragma comment to ruby file" do
           cli
@@ -37,7 +37,7 @@ RSpec.describe Pragmater::CLI do
 
       context "with multiple files", :temp_dir do
         let :options do
-          [temp_dir, "-c", "# frozen_string_literal: true", "-w", "*.rb", "**/*.rake"]
+          [temp_dir, "-c", "# frozen_string_literal: true", "-i", "*.rb", "**/*.rake"]
         end
 
         it "adds pragma comment to selected files", :aggregate_failures do
@@ -63,7 +63,7 @@ RSpec.describe Pragmater::CLI do
       end
 
       context "with multiple files and included extensions", :temp_dir do
-        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", "*.rb"] }
+        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-i", "*.rb"] }
 
         it "adds pragma comment to selected files", :aggregate_failures do
           cli
@@ -96,7 +96,7 @@ RSpec.describe Pragmater::CLI do
       end
 
       context "with a single file", :temp_dir do
-        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", "test.rb"] }
+        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-i", "test.rb"] }
 
         it "adds pragma comment to ruby file" do
           cli
@@ -111,7 +111,7 @@ RSpec.describe Pragmater::CLI do
 
       context "with multiple files", :temp_dir do
         let :options do
-          [temp_dir, "-c", "# frozen_string_literal: true", "-w", "*.rb", "**/*.rake"]
+          [temp_dir, "-c", "# frozen_string_literal: true", "-i", "*.rb", "**/*.rake"]
         end
 
         it "removes pragma comment to selected files", :aggregate_failures do
@@ -133,7 +133,7 @@ RSpec.describe Pragmater::CLI do
       end
 
       context "with multiple files and included extensions", :temp_dir do
-        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-w", "*.rb"] }
+        let(:options) { [temp_dir, "-c", "# frozen_string_literal: true", "-i", "*.rb"] }
 
         it "removes pragma comment from selected files", :aggregate_failures do
           cli

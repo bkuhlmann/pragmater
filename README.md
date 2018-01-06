@@ -78,8 +78,8 @@ From the command line, type: `pragmater help`
 Both the `--add` and `--remove` commands support options for specifying pragma comments and/or
 included files (viewable by running `pragmater --help --add` or `pragmater --help --remove`):
 
-    -c, [--comments=one two three]   # Pragma comments
-    -w, [--includes=one two three]   # File include list
+    -c, [--comments=one two three]  # Pragma comments
+    -i, [--includes=one two three]  # File include list
 
 ### Customization
 

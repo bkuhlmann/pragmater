@@ -40,7 +40,7 @@ module Pragmater
                   type: :array,
                   default: []
     method_option :includes,
-                  aliases: "-w",
+                  aliases: "-i",
                   desc: "File include list",
                   type: :array,
                   default: []
@@ -65,7 +65,7 @@ module Pragmater
                   type: :array,
                   default: []
     method_option :includes,
-                  aliases: "-w",
+                  aliases: "-i",
                   desc: "File include list",
                   type: :array,
                   default: []
