@@ -1,3 +1,9 @@
+# v5.0.2 (2018-01-06)
+
+- Fixed CLI `--add` and `--remove` option defaults.
+- Fixed short option for `--includes` options.
+- Removed Patreon badge from README.
+
 # v5.0.1 (2018-01-01)
 
 - Updated to Gemsmith 11.0.0.

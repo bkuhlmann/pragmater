@@ -51,7 +51,7 @@ or multiple Ruby source files in order to benefit from improved memory and concu
 
 ## Screencasts
 
-[![asciicast](https://asciinema.org/a/91755.png)](https://asciinema.org/a/91755)
+[![asciicast](https://asciinema.org/a/155880.png)](https://asciinema.org/a/155880)
 
 ## Requirements
 
@@ -169,7 +169,7 @@ Read [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## License
 
-Copyright (c) 2015 [Alchemists](https://www.alchemists.io).
+Copyright 2015 [Alchemists](https://www.alchemists.io).
 Read [LICENSE](LICENSE.md) for details.
 
 ## History
