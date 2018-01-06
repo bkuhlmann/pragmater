@@ -38,17 +38,14 @@ module Pragmater
                   aliases: "-c",
                   desc: "Pragma comments",
                   type: :array,
-                  default: []
+                  default: configuration.to_h.dig(:add, :comments)
     method_option :includes,
                   aliases: "-i",
                   desc: "File include list",
                   type: :array,
-                  default: []
+                  default: configuration.to_h.dig(:add, :includes)
     def add path = "."
-      settings = configuration.merge add: {
-        comments: options[:comments],
-        includes: options[:includes]
-      }
+      settings = configuration.merge add: {comments: options.comments, includes: options.includes}
 
       runner = Runner.new path,
                           comments: settings.dig(:add, :comments),
@@ -63,16 +60,16 @@ module Pragmater
                   aliases: "-c",
                   desc: "Pragma comments",
                   type: :array,
-                  default: []
+                  default: configuration.to_h.dig(:remove, :comments)
     method_option :includes,
                   aliases: "-i",
                   desc: "File include list",
                   type: :array,
-                  default: []
+                  default: configuration.to_h.dig(:remove, :includes)
     def remove path = "."
       settings = configuration.merge remove: {
-        comments: options[:comments],
-        includes: options[:includes]
+        comments: options.comments,
+        includes: options.includes
       }
 
       runner = Runner.new path,
