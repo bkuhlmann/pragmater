@@ -111,8 +111,8 @@ The `configuration.yml` file can be configured as follows:
 
 ### Frozen String Literals
 
-With Ruby 2.3.0, support for frozen strings was added. These comments are meant to be placed at the
-top of each source file. Example:
+Support for frozen string literals was added in Ruby 2.3.0. The ability to freeze strings within a
+source can be done by placing a frozen string pragma at the top of each source file. Example:
 
     # frozen_string_literal: true
 
@@ -122,7 +122,7 @@ the following Ruby command line option:
 
     --enable=frozen-string-literal
 
-It is important to note that, once enabled, it freezes strings program-wide -- It's an all or
+It is important to note that, once enabled, this freezes strings program-wide -- It's an all or
 nothing option.
 
 Regardless of whether you leverage the capabilities of this gem or the Ruby command line option
@@ -130,6 +130,37 @@ mentioned above, the following Ruby command line option is available to aid debu
 down frozen string literal issues:
 
     --debug=frozen-string-literal
+
+Ruby 2.3.0 also added the following methods to the `String` class:
+
+- `String#+@`: Answers a duplicated, mutable, string if not already frozen. Example:
+
+        immutable = "test".freeze
+        mutable = +immutable
+        mutable.capitalize! # => "Test"
+
+- `String#-@`: Answers a immutable string if not already frozen. Example:
+
+        mutable = "test"
+        immutable = -mutable
+        immutable.capitalize! # => FrozenError
+
+You can also use the methods, shown above, for variable initialization. Example:
+
+    immutable = -"test"
+    mutable = +"test"
+
+Despite Ruby allowing you to do this, it is *not recommended* to use the above examples as it leads
+to hard to read code. Instead use the following:
+
+    immutable = "test".freeze
+    mutable = "test"
+
+While this requires extra typing, it expresses intent more clearly. There is a slight caveat to this
+rule in that the use of `String#-@` was [enhanced in Ruby 2.5.0](http://bit.ly/2DGAjgG) to
+*deduplicate* all instances of the same string thus reducing your memory footprint. This can be
+valuable in situations where you are not using the frozen string comment and need to selectively
+freeze strings.
 
 ### Available Comments
 
