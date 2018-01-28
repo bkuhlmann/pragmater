@@ -81,6 +81,14 @@ included files (viewable by running `pragmater --help --add` or `pragmater --hel
     -c, [--comments=one two three]  # Pragma comments
     -i, [--includes=one two three]  # File include list
 
+Example (same options could be used for the `--remove` command too):
+
+    pragmater --add --comments "# frozen_string_literal: true" --includes "Gemfile" "Guardfile" "Rakefile" ".gemspec" "config.ru" "bin/**/*" "**/*.rake" "**/*.rb"
+
+The `--add` and `--remove` commands default to the current working directory so a path isn't
+necessary unless you want to run Pragmater on a directory structure *other than* your current
+working directory.
+
 ### Customization
 
 This gem can be configured via a global configuration:
