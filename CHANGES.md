@@ -1,4 +1,4 @@
-# v5.1.0 (2018-04-01)
+# 5.1.0 (2018-04-01)
 
 - Fixed gemspec issues with missing gem signing key/certificate.
 - Added CLI example usage documentation.
@@ -13,17 +13,17 @@
 - Removed Gemnasium support.
 - Refactored temp dir shared context as a pathname.
 
-# v5.0.2 (2018-01-06)
+# 5.0.2 (2018-01-06)
 
 - Fixed CLI `--add` and `--remove` option defaults.
 - Fixed short option for `--includes` options.
 - Removed Patreon badge from README.
 
-# v5.0.1 (2018-01-01)
+# 5.0.1 (2018-01-01)
 
 - Updated to Gemsmith 11.0.0.
 
-# v5.0.0 (2018-01-01)
+# 5.0.0 (2018-01-01)
 
 - Updated Code Climate badges.
 - Updated Code Climate configuration to Version 2.0.0.
@@ -35,12 +35,12 @@
 - Updated to Apache 2.0 license.
 - Refactored code to use Ruby 2.5.0 `Array#append` syntax.
 
-# v4.3.1 (2017-11-19)
+# 4.3.1 (2017-11-19)
 
 - Updated to Git Cop 1.7.0.
 - Updated to Rake 12.3.0.
 
-# v4.3.0 (2017-10-29)
+# 4.3.0 (2017-10-29)
 
 - Added Bundler Audit gem.
 - Updated to Rubocop 0.50.0.
@@ -48,13 +48,13 @@
 - Updated to Ruby 2.4.2.
 - Removed Pry State gem.
 
-# v4.2.0 (2017-08-20)
+# 4.2.0 (2017-08-20)
 
 - Added dynamic formatting of RSpec output.
 - Updated to Gemsmith 10.2.0.
 - Updated to Runcom 1.3.0.
 
-# v4.1.0 (2017-07-16)
+# 4.1.0 (2017-07-16)
 
 - Added Git Cop code quality task.
 - Updated CONTRIBUTING documentation.
@@ -67,7 +67,7 @@
 - Removed Thor+ gem.
 - Refactored CLI version/help specs.
 
-# v4.0.0 (2017-06-17)
+# 4.0.0 (2017-06-17)
 
 - Fixed Reek DuplicateMethodCall issue.
 - Fixed reading of lines within writer.
@@ -81,7 +81,7 @@
 - Refactored CLI to use runner.
 - Refactored Reek issues.
 
-# v3.1.0 (2017-05-06)
+# 3.1.0 (2017-05-06)
 
 - Fixed Rubocop Style/AutoResourceCleanup issues.
 - Fixed Travis CI configuration to not update gems.
@@ -98,7 +98,7 @@
 - Removed Code Climate code comment checks.
 - Removed `.bundle` directory from `.gitignore`.
 
-# v3.0.0 (2017-01-22)
+# 3.0.0 (2017-01-22)
 
 - Updated Rubocop Metrics/LineLength to 100 characters.
 - Updated Rubocop Metrics/ParameterLists max to three.
@@ -108,7 +108,7 @@
 - Updated to Ruby 2.4.0.
 - Removed Rubocop Style/Documentation check.
 
-# v2.2.0 (2016-12-18)
+# 2.2.0 (2016-12-18)
 
 - Fixed Rakefile support for RSpec, Reek, Rubocop, and SCSS Lint.
 - Added `Gemfile.lock` to `.gitignore`.
@@ -120,11 +120,11 @@
 - Updated to Ruby 2.3.2.
 - Updated to Ruby 2.3.3.
 
-# v2.1.1 (2016-11-13)
+# 2.1.1 (2016-11-13)
 
 - Fixed gem requirements order.
 
-# v2.1.0 (2016-11-13)
+# 2.1.0 (2016-11-13)
 
 - Fixed Ruby pragma.
 - Added Code Climate engine support.
@@ -135,7 +135,7 @@
 - Removed CLI defaults (using configuration instead).
 - Refactored source requirements.
 
-# v2.0.0 (2016-11-05)
+# 2.0.0 (2016-11-05)
 
 - Fixed Rakefile to safely load Gemsmith tasks.
 - Added CLI `--config` option.
@@ -167,7 +167,7 @@
 - Refactored default configuration settings to CLI.
 - Refactored gemspec to use default security keys.
 
-# v1.3.0 (2016-06-16)
+# 1.3.0 (2016-06-16)
 
 - Fixed CLI help documentation.
 - Fixed CLI invalid path error message.
@@ -176,7 +176,7 @@
 - Updated to Gemsmith 7.7.0.
 - Updated to Ruby 2.3.1.
 
-# v1.2.0 (2016-04-24)
+# 1.2.0 (2016-04-24)
 
 - Fixed Rubocop Style/RegexpLiteral issues.
 - Fixed contributing guideline links.
@@ -191,11 +191,11 @@
 - Updated to Code of Conduct, Version 1.4.0.
 - Removed gem label from CLI edit and version descriptions
 
-# v1.1.0 (2016-01-20)
+# 1.1.0 (2016-01-20)
 
 - Fixed gem secure install issues.
 
-# v1.0.0 (2016-01-18)
+# 1.0.0 (2016-01-18)
 
 - Fixed CLI info output to match error output format.
 - Fixed README URL to public gem certificate.
@@ -216,6 +216,6 @@
 - Removed RSpec default monkey patching behavior.
 - Removed frozen string literal pragam from binary/rake files.
 
-# v0.1.0 (2015-12-26)
+# 0.1.0 (2015-12-26)
 
 - Initial version.
