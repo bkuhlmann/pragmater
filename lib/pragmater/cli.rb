@@ -13,7 +13,7 @@ module Pragmater
     package_name Identity.version_label
 
     def self.configuration
-      Runcom::Configuration.new project_name: Identity.name, defaults: {
+      Runcom::Configuration.new Identity.name, defaults: {
         add: {
           comments: "",
           includes: []
@@ -45,7 +45,9 @@ module Pragmater
                   type: :array,
                   default: configuration.to_h.dig(:add, :includes)
     def add path = "."
-      settings = configuration.merge add: {comments: options.comments, includes: options.includes}
+      settings = configuration.merge(
+        add: {comments: options.comments, includes: options.includes}
+      ).to_h
 
       runner = Runner.new path,
                           comments: settings.dig(:add, :comments),
@@ -67,10 +69,9 @@ module Pragmater
                   type: :array,
                   default: configuration.to_h.dig(:remove, :includes)
     def remove path = "."
-      settings = configuration.merge remove: {
-        comments: options.comments,
-        includes: options.includes
-      }
+      settings = configuration.merge(
+        remove: {comments: options.comments, includes: options.includes}
+      ).to_h
 
       runner = Runner.new path,
                           comments: settings.dig(:remove, :comments),

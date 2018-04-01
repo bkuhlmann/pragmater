@@ -22,7 +22,9 @@ RSpec.describe Pragmater::CLI do
         let(:options) { [temp_dir.to_s, "-c", "# frozen_string_literal: true", "-i", "test.rb"] }
 
         it "adds pragma comment to ruby file" do
-          cli
+          ClimateControl.modify XDG_CONFIG_HOME: temp_dir.to_s do
+            cli
+          end
 
           File.open ruby_file, "r" do |file|
             expect(file.readlines).to contain_exactly("# frozen_string_literal: true\n")
@@ -30,7 +32,7 @@ RSpec.describe Pragmater::CLI do
         end
 
         it "prints that file was updated" do
-          result = -> { cli }
+          result = -> { ClimateControl.modify(XDG_CONFIG_HOME: temp_dir.to_s) { cli } }
           expect(&result).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
         end
       end
@@ -41,7 +43,9 @@ RSpec.describe Pragmater::CLI do
         end
 
         it "adds pragma comment to selected files", :aggregate_failures do
-          cli
+          ClimateControl.modify XDG_CONFIG_HOME: temp_dir.to_s do
+            cli
+          end
 
           File.open ruby_file, "r" do |file|
             expect(file.readlines).to contain_exactly("# frozen_string_literal: true\n")
@@ -56,7 +60,7 @@ RSpec.describe Pragmater::CLI do
 
         it "prints selected files were updated" do
           pattern = /info\s+Processed\:\s#{ruby_file}\.\n\s+info\s+Processed\:\s#{rake_file}\.\n/
-          result = -> { cli }
+          result = -> { ClimateControl.modify(XDG_CONFIG_HOME: temp_dir.to_s) { cli } }
 
           expect(&result).to output(pattern).to_stdout
         end
@@ -66,7 +70,9 @@ RSpec.describe Pragmater::CLI do
         let(:options) { [temp_dir.to_s, "-c", "# frozen_string_literal: true", "-i", "*.rb"] }
 
         it "adds pragma comment to selected files", :aggregate_failures do
-          cli
+          ClimateControl.modify XDG_CONFIG_HOME: temp_dir.to_s do
+            cli
+          end
 
           File.open ruby_file, "r" do |file|
             expect(file.readlines).to contain_exactly("# frozen_string_literal: true\n")
@@ -77,7 +83,7 @@ RSpec.describe Pragmater::CLI do
         end
 
         it "prints selected files were updated" do
-          result = -> { cli }
+          result = -> { ClimateControl.modify(XDG_CONFIG_HOME: temp_dir.to_s) { cli } }
           expect(&result).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
         end
       end
@@ -88,6 +94,7 @@ RSpec.describe Pragmater::CLI do
       let(:ruby_file) { File.join temp_dir, "test.rb" }
       let(:rake_file) { File.join tasks_dir, "test.rake" }
       let(:text_file) { File.join temp_dir, "test.txt" }
+
       before do
         FileUtils.mkdir tasks_dir
         [ruby_file, rake_file, text_file].each do |file_path|
@@ -99,12 +106,15 @@ RSpec.describe Pragmater::CLI do
         let(:options) { [temp_dir.to_s, "-c", "# frozen_string_literal: true", "-i", "test.rb"] }
 
         it "adds pragma comment to ruby file" do
-          cli
+          ClimateControl.modify XDG_CONFIG_HOME: temp_dir.to_s do
+            cli
+          end
+
           File.open(ruby_file, "r") { |file| expect(file.readlines).to be_empty }
         end
 
         it "prints that file was updated" do
-          result = -> { cli }
+          result = -> { ClimateControl.modify(XDG_CONFIG_HOME: temp_dir.to_s) { cli } }
           expect(&result).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
         end
       end
@@ -115,7 +125,9 @@ RSpec.describe Pragmater::CLI do
         end
 
         it "removes pragma comment to selected files", :aggregate_failures do
-          cli
+          ClimateControl.modify XDG_CONFIG_HOME: temp_dir.to_s do
+            cli
+          end
 
           File.open(ruby_file, "r") { |file| expect(file.readlines).to be_empty }
           File.open(rake_file, "r") { |file| expect(file.readlines).to be_empty }
@@ -126,7 +138,7 @@ RSpec.describe Pragmater::CLI do
 
         it "prints selected files were updated" do
           pattern = /info\s+Processed\:\s#{ruby_file}\.\n\s+info\s+Processed\:\s#{rake_file}\.\n/
-          result = -> { cli }
+          result = -> { ClimateControl.modify(XDG_CONFIG_HOME: temp_dir.to_s) { cli } }
 
           expect(&result).to output(pattern).to_stdout
         end
@@ -136,7 +148,9 @@ RSpec.describe Pragmater::CLI do
         let(:options) { [temp_dir.to_s, "-c", "# frozen_string_literal: true", "-i", "*.rb"] }
 
         it "removes pragma comment from selected files", :aggregate_failures do
-          cli
+          ClimateControl.modify XDG_CONFIG_HOME: temp_dir.to_s do
+            cli
+          end
 
           File.open(ruby_file, "r") { |file| expect(file.readlines).to be_empty }
 
@@ -150,7 +164,7 @@ RSpec.describe Pragmater::CLI do
         end
 
         it "prints selected files were updated" do
-          result = -> { cli }
+          result = -> { ClimateControl.modify(XDG_CONFIG_HOME: temp_dir.to_s) { cli } }
           expect(&result).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
         end
       end
@@ -159,7 +173,7 @@ RSpec.describe Pragmater::CLI do
     shared_examples_for "a config command", :temp_dir do
       context "with no options" do
         it "prints help text" do
-          result = -> { cli }
+          result = -> { ClimateControl.modify(XDG_CONFIG_HOME: temp_dir.to_s) { cli } }
           expect(&result).to output(/Manage gem configuration./).to_stdout
         end
       end
