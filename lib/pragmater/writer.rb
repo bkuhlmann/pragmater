@@ -3,7 +3,7 @@
 module Pragmater
   # Writes formatted pragma comments to source file.
   # :reek:TooManyInstanceVariables
-  # :reek:PrimaDonnaMethod
+  # :reek:MissingSafeMethod
   class Writer
     # rubocop:disable Metrics/ParameterLists
     def initialize file_path, new_comments, formatter: Formatter, commenter: Commenter
