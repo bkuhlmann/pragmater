@@ -14,6 +14,7 @@ module Pragmater
 
     def files
       return [] unless path.exist? && path.directory? && !includes.empty?
+
       Pathname.glob(%(#{path}/{#{includes.join ","}})).select(&:file?)
     end
 
