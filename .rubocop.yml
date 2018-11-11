@@ -1,6 +1,9 @@
 inherit_from:
   - https://raw.githubusercontent.com/bkuhlmann/code_quality/master/configurations/rubocop/ruby.yml
 
+Lint/Void:
+  CheckForMethodsWithNoSideEffects: false
+
 Style/FrozenStringLiteralComment:
   Exclude:
     - spec/fixtures/**/*
