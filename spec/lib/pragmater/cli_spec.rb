@@ -4,9 +4,10 @@ require "spec_helper"
 
 RSpec.describe Pragmater::CLI do
   describe ".start" do
+    subject(:cli) { described_class.start command_line }
+
     let(:options) { [] }
     let(:command_line) { Array(command).concat options }
-    let(:cli) { described_class.start command_line }
 
     shared_examples_for "an add command" do
       let(:tasks_dir) { File.join temp_dir, "tasks" }
@@ -199,56 +200,67 @@ RSpec.describe Pragmater::CLI do
 
     describe "--add" do
       let(:command) { "--add" }
+
       it_behaves_like "an add command"
     end
 
     describe "-a" do
       let(:command) { "-a" }
+
       it_behaves_like "an add command"
     end
 
     describe "--remove" do
       let(:command) { "--remove" }
+
       it_behaves_like "a remove command"
     end
 
     describe "-r" do
       let(:command) { "-r" }
+
       it_behaves_like "a remove command"
     end
 
     describe "--config" do
       let(:command) { "--config" }
+
       it_behaves_like "a config command"
     end
 
     describe "-c" do
       let(:command) { "-c" }
+
       it_behaves_like "a config command"
     end
 
     describe "--version" do
       let(:command) { "--version" }
+
       it_behaves_like "a version command"
     end
 
     describe "-v" do
       let(:command) { "-v" }
+
       it_behaves_like "a version command"
     end
 
     describe "--help" do
       let(:command) { "--help" }
+
       it_behaves_like "a help command"
     end
 
     describe "-h" do
       let(:command) { "-h" }
+
       it_behaves_like "a help command"
     end
 
     context "with no command" do
       let(:command) { nil }
+
       it_behaves_like "a help command"
     end
   end

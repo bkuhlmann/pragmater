@@ -8,11 +8,12 @@ RSpec.describe Pragmater::Runner, :temp_dir do
   let(:includes) { [] }
 
   describe "#files" do
+    subject(:runner) { described_class.new path, comments: comments, includes: includes }
+
     let(:tasks_dir) { File.join temp_dir, "tasks" }
     let(:ruby_file) { File.join temp_dir, "test.rb" }
     let(:rake_file) { File.join tasks_dir, "test.rake" }
     let(:text_file) { File.join temp_dir, "test.txt" }
-    subject { described_class.new path, comments: comments, includes: includes }
 
     before do
       FileUtils.mkdir tasks_dir
@@ -23,7 +24,7 @@ RSpec.describe Pragmater::Runner, :temp_dir do
       subject { described_class.new }
 
       it "answers empty array" do
-        expect(subject.files).to be_empty
+        expect(runner.files).to be_empty
       end
     end
 
@@ -31,7 +32,7 @@ RSpec.describe Pragmater::Runner, :temp_dir do
       let(:path) { temp_dir }
 
       it "answers empty array" do
-        expect(subject.files).to be_empty
+        expect(runner.files).to be_empty
       end
     end
 
@@ -40,7 +41,7 @@ RSpec.describe Pragmater::Runner, :temp_dir do
 
       it "answers files with matching extensions" do
         Dir.chdir temp_dir do
-          expect(subject.files).to contain_exactly(Pathname("./test.rb"))
+          expect(runner.files).to contain_exactly(Pathname("./test.rb"))
         end
       end
     end
@@ -50,7 +51,7 @@ RSpec.describe Pragmater::Runner, :temp_dir do
       let(:includes) { "*.rb" }
 
       it "answers files with matching extensions" do
-        expect(subject.files).to contain_exactly(Pathname("#{temp_dir}/test.rb"))
+        expect(runner.files).to contain_exactly(Pathname("#{temp_dir}/test.rb"))
       end
     end
 
@@ -59,7 +60,7 @@ RSpec.describe Pragmater::Runner, :temp_dir do
       let(:includes) { ["*.rb"] }
 
       it "answers files with matching extensions" do
-        expect(subject.files).to contain_exactly(Pathname("#{temp_dir}/test.rb"))
+        expect(runner.files).to contain_exactly(Pathname("#{temp_dir}/test.rb"))
       end
     end
 
@@ -67,7 +68,7 @@ RSpec.describe Pragmater::Runner, :temp_dir do
       let(:path) { "bogus" }
 
       it "answers empty array" do
-        expect(subject.files).to be_empty
+        expect(runner.files).to be_empty
       end
     end
 
@@ -76,7 +77,7 @@ RSpec.describe Pragmater::Runner, :temp_dir do
       let(:includes) { ["bogus", "~#}*^"] }
 
       it "answers empty array" do
-        expect(subject.files).to be_empty
+        expect(runner.files).to be_empty
       end
     end
 
@@ -85,7 +86,7 @@ RSpec.describe Pragmater::Runner, :temp_dir do
       let(:includes) { [".rb"] }
 
       it "answers empty array" do
-        expect(subject.files).to be_empty
+        expect(runner.files).to be_empty
       end
     end
 
@@ -100,7 +101,7 @@ RSpec.describe Pragmater::Runner, :temp_dir do
       end
 
       it "answers recursed files" do
-        expect(subject.files).to contain_exactly(
+        expect(runner.files).to contain_exactly(
           nested_file,
           Pathname("#{tasks_dir}/test.rake")
         )
@@ -109,16 +110,17 @@ RSpec.describe Pragmater::Runner, :temp_dir do
   end
 
   describe "#run" do
+    subject(:runner) { described_class.new temp_dir, includes: includes, writer: writer_class }
+
     let(:writer_class) { class_spy Pragmater::Writer }
     let(:writer_instance) { instance_spy Pragmater::Writer }
-    subject { described_class.new temp_dir, includes: includes, writer: writer_class }
 
     context "without files" do
       let(:action) { :add }
 
       it "doesn't update files" do
-        subject.run action: action
-        expect(writer_instance).to_not have_received(action)
+        runner.run action: action
+        expect(writer_instance).not_to have_received(action)
       end
     end
 
@@ -133,7 +135,7 @@ RSpec.describe Pragmater::Runner, :temp_dir do
       end
 
       it "updates files" do
-        subject.run action: action
+        runner.run action: action
         expect(writer_instance).to have_received(action)
       end
     end

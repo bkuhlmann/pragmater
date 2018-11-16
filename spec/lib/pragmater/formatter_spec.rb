@@ -17,11 +17,11 @@ RSpec.describe Pragmater::Formatter do
     end
 
     it "does not match when space exists between comment and bang symbol" do
-      expect(described_class.shebang_format).to_not match("# ! /usr/bin/env ruby")
+      expect(described_class.shebang_format).not_to match("# ! /usr/bin/env ruby")
     end
 
     it "does not match normal comments" do
-      expect(described_class.shebang_format).to_not match("# This is a normal comment.")
+      expect(described_class.shebang_format).not_to match("# This is a normal comment.")
     end
   end
 
@@ -47,11 +47,11 @@ RSpec.describe Pragmater::Formatter do
     end
 
     it "does not match shebangs" do
-      expect(described_class.pragma_format).to_not match("#!/usr/bin/ruby")
+      expect(described_class.pragma_format).not_to match("#!/usr/bin/ruby")
     end
 
     it "does not match normal comments" do
-      expect(described_class.pragma_format).to_not match("# This is a normal comment.")
+      expect(described_class.pragma_format).not_to match("# This is a normal comment.")
     end
   end
 
@@ -65,18 +65,18 @@ RSpec.describe Pragmater::Formatter do
     end
 
     it "does not match general comments" do
-      expect(described_class.valid_formats).to_not match("# A example comment.")
+      expect(described_class.valid_formats).not_to match("# A example comment.")
     end
   end
 
   describe "#format_shebang" do
-    subject { described_class.new string }
+    subject(:formatter) { described_class.new string }
 
     context "with formatted shebang" do
       let(:string) { "#! /usr/bin/env ruby" }
 
       it "answers formatted shebang" do
-        expect(subject.format_shebang).to eq("#! /usr/bin/env ruby")
+        expect(formatter.format_shebang).to eq("#! /usr/bin/env ruby")
       end
     end
 
@@ -84,7 +84,7 @@ RSpec.describe Pragmater::Formatter do
       let(:string) { "#!/usr/bin/env ruby" }
 
       it "answers formatted shebang" do
-        expect(subject.format_shebang).to eq("#! /usr/bin/env ruby")
+        expect(formatter.format_shebang).to eq("#! /usr/bin/env ruby")
       end
     end
 
@@ -92,19 +92,19 @@ RSpec.describe Pragmater::Formatter do
       let(:string) { "# Test." }
 
       it "answers original string" do
-        expect(subject.format_shebang).to eq("# Test.")
+        expect(formatter.format_shebang).to eq("# Test.")
       end
     end
   end
 
   describe "#format_pragma" do
-    subject { described_class.new string }
+    subject(:formatter) { described_class.new string }
 
     context "with formatted pragma" do
       let(:string) { "# frozen_string_literal: true" }
 
       it "answers formatted pragma" do
-        expect(subject.format_pragma).to eq("# frozen_string_literal: true")
+        expect(formatter.format_pragma).to eq("# frozen_string_literal: true")
       end
     end
 
@@ -112,7 +112,7 @@ RSpec.describe Pragmater::Formatter do
       let(:string) { "#frozen_string_literal:true" }
 
       it "answers formatted pragma" do
-        expect(subject.format_pragma).to eq("# frozen_string_literal: true")
+        expect(formatter.format_pragma).to eq("# frozen_string_literal: true")
       end
     end
 
@@ -120,19 +120,19 @@ RSpec.describe Pragmater::Formatter do
       let(:string) { "# Test." }
 
       it "answers original string" do
-        expect(subject.format_pragma).to eq("# Test.")
+        expect(formatter.format_pragma).to eq("# Test.")
       end
     end
   end
 
   describe "#format" do
-    subject { described_class.new string }
+    subject(:formatter) { described_class.new string }
 
     context "when shebang" do
       let(:string) { "#! /usr/bin/env ruby" }
 
       it "answers shebang" do
-        expect(subject.format).to eq("#! /usr/bin/env ruby")
+        expect(formatter.format).to eq("#! /usr/bin/env ruby")
       end
     end
 
@@ -140,7 +140,7 @@ RSpec.describe Pragmater::Formatter do
       let(:string) { "# frozen_string_literal: true" }
 
       it "answers pragma" do
-        expect(subject.format).to eq("# frozen_string_literal: true")
+        expect(formatter.format).to eq("# frozen_string_literal: true")
       end
     end
 
@@ -148,7 +148,7 @@ RSpec.describe Pragmater::Formatter do
       let(:string) { "# Some random comment." }
 
       it "answers normal comment" do
-        expect(subject.format).to eq("# Some random comment.")
+        expect(formatter.format).to eq("# Some random comment.")
       end
     end
   end

@@ -3,8 +3,10 @@
 require "spec_helper"
 
 RSpec.describe Pragmater::Writer, :temp_dir do
+  subject(:writer) { described_class.new test_file_path, comments }
+
   let(:test_file_path) { File.join temp_dir, "test.rb" }
-  subject { described_class.new test_file_path, comments }
+
   before { FileUtils.cp fixture_file_path, test_file_path }
 
   describe "#add" do
@@ -13,7 +15,7 @@ RSpec.describe Pragmater::Writer, :temp_dir do
       let(:comments) { "# frozen_string_literal: true" }
 
       it "formats, adds comments, and spacing to top of file" do
-        subject.add
+        writer.add
 
         File.open test_file_path, "r" do |file|
           expect(file.to_a.join).to eq(
@@ -34,7 +36,7 @@ RSpec.describe Pragmater::Writer, :temp_dir do
       let(:comments) { "# frozen_string_literal: true" }
 
       it "formats and adds comments with no extra spacing to top of file" do
-        subject.add
+        writer.add
 
         File.open test_file_path, "r" do |file|
           expect(file.to_a.join).to eq(
@@ -52,7 +54,7 @@ RSpec.describe Pragmater::Writer, :temp_dir do
       let(:comments) { "# frozen_string_literal: true" }
 
       it "adds formatted comments to top of file" do
-        subject.add
+        writer.add
 
         File.open test_file_path, "r" do |file|
           expect(file.to_a).to contain_exactly("# frozen_string_literal: true\n")
@@ -65,7 +67,7 @@ RSpec.describe Pragmater::Writer, :temp_dir do
       let(:comments) { "#! /usr/bin/env ruby" }
 
       it "does not add duplicates" do
-        subject.add
+        writer.add
 
         File.open test_file_path, "r" do |file|
           expect(file.to_a.join).to eq(
@@ -84,7 +86,7 @@ RSpec.describe Pragmater::Writer, :temp_dir do
       let(:comments) { "#! /usr/bin/env ruby" }
 
       it "formats and removes comments" do
-        subject.remove
+        writer.remove
 
         File.open test_file_path, "r" do |file|
           expect(file.to_a.join).to eq("puts RUBY_VERSION\n")
@@ -100,7 +102,7 @@ RSpec.describe Pragmater::Writer, :temp_dir do
       let(:comments) { "#! /usr/bin/env ruby" }
 
       it "formats, removes comments, and removes trailing space" do
-        subject.remove
+        writer.remove
 
         File.open test_file_path, "r" do |file|
           expect(file.to_a.join).to eq("puts RUBY_VERSION\n")
@@ -113,7 +115,7 @@ RSpec.describe Pragmater::Writer, :temp_dir do
       let(:comments) { "# frozen_string_literal: true" }
 
       it "does nothing" do
-        subject.remove
+        writer.remove
         File.open(test_file_path, "r") { |file| expect(file.to_a).to be_empty }
       end
     end

@@ -3,16 +3,17 @@
 require "spec_helper"
 
 RSpec.describe Pragmater::Commenter do
+  subject(:commenter) { described_class.new older, newer }
+
   let(:older) { [] }
   let(:newer) { [] }
-  subject { described_class.new older, newer }
 
   describe "#add" do
     context "with single newer comment" do
       let(:newer) { "# frozen_string_literal: true" }
 
       it "answers array of added comments" do
-        expect(subject.add).to contain_exactly("# frozen_string_literal: true")
+        expect(commenter.add).to contain_exactly("# frozen_string_literal: true")
       end
     end
 
@@ -20,7 +21,10 @@ RSpec.describe Pragmater::Commenter do
       let(:newer) { ["# encoding: UTF-8", "# frozen_string_literal: true"] }
 
       it "answers array of added comments" do
-        expect(subject.add).to contain_exactly("# encoding: UTF-8", "# frozen_string_literal: true")
+        expect(commenter.add).to contain_exactly(
+          "# encoding: UTF-8",
+          "# frozen_string_literal: true"
+        )
       end
     end
 
@@ -28,7 +32,7 @@ RSpec.describe Pragmater::Commenter do
       let(:older) { "# encoding: UTF-8" }
 
       it "answers array of added comments" do
-        expect(subject.add).to contain_exactly("# encoding: UTF-8")
+        expect(commenter.add).to contain_exactly("# encoding: UTF-8")
       end
     end
 
@@ -36,7 +40,10 @@ RSpec.describe Pragmater::Commenter do
       let(:older) { ["# encoding: UTF-8", "# frozen_string_literal: true"] }
 
       it "answers array of added comments" do
-        expect(subject.add).to contain_exactly("# encoding: UTF-8", "# frozen_string_literal: true")
+        expect(commenter.add).to contain_exactly(
+          "# encoding: UTF-8",
+          "# frozen_string_literal: true"
+        )
       end
     end
 
@@ -45,7 +52,7 @@ RSpec.describe Pragmater::Commenter do
       let(:newer) { ["# encoding: UTF-8", "# coding: UTF-8"] }
 
       it "answers array of added comments" do
-        expect(subject.add).to contain_exactly(
+        expect(commenter.add).to contain_exactly(
           "# frozen_string_literal: true",
           "# example: test",
           "# encoding: UTF-8",
@@ -59,7 +66,10 @@ RSpec.describe Pragmater::Commenter do
       let(:newer) { ["# frozen_string_literal: true", "# encoding: UTF-8"] }
 
       it "answers array of non-duplicated comments" do
-        expect(subject.add).to contain_exactly("# encoding: UTF-8", "# frozen_string_literal: true")
+        expect(commenter.add).to contain_exactly(
+          "# encoding: UTF-8",
+          "# frozen_string_literal: true"
+        )
       end
     end
 
@@ -67,13 +77,13 @@ RSpec.describe Pragmater::Commenter do
       let(:newer) { "# bogus" }
 
       it "answers empty array" do
-        expect(subject.add).to be_empty
+        expect(commenter.add).to be_empty
       end
     end
 
     context "with empty older and newer comments" do
       it "answers empty array" do
-        expect(subject.add).to be_empty
+        expect(commenter.add).to be_empty
       end
     end
   end
@@ -84,7 +94,7 @@ RSpec.describe Pragmater::Commenter do
       let(:newer) { ["# coding: UTF-8", "# encoding: UTF-8"] }
 
       it "answers array with matches from older and newer comments removed" do
-        expect(subject.remove).to contain_exactly("# frozen_string_literal: true")
+        expect(commenter.remove).to contain_exactly("# frozen_string_literal: true")
       end
     end
 
@@ -93,7 +103,7 @@ RSpec.describe Pragmater::Commenter do
       let(:newer) { ["# frozen_string_literal: true", "# coding: UTF-8"] }
 
       it "answers array of older comments only" do
-        expect(subject.remove).to contain_exactly("# encoding: UTF-8")
+        expect(commenter.remove).to contain_exactly("# encoding: UTF-8")
       end
     end
 
@@ -101,7 +111,7 @@ RSpec.describe Pragmater::Commenter do
       let(:newer) { "# encoding: UTF-8" }
 
       it "answers empty array" do
-        expect(subject.remove).to be_empty
+        expect(commenter.remove).to be_empty
       end
     end
 
@@ -110,13 +120,13 @@ RSpec.describe Pragmater::Commenter do
       let(:newer) { "# bogus" }
 
       it "answers empty array" do
-        expect(subject.remove).to be_empty
+        expect(commenter.remove).to be_empty
       end
     end
 
     context "with empty older and newer comments" do
       it "answers empty array" do
-        expect(subject.remove).to be_empty
+        expect(commenter.remove).to be_empty
       end
     end
   end
