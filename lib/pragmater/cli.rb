@@ -13,7 +13,7 @@ module Pragmater
     package_name Identity.version_label
 
     def self.configuration
-      Runcom::Configuration.new Identity.name, defaults: {
+      Runcom::Config.new Identity.name, defaults: {
         add: {
           comments: "",
           includes: []
