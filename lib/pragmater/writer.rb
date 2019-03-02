@@ -59,7 +59,7 @@ module Pragmater
 
     # :reek:UtilityFunction
     def remove_spacing! lines
-      lines.delete_at(0) if lines.first == "\n"
+      lines.delete_at 0 if lines.first == "\n"
     end
 
     def write
