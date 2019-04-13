@@ -12,18 +12,21 @@ module Pragmater
 
     package_name Identity.version_label
 
+    # rubocop:disable Metrics/MethodLength
     def self.configuration
-      Runcom::Config.new Identity.name, defaults: {
-        add: {
-          comments: "",
-          includes: []
-        },
-        remove: {
-          comments: "",
-          includes: []
-        }
-      }
+      Runcom::Config.new Identity.name,
+                         defaults: {
+                           add: {
+                             comments: "",
+                             includes: []
+                           },
+                           remove: {
+                             comments: "",
+                             includes: []
+                           }
+                         }
     end
+    # rubocop:enable Metrics/MethodLength
 
     def initialize args = [], options = {}, config = {}
       super args, options, config
@@ -85,11 +88,13 @@ module Pragmater
     method_option :edit,
                   aliases: "-e",
                   desc: "Edit gem configuration.",
-                  type: :boolean, default: false
+                  type: :boolean,
+                  default: false
     method_option :info,
                   aliases: "-i",
                   desc: "Print gem configuration.",
-                  type: :boolean, default: false
+                  type: :boolean,
+                  default: false
     def config
       path = configuration.path
 
