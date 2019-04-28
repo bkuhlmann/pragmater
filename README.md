@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="pragmater.png" alt="Pragmater Icon"/>
+</p>
+
 # Pragmater
 
 [![Gem Version](https://badge.fury.io/rb/pragmater.svg)](http://badge.fury.io/rb/pragmater)
