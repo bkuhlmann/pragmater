@@ -9,17 +9,16 @@
 [![Code Climate Test Coverage](https://api.codeclimate.com/v1/badges/f0971ab6985309ce4db4/test_coverage)](https://codeclimate.com/github/bkuhlmann/pragmater/test_coverage)
 [![Circle CI Status](https://circleci.com/gh/bkuhlmann/pragmater.svg?style=svg)](https://circleci.com/gh/bkuhlmann/pragmater)
 
-A command line interface for managing/formatting source file
-[directive pragma](https://en.wikipedia.org/wiki/Directive_(programming)) comments
-(a.k.a. *magic comments*). Examples:
+A command line interface for managing/formatting source file [directive
+pragmas](https://en.wikipedia.org/wiki/Directive_(programming)) (a.k.a. *magic comments*). Examples:
 
     #! /usr/bin/env ruby
     # frozen_string_literal: true
     # encoding: UTF-8
 
 With [Ruby 2.3.0](https://www.ruby-lang.org/en/news/2015/12/25/ruby-2-3-0-released), frozen strings
-are supported via a pragma comment. This gem provides an easy way to add pragma comments to single
-or multiple Ruby source files in order to benefit from improved memory and concurrency performance.
+are supported via a pragma. This gem provides an easy way to add pragmas to single or multiple Ruby
+source files in order to benefit from improved memory and concurrency performance.
 
 <!-- Tocer[start]: Auto-generated, don't remove. -->
 
@@ -32,8 +31,10 @@ or multiple Ruby source files in order to benefit from improved memory and concu
   - [Usage](#usage)
     - [Command Line Interface (CLI)](#command-line-interface-cli)
     - [Customization](#customization)
+    - [Available Pragmas](#available-pragmas)
+    - [Syntax](#syntax)
+    - [Precedence](#precedence)
     - [Frozen String Literals](#frozen-string-literals)
-    - [Available Comments](#available-comments)
   - [Tests](#tests)
   - [Versioning](#versioning)
   - [Code of Conduct](#code-of-conduct)
@@ -46,11 +47,11 @@ or multiple Ruby source files in order to benefit from improved memory and concu
 
 ## Features
 
-- Supports adding a pragma comment or multiple pragma comments to single or multiple source files.
-- Supports removing a pragma comment(s) from single or multiple source files.
+- Supports adding a pragma or multiple pragmas to single or multiple source files.
+- Supports removing pragma(s) from single or multiple source files.
 - Supports file list filtering. Defaults to any file.
-- Ensures duplicate pragma comments never exist.
-- Ensures pragma comments are consistently formatted.
+- Ensures duplicate pragmas never exist.
+- Ensures pragmas are consistently formatted.
 
 ## Screencasts
 
@@ -78,8 +79,8 @@ From the command line, type: `pragmater help`
     pragmater -r, [--remove=PATH]   # Remove pragma comments from source file(s).
     pragmater -v, [--version]       # Show gem version.
 
-Both the `--add` and `--remove` commands support options for specifying pragma comments and/or
-included files (viewable by running `pragmater --help --add` or `pragmater --help --remove`):
+Both the `--add` and `--remove` commands support options for specifying pragmas and/or included
+files (viewable by running `pragmater --help --add` or `pragmater --help --remove`):
 
     -c, [--comments=one two three]  # Pragma comments
     -i, [--includes=one two three]  # File include list
@@ -114,10 +115,61 @@ Feel free to take this default configuration, modify, and save as your own custo
 
 The `configuration.yml` file can be configured as follows:
 
-- `add`: Defines global/local comments and/or file include lists when adding pragma comments. The
-  `comments` and `includes` options can be either a single string or an array of values.
-- `remove`: Defines global/local comments and/or file include lists when removing pragma comments.
-  The `comments` and `includes` options can be either a single string or an array of values.
+- `add`: Defines global/local comments and/or file include lists when adding pragmas. The
+  `comments` and `includes` options can be either a single string or an array.
+- `remove`: Defines global/local comments and/or file include lists when removing pragmas.
+  The `comments` and `includes` options can be either a single string or an array.
+
+### Available Pragmas
+
+With Ruby 2.3 and higher, the following pragmas are available:
+
+- `# encoding:` Defaults to `UTF-8` but any supported encoding can be used. For a list of values,
+  launch an IRB session and run `Encoding.name_list`.
+- `# coding:` The shorthand for `# encoding:`. Supports the same values as mentioned above.
+- `# frozen_string_literal:` Defaults to `false` but can take either `true` or `false` as a value.
+  When enabled, Ruby will throw errors when strings are used in a mutable fashion.
+- `# warn_indent:` Defaults to `false` but can take either `true` or `false` as a value. When
+  enabled, and running Ruby with the `-w` option, it'll throw warnings for code that isn't indented
+  by two spaces.
+
+### Syntax
+
+The pragma syntax allows for two kinds of styles. Example:
+
+    # encoding: UTF-8
+    # -*- encoding: UTF-8 -*-
+
+Only the former syntax is supported by this gem as the latter syntax is more verbose and requires
+additional typing.
+
+### Precedence
+
+When different multiple pragmas are defined, they all take precedence:
+
+    # encoding: binary
+    # frozen_string_literal: true
+
+In the above example, both *binary* encoding and *frozen string literals* behavior will be applied.
+
+When defining multiple pragmas that are similar, behavior can differ based on the *kind* of pragma
+used. The following walks through each use case so you know what to expect:
+
+    # encoding: binary
+    # encoding: UTF-8
+
+In the above example, only the *binary* encoding will be applied while the *UTF-8* encoding will be
+ignored (same principle applies for the `coding` pragma too).
+
+    # frozen_string_literal: false
+    # frozen_string_literal: true
+
+In the above example, frozen string literal support *will be enabled* instead of being disabled.
+
+    # warn_indent: false
+    # warn_indent: true
+
+In the above example, indentation warnings *will be enabled* instead of being disabled.
 
 ### Frozen String Literals
 
@@ -167,23 +219,10 @@ to hard to read code. Instead use the following:
     mutable = "test"
 
 While this requires extra typing, it expresses intent more clearly. There is a slight caveat to this
-rule in that the use of `String#-@` was [enhanced in Ruby 2.5.0](http://bit.ly/2DGAjgG) to
+rule in which the use of `String#-@` was [enhanced in Ruby 2.5.0](http://bit.ly/2DGAjgG) to
 *deduplicate* all instances of the same string thus reducing your memory footprint. This can be
 valuable in situations where you are not using the frozen string comment and need to selectively
 freeze strings.
-
-### Available Comments
-
-With Ruby 2.3 and higher, the following comments are available:
-
-- `# encoding:` Defaults to `UTF-8` but any supported encoding can be used. For a list of values,
-  launch an IRB session and run `Encoding.name_list`.
-- `# coding:` The shorthand for `# encoding:`. Supports the same values as mentioned above.
-- `# frozen_string_literal:` Defaults to `false` but can take either `true` or `false` as a value.
-  When enabled, Ruby will throw errors when strings are used in a mutable fashion.
-- `# warn_indent:` Defaults to `false` but can take either `true` or `false` as a value. When
-  enabled, and running Ruby with the `-w` option, it'll throw warnings for code that isn't indented
-  by two spaces.
 
 ## Tests
 
