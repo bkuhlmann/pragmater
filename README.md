@@ -73,17 +73,17 @@ Type the following to install:
 
 From the command line, type: `pragmater help`
 
-    pragmater -a, [--add=PATH]      # Add pragma comments to source file(s).
+    pragmater -a, [--add=PATH]      # Add comments to source file(s).
     pragmater -c, [--config]        # Manage gem configuration.
     pragmater -h, [--help=COMMAND]  # Show this message or get help for a command.
-    pragmater -r, [--remove=PATH]   # Remove pragma comments from source file(s).
+    pragmater -r, [--remove=PATH]   # Remove comments from source file(s).
     pragmater -v, [--version]       # Show gem version.
 
 Both the `--add` and `--remove` commands support options for specifying pragmas and/or included
 files (viewable by running `pragmater --help --add` or `pragmater --help --remove`):
 
-    -c, [--comments=one two three]  # Pragma comments
-    -i, [--includes=one two three]  # File include list
+    -c, [--comments=one two three]  # Define desired comments
+    -i, [--includes=one two three]  # Include specific files and/or directories
 
 Example (same options could be used for the `--remove` command too):
 

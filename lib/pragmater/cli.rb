@@ -35,16 +35,16 @@ module Pragmater
       abort error.message
     end
 
-    desc "-a, [--add=PATH]", "Add pragma comments to source file(s)."
+    desc "-a, [--add=PATH]", "Add comments to source file(s)."
     map %w[-a --add] => :add
     method_option :comments,
                   aliases: "-c",
-                  desc: "Pragma comments",
+                  desc: "Define desired comments",
                   type: :array,
                   default: configuration.to_h.dig(:add, :comments)
     method_option :includes,
                   aliases: "-i",
-                  desc: "File include list",
+                  desc: "Include specific files and/or directories",
                   type: :array,
                   default: configuration.to_h.dig(:add, :includes)
     def add path = "."
@@ -59,16 +59,16 @@ module Pragmater
       runner.run(action: :add) { |file| say_status :info, "Processed: #{file}.", :green }
     end
 
-    desc "-r, [--remove=PATH]", "Remove pragma comments from source file(s)."
+    desc "-r, [--remove=PATH]", "Remove comments from source file(s)."
     map %w[-r --remove] => :remove
     method_option :comments,
                   aliases: "-c",
-                  desc: "Pragma comments",
+                  desc: "Define desired comments",
                   type: :array,
                   default: configuration.to_h.dig(:remove, :comments)
     method_option :includes,
                   aliases: "-i",
-                  desc: "File include list",
+                  desc: "Include specific files and/or directories",
                   type: :array,
                   default: configuration.to_h.dig(:remove, :includes)
     def remove path = "."
