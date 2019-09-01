@@ -1,3 +1,10 @@
+# 6.3.2 (2019-09-01)
+
+- Updated CLI command descriptions.
+- Updated README with pragma syntax and precedence usage.
+- Updated to Rubocop 0.73.0.
+- Updated to Ruby 2.6.4.
+
 # 6.3.1 (2019-07-01)
 
 - Updated XDG documentation to reference XDG gem.
