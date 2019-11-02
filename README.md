@@ -55,7 +55,7 @@ source files in order to benefit from improved memory and concurrency performanc
 
 ## Screencasts
 
-[![asciicast](https://asciinema.org/a/155880.png)](https://asciinema.org/a/155880)
+[![asciicast](https://asciinema.org/a/278662.svg)](https://asciinema.org/a/278662)
 
 ## Requirements
 
