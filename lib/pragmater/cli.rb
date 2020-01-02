@@ -14,7 +14,7 @@ module Pragmater
 
     # rubocop:disable Metrics/MethodLength
     def self.configuration
-      Runcom::Config.new Identity.name,
+      Runcom::Config.new "#{Identity.name}/configuration.yml",
                          defaults: {
                            add: {
                              comments: "",
