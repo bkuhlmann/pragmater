@@ -59,7 +59,7 @@ source files in order to benefit from improved memory and concurrency performanc
 
 ## Requirements
 
-1. [Ruby 2.6.x](https://www.ruby-lang.org)
+1. [Ruby 2.7.x](https://www.ruby-lang.org)
 
 ## Setup
 
