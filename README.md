@@ -26,6 +26,8 @@ source files in order to benefit from improved memory and concurrency performanc
   - [Screencasts](#screencasts)
   - [Requirements](#requirements)
   - [Setup](#setup)
+    - [Production](#production)
+    - [Development](#development)
   - [Usage](#usage)
     - [Command Line Interface (CLI)](#command-line-interface-cli)
     - [Customization](#customization)
@@ -61,9 +63,23 @@ source files in order to benefit from improved memory and concurrency performanc
 
 ## Setup
 
-Type the following to install:
+### Production
+
+To install, run:
 
     gem install pragmater
+
+### Development
+
+To contribute, run:
+
+    git clone https://github.com/bkuhlmann/pragmater.git
+    cd pragmater
+    bin/setup
+
+You can also use the IRB console for direct access to all objects:
+
+    bin/console
 
 ## Usage
 
