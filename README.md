@@ -5,8 +5,6 @@
 # Pragmater
 
 [![Gem Version](https://badge.fury.io/rb/pragmater.svg)](http://badge.fury.io/rb/pragmater)
-[![Code Climate Maintainability](https://api.codeclimate.com/v1/badges/f0971ab6985309ce4db4/maintainability)](https://codeclimate.com/github/bkuhlmann/pragmater/maintainability)
-[![Code Climate Test Coverage](https://api.codeclimate.com/v1/badges/f0971ab6985309ce4db4/test_coverage)](https://codeclimate.com/github/bkuhlmann/pragmater/test_coverage)
 [![Circle CI Status](https://circleci.com/gh/bkuhlmann/pragmater.svg?style=svg)](https://circleci.com/gh/bkuhlmann/pragmater)
 
 A command line interface for managing/formatting source file [directive
