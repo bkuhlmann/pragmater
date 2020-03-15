@@ -3,20 +3,9 @@
 module Pragmater
   # Gem identity information.
   module Identity
-    def self.name
-      "pragmater"
-    end
-
-    def self.label
-      "Pragmater"
-    end
-
-    def self.version
-      "7.0.1"
-    end
-
-    def self.version_label
-      "#{label} #{version}"
-    end
+    NAME = "pragmater"
+    LABEL = "Pragmater"
+    VERSION = "7.0.1"
+    VERSION_LABEL = "#{LABEL} #{VERSION}"
   end
 end

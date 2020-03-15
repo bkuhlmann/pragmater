@@ -3,8 +3,8 @@
 require_relative "lib/pragmater/identity"
 
 Gem::Specification.new do |spec|
-  spec.name = Pragmater::Identity.name
-  spec.version = Pragmater::Identity.version
+  spec.name = Pragmater::Identity::NAME
+  spec.version = Pragmater::Identity::VERSION
   spec.platform = Gem::Platform::RUBY
   spec.authors = ["Brooke Kuhlmann"]
   spec.email = ["brooke@alchemists.io"]

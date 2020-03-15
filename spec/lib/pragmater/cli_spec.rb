@@ -182,7 +182,7 @@ RSpec.describe Pragmater::CLI do
 
     shared_examples_for "a version command" do
       it "prints version" do
-        pattern = /#{Pragmater::Identity.version_label}\n/
+        pattern = /#{Pragmater::Identity::VERSION_LABEL}\n/
         result = -> { cli }
 
         expect(&result).to output(pattern).to_stdout
@@ -191,7 +191,7 @@ RSpec.describe Pragmater::CLI do
 
     shared_examples_for "a help command" do
       it "prints usage" do
-        pattern = /#{Pragmater::Identity.version_label}\scommands:\n/
+        pattern = /#{Pragmater::Identity::VERSION_LABEL}\scommands:\n/
         result = -> { cli }
 
         expect(&result).to output(pattern).to_stdout

@@ -5,5 +5,5 @@ require "pragmater"
 require "pragmater/cli"
 require "pragmater/identity"
 
-Process.setproctitle Pragmater::Identity.version_label
+Process.setproctitle Pragmater::Identity::VERSION_LABEL
 Pragmater::CLI.start
