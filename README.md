@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="pragmater.png" alt="Pragmater Icon"/>
+  <img src="https://www.alchemists.io/images/projects/pragmater/icon.png" alt="Pragmater Icon"/>
 </p>
 
 # Pragmater
