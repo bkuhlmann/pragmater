@@ -37,7 +37,7 @@ toc::[]
 == Screencasts
 
 [link=https://www.alchemists.io/screencasts/pragmater.html]
-image::https://www.alchemists.io/images/screencasts/pragmater.png[Screencast]
+image::https://www.alchemists.io/images/screencasts/pragmater/cover-original.png[Screencast,role=focal_point]
 
 == Requirements
 
