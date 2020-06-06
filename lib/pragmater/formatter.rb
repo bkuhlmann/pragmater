@@ -4,7 +4,7 @@ module Pragmater
   # Formats pragma comments in a consistent manner.
   class Formatter
     def self.shebang_format
-      %r(\A\#\!\s?\/.*ruby\Z)
+      %r(\A\#!\s?/.*ruby\Z)
     end
 
     def self.pragma_format
@@ -13,9 +13,9 @@ module Pragmater
         \#       # Start of comment.
         \s?      # Space - optional.
         \w+      # Key - 1 or more word characters only.
-        \:       # Key and value delimiter.
+        :        # Key and value delimiter.
         \s?      # Space - optional.
-        [\w\-]+  # Value - 1 or more word or dash characters.
+        [\w-]+   # Value - 1 or more word or dash characters.
         \Z       # End of line.
       /x
     end

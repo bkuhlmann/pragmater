@@ -34,7 +34,7 @@ RSpec.describe Pragmater::CLI do
 
         it "prints that file was updated" do
           result = -> { ClimateControl.modify(XDG_CONFIG_HOME: temp_dir.to_s) { cli } }
-          expect(&result).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
+          expect(&result).to output(/info\s+Processed:\s#{ruby_file}\.\n/).to_stdout
         end
       end
 
@@ -60,7 +60,7 @@ RSpec.describe Pragmater::CLI do
         end
 
         it "prints selected files were updated" do
-          pattern = /info\s+Processed\:\s#{ruby_file}\.\n\s+info\s+Processed\:\s#{rake_file}\.\n/
+          pattern = /info\s+Processed:\s#{ruby_file}\.\n\s+info\s+Processed:\s#{rake_file}\.\n/
           result = -> { ClimateControl.modify(XDG_CONFIG_HOME: temp_dir.to_s) { cli } }
 
           expect(&result).to output(pattern).to_stdout
@@ -85,7 +85,7 @@ RSpec.describe Pragmater::CLI do
 
         it "prints selected files were updated" do
           result = -> { ClimateControl.modify(XDG_CONFIG_HOME: temp_dir.to_s) { cli } }
-          expect(&result).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
+          expect(&result).to output(/info\s+Processed:\s#{ruby_file}\.\n/).to_stdout
         end
       end
     end
@@ -116,7 +116,7 @@ RSpec.describe Pragmater::CLI do
 
         it "prints that file was updated" do
           result = -> { ClimateControl.modify(XDG_CONFIG_HOME: temp_dir.to_s) { cli } }
-          expect(&result).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
+          expect(&result).to output(/info\s+Processed:\s#{ruby_file}\.\n/).to_stdout
         end
       end
 
@@ -138,7 +138,7 @@ RSpec.describe Pragmater::CLI do
         end
 
         it "prints selected files were updated" do
-          pattern = /info\s+Processed\:\s#{ruby_file}\.\n\s+info\s+Processed\:\s#{rake_file}\.\n/
+          pattern = /info\s+Processed:\s#{ruby_file}\.\n\s+info\s+Processed:\s#{rake_file}\.\n/
           result = -> { ClimateControl.modify(XDG_CONFIG_HOME: temp_dir.to_s) { cli } }
 
           expect(&result).to output(pattern).to_stdout
@@ -166,7 +166,7 @@ RSpec.describe Pragmater::CLI do
 
         it "prints selected files were updated" do
           result = -> { ClimateControl.modify(XDG_CONFIG_HOME: temp_dir.to_s) { cli } }
-          expect(&result).to output(/info\s+Processed\:\s#{ruby_file}\.\n/).to_stdout
+          expect(&result).to output(/info\s+Processed:\s#{ruby_file}\.\n/).to_stdout
         end
       end
     end
