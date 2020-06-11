@@ -102,8 +102,8 @@ pragmater --add --comments "# frozen_string_literal: true" --includes "Gemfile" 
 ----
 
 The `--add` and `--remove` commands default to the current working directory so a path isn’t
-necessary unless you want to run Pragmater on a directory structure _other than_ your current
-working directory.
+necessary unless you want to run Pragmater on a directory structure other than your current working
+directory.
 
 === Customization
 
@@ -124,8 +124,7 @@ The default configuration is as follows:
   :includes: []
 ----
 
-Feel free to take this default configuration, modify, and save as your own custom
-`configuration.yml`.
+Feel free to take the above configuration, modify, and save as your own custom `configuration.yml`.
 
 The `configuration.yml` file can be configured as follows:
 
@@ -270,6 +269,24 @@ rule in which the use of `+String#-@+` was http://bit.ly/2DGAjgG[enhanced in Rub
 _deduplicate_ all instances of the same string thus reducing your memory footprint. This can be
 valuable in situations where you are not using the frozen string comment and need to selectively
 freeze strings.
+
+=== Consistency
+
+As an added bonus, this gem ensures pragmas for all analyzed files are formatted in a consistent
+style. This means there is always a space after the octothorpe (`#`). Here are multiple pragmas
+presented together for a visual comparison:
+
+[source,ruby]
+----
+#! /usr/bin/env ruby
+# encoding: UTF-8
+# coding: UTF-8
+# frozen_string_literal: true
+# warn_indent: true
+----
+
+One oddity to the above is the use of `# !/usr/bin/env ruby` is not allowed but `#! /usr/bin/env
+ruby` is which is why spacing is slightly different for shell pragmas.
 
 == Tests
 
