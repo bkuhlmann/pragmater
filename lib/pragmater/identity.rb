@@ -5,7 +5,7 @@ module Pragmater
   module Identity
     NAME = "pragmater"
     LABEL = "Pragmater"
-    VERSION = "7.1.0"
+    VERSION = "7.2.0"
     VERSION_LABEL = "#{LABEL} #{VERSION}"
   end
 end
