@@ -1,32 +1,34 @@
 # frozen_string_literal: true
 
+require "pathname"
+require "refinements/pathnames"
+
 module Pragmater
   # Adds/removes pragma comments for files in given path.
   class Runner
-    # rubocop:disable Metrics/ParameterLists
-    def initialize path = ".", comments: [], includes: [], writer: Writer
-      @path = Pathname path
-      @comments = Array comments
-      @includes = Array includes
-      @writer = writer
-    end
-    # rubocop:enable Metrics/ParameterLists
+    using Refinements::Pathnames
 
-    def files
-      return [] unless path.exist? && path.directory? && !includes.empty?
-
-      Pathname.glob(%(#{path}/{#{includes.join ","}})).select(&:file?)
+    def self.for **attributes
+      new Context[attributes]
     end
 
-    def run action:
-      files.each do |file|
-        writer.new(file, comments).public_send action
-        yield file if block_given?
-      end
+    def initialize context, parser: Parsers::File.new
+      @context = context
+      @parser = parser
+    end
+
+    def call
+      Pathname(context.root_dir).files("{#{context.includes.join ","}}").map(&method(:write))
     end
 
     private
 
-    attr_reader :path, :comments, :includes, :writer
+    attr_reader :context, :parser
+
+    def write path
+      path.tap do |a_path|
+        a_path.write parser.call(a_path, context.comments, action: context.action).join
+      end
+    end
   end
 end

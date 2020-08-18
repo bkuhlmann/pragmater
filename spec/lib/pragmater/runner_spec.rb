@@ -1,143 +1,101 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+require "refinements/pathnames"
 
 RSpec.describe Pragmater::Runner, :temp_dir do
-  let(:path) { "." }
-  let(:comments) { [] }
-  let(:includes) { [] }
+  using Refinements::Pathnames
 
-  describe "#files" do
-    subject(:runner) { described_class.new path, comments: comments, includes: includes }
+  subject(:runner) { described_class.new context }
 
-    let(:tasks_dir) { File.join temp_dir, "tasks" }
-    let(:ruby_file) { File.join temp_dir, "test.rb" }
-    let(:rake_file) { File.join tasks_dir, "test.rake" }
-    let(:text_file) { File.join temp_dir, "test.txt" }
+  let :context do
+    Pragmater::Context[
+      action: :insert,
+      root_dir: temp_dir,
+      comments: ["# encoding: UTF-8"]
+    ]
+  end
 
-    before do
-      FileUtils.mkdir tasks_dir
-      FileUtils.touch [ruby_file, rake_file, text_file]
+  describe ".for" do
+    let :attributes do
+      {
+        action: :insert,
+        root_dir: temp_dir,
+        comments: ["# encoding: UTF-8"],
+        includes: ["*.rb"]
+      }
     end
 
-    context "with defaults" do
-      subject { described_class.new }
-
-      it "answers empty array" do
-        expect(runner.files).to be_empty
-      end
+    it "runner with valid attributes" do
+      expect(described_class.for(**attributes)).to be_a(described_class)
     end
 
-    context "with path only" do
-      let(:path) { temp_dir }
-
-      it "answers empty array" do
-        expect(runner.files).to be_empty
-      end
-    end
-
-    context "with includes only" do
-      let(:includes) { ["*.rb"] }
-
-      it "answers files with matching extensions" do
-        Dir.chdir temp_dir do
-          expect(runner.files).to contain_exactly(Pathname("./test.rb"))
-        end
-      end
-    end
-
-    context "with path and includes string" do
-      let(:path) { temp_dir }
-      let(:includes) { "*.rb" }
-
-      it "answers files with matching extensions" do
-        expect(runner.files).to contain_exactly(Pathname("#{temp_dir}/test.rb"))
-      end
-    end
-
-    context "with path and includes array" do
-      let(:path) { temp_dir }
-      let(:includes) { ["*.rb"] }
-
-      it "answers files with matching extensions" do
-        expect(runner.files).to contain_exactly(Pathname("#{temp_dir}/test.rb"))
-      end
-    end
-
-    context "with invalid path" do
-      let(:path) { "bogus" }
-
-      it "answers empty array" do
-        expect(runner.files).to be_empty
-      end
-    end
-
-    context "with path and invalid includes" do
-      let(:path) { temp_dir }
-      let(:includes) { ["bogus", "~#}*^"] }
-
-      it "answers empty array" do
-        expect(runner.files).to be_empty
-      end
-    end
-
-    context "with path and includes without wildcards" do
-      let(:path) { temp_dir }
-      let(:includes) { [".rb"] }
-
-      it "answers empty array" do
-        expect(runner.files).to be_empty
-      end
-    end
-
-    context "with path and recursive includes" do
-      let(:path) { temp_dir }
-      let(:includes) { ["**/*.rake"] }
-      let(:nested_file) { Pathname File.join(tasks_dir, "nested", "nested.rake") }
-
-      before do
-        FileUtils.mkdir File.join(tasks_dir, "nested")
-        FileUtils.touch nested_file
-      end
-
-      it "answers recursed files" do
-        expect(runner.files).to contain_exactly(
-          nested_file,
-          Pathname("#{tasks_dir}/test.rake")
-        )
-      end
+    it "fails with invalid attribute" do
+      expectation = proc { described_class.for(**attributes.merge(bogus: true)) }
+      expect(&expectation).to raise_error(ArgumentError, /bogus/)
     end
   end
 
-  describe "#run" do
-    subject(:runner) { described_class.new temp_dir, includes: includes, writer: writer_class }
-
-    let(:writer_class) { class_spy Pragmater::Writer }
-    let(:writer_instance) { instance_spy Pragmater::Writer }
-
-    context "without files" do
-      let(:action) { :add }
-
-      it "doesn't update files" do
-        runner.run action: action
-        expect(writer_instance).not_to have_received(action)
-      end
+  describe "#call" do
+    let :test_files do
+      [
+        temp_dir.join("test.rb"),
+        temp_dir.join("task", "test.rake"),
+        temp_dir.join("test.txt")
+      ]
     end
 
-    context "with files" do
-      let(:includes) { ["*.rb"] }
-      let(:action) { :remove }
-      let(:test_file) { Pathname "#{temp_dir}/test.rb" }
+    before { test_files.each(&:make_ancestors).each(&:touch) }
 
-      before do
-        FileUtils.touch test_file
-        allow(writer_class).to receive(:new).with(test_file, comments).and_return(writer_instance)
-      end
+    it "modifies a single with matching extension" do
+      context.includes = ["*.rb"]
+      runner.call
 
-      it "updates files" do
-        runner.run action: action
-        expect(writer_instance).to have_received(action)
-      end
+      expect(test_files.map(&:read)).to contain_exactly("", "", "# encoding: UTF-8\n")
+    end
+
+    it "modifies multiple files with matching extensions" do
+      context.includes = ["*.rb", "*.txt"]
+      runner.call
+
+      expect(test_files.map(&:read)).to contain_exactly(
+        "",
+        "# encoding: UTF-8\n",
+        "# encoding: UTF-8\n"
+      )
+    end
+
+    it "modifies files with matching nested extensions" do
+      context.includes = ["**/*.rake"]
+      runner.call
+
+      expect(test_files.map(&:read)).to contain_exactly("# encoding: UTF-8\n", "", "")
+    end
+
+    it "doesn't modify files when no files are included" do
+      context.includes = []
+      runner.call
+
+      expect(test_files.map(&:read)).to contain_exactly("", "", "")
+    end
+
+    it "doesn't modify files when when extensions don't match" do
+      context.includes = ["*.md"]
+      runner.call
+
+      expect(test_files.map(&:read)).to contain_exactly("", "", "")
+    end
+
+    it "doesn't modify files with invalid extensions" do
+      context.includes = ["bogus", "~#}*^"]
+      runner.call
+
+      expect(test_files.map(&:read)).to contain_exactly("", "", "")
+    end
+
+    it "answers files processed" do
+      context.includes = ["*.rb"]
+      expect(runner.call).to contain_exactly(temp_dir.join("test.rb"))
     end
   end
 end

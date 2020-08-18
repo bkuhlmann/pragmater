@@ -56,7 +56,7 @@ module Pragmater
                           comments: settings.dig(:add, :comments),
                           includes: settings.dig(:add, :includes)
 
-      runner.run(action: :add) { |file| say_status :info, "Processed: #{file}.", :green }
+      runner.call(action: :add) { |file| say_status :info, "Processed: #{file}.", :green }
     end
 
     desc "-r, [--remove=PATH]", "Remove comments from source file(s)."
@@ -80,7 +80,7 @@ module Pragmater
                           comments: settings.dig(:remove, :comments),
                           includes: settings.dig(:remove, :includes)
 
-      runner.run(action: :remove) { |file| say_status :info, "Processed: #{file}.", :green }
+      runner.call(action: :remove) { |file| say_status :info, "Processed: #{file}.", :green }
     end
 
     desc "-c, [--config]", "Manage gem configuration."
