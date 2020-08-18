@@ -2,18 +2,18 @@
 
 require "spec_helper"
 
-RSpec.describe Pragmater::Commenter do
+RSpec.describe Pragmater::Parsers::Comments do
   subject(:commenter) { described_class.new older, newer }
 
   let(:older) { [] }
   let(:newer) { [] }
 
-  describe "#add" do
+  describe "#insert" do
     context "with single newer comment" do
       let(:newer) { "# frozen_string_literal: true" }
 
       it "answers array of added comments" do
-        expect(commenter.add).to contain_exactly("# frozen_string_literal: true")
+        expect(commenter.insert).to contain_exactly("# frozen_string_literal: true")
       end
     end
 
@@ -21,7 +21,7 @@ RSpec.describe Pragmater::Commenter do
       let(:newer) { ["# encoding: UTF-8", "# frozen_string_literal: true"] }
 
       it "answers array of added comments" do
-        expect(commenter.add).to contain_exactly(
+        expect(commenter.insert).to contain_exactly(
           "# encoding: UTF-8",
           "# frozen_string_literal: true"
         )
@@ -32,7 +32,7 @@ RSpec.describe Pragmater::Commenter do
       let(:older) { "# encoding: UTF-8" }
 
       it "answers array of added comments" do
-        expect(commenter.add).to contain_exactly("# encoding: UTF-8")
+        expect(commenter.insert).to contain_exactly("# encoding: UTF-8")
       end
     end
 
@@ -40,7 +40,7 @@ RSpec.describe Pragmater::Commenter do
       let(:older) { ["# encoding: UTF-8", "# frozen_string_literal: true"] }
 
       it "answers array of added comments" do
-        expect(commenter.add).to contain_exactly(
+        expect(commenter.insert).to contain_exactly(
           "# encoding: UTF-8",
           "# frozen_string_literal: true"
         )
@@ -52,7 +52,7 @@ RSpec.describe Pragmater::Commenter do
       let(:newer) { ["# encoding: UTF-8", "# coding: UTF-8"] }
 
       it "answers array of added comments" do
-        expect(commenter.add).to contain_exactly(
+        expect(commenter.insert).to contain_exactly(
           "# frozen_string_literal: true",
           "# example: test",
           "# encoding: UTF-8",
@@ -66,24 +66,24 @@ RSpec.describe Pragmater::Commenter do
       let(:newer) { ["# frozen_string_literal: true", "# encoding: UTF-8"] }
 
       it "answers array of non-duplicated comments" do
-        expect(commenter.add).to contain_exactly(
+        expect(commenter.insert).to contain_exactly(
           "# encoding: UTF-8",
           "# frozen_string_literal: true"
         )
       end
     end
 
-    context "with newer, invalid, comments" do
+    context "with newer comment only" do
       let(:newer) { "# bogus" }
 
-      it "answers empty array" do
-        expect(commenter.add).to be_empty
+      it "answers array with original comment" do
+        expect(commenter.insert).to contain_exactly("# bogus")
       end
     end
 
     context "with empty older and newer comments" do
       it "answers empty array" do
-        expect(commenter.add).to be_empty
+        expect(commenter.insert).to be_empty
       end
     end
   end

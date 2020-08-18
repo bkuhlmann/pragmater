@@ -6,7 +6,7 @@ module Pragmater
   # :reek:MissingSafeMethod
   class Writer
     # rubocop:disable Metrics/ParameterLists
-    def initialize file_path, new_comments, formatter: Formatter, commenter: Commenter
+    def initialize file_path, new_comments, formatter: Formatters::Main, commenter: Commenter
       @file_path = file_path
       @file_lines = File.readlines file_path
       @formatter = formatter
@@ -34,7 +34,7 @@ module Pragmater
     attr_reader :file_path, :file_lines, :new_comments, :old_comments, :formatter, :commenter
 
     def file_comments
-      file_lines.select { |line| line =~ formatter.valid_formats }
+      file_lines.select { |line| line =~ formatter::MATCHABLE }
     end
 
     def file_lines_without_comments
