@@ -3,6 +3,7 @@
 require "pragmater/identity"
 require "pragmater/formatters/general"
 require "pragmater/formatters/shebang"
+require "pragmater/formatters/main"
 require "pragmater/formatter"
 require "pragmater/commenter"
 require "pragmater/writer"
