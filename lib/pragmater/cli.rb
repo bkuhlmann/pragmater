@@ -35,28 +35,27 @@ module Pragmater
       abort error.message
     end
 
-    desc "-a, [--add=PATH]", "Add comments to source file(s)."
-    map %w[-a --add] => :add
+    desc "-i, [--insert=PATH]", "Insert comments into source file(s)."
+    map %w[-i --insert] => :insert
     method_option :comments,
                   aliases: "-c",
                   desc: "Define desired comments",
                   type: :array,
-                  default: configuration.to_h.dig(:add, :comments)
+                  default: configuration.to_h.dig(:insert, :comments)
     method_option :includes,
                   aliases: "-i",
                   desc: "Include specific files and/or directories",
                   type: :array,
-                  default: configuration.to_h.dig(:add, :includes)
-    def add path = "."
+                  default: configuration.to_h.dig(:insert, :includes)
+    def insert path = "."
       settings = configuration.merge(
-        add: {comments: options.comments, includes: options.includes}
+        insert: {comments: options.comments, includes: options.includes}
       ).to_h
 
-      runner = Runner.new path,
-                          comments: settings.dig(:add, :comments),
-                          includes: settings.dig(:add, :includes)
+      runner = Runner.new comments: settings.dig(:insert, :comments),
+                          includes: settings.dig(:insert, :includes)
 
-      runner.call(action: :add) { |file| say_status :info, "Processed: #{file}.", :green }
+      runner.call(path, action: :insert) { |file| say_status :info, "Processed: #{file}.", :green }
     end
 
     desc "-r, [--remove=PATH]", "Remove comments from source file(s)."
@@ -76,11 +75,10 @@ module Pragmater
         remove: {comments: options.comments, includes: options.includes}
       ).to_h
 
-      runner = Runner.new path,
-                          comments: settings.dig(:remove, :comments),
+      runner = Runner.new comments: settings.dig(:remove, :comments),
                           includes: settings.dig(:remove, :includes)
 
-      runner.call(action: :remove) { |file| say_status :info, "Processed: #{file}.", :green }
+      runner.call(path, action: :remove) { |file| say_status :info, "Processed: #{file}.", :green }
     end
 
     desc "-c, [--config]", "Manage gem configuration."

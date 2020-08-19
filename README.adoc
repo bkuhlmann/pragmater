@@ -21,14 +21,14 @@ Examples:
 ----
 
 With https://www.ruby-lang.org/en/news/2015/12/25/ruby-2-3-0-released[Ruby 2.3.0], frozen strings
-are supported via a pragma. This gem provides an easy way to add pragmas to single or multiple Ruby
-source files in order to benefit from improved memory and concurrency performance.
+are supported via a pragma. This gem provides an easy way to insert or remove pragmas to single or
+multiple Ruby source files in order to benefit from improved memory and concurrency performance.
 
 toc::[]
 
 == Features
 
-* Supports adding a pragma or multiple pragmas to single or multiple source files.
+* Supports inserting a pragma or multiple pragmas to single or multiple source files.
 * Supports removing pragma(s) from single or multiple source files.
 * Supports file list filtering. Defaults to any file.
 * Ensures duplicate pragmas never exist.
@@ -79,30 +79,31 @@ bin/console
 From the command line, type: `+pragmater help+`
 
 ....
-pragmater -a, [--add=PATH]      # Add comments to source file(s).
 pragmater -c, [--config]        # Manage gem configuration.
 pragmater -h, [--help=COMMAND]  # Show this message or get help for a command.
+pragmater -i, [--insert=PATH]   # Insert comments into source file(s).
 pragmater -r, [--remove=PATH]   # Remove comments from source file(s).
 pragmater -v, [--version]       # Show gem version.
 ....
 
-Both the `+--add+` and `+--remove+` commands support options for specifying pragmas and/or included
-files (viewable by running `+pragmater --help --add+` or `+pragmater --help --remove+`):
+Both the `+--insert+` and `+--remove+` commands support the same options for specifying pragmas
+and/or included files (viewable by running `+pragmater --help --insert+` or `+pragmater --help
+--remove+`):
 
 ....
 -c, [--comments=one two three]  # Define desired comments
 -i, [--includes=one two three]  # Include specific files and/or directories
 ....
 
-Example (same options could be used for the `+--remove+` command too):
+Example:
 
 [source,bash]
 ----
-pragmater --add --comments "# frozen_string_literal: true" --includes "Gemfile" "Guardfile" "Rakefile" ".gemspec" "config.ru" "bin/**/*" "**/*.rake" "**/*.rb"
+pragmater --insert --comments "# frozen_string_literal: true" --includes "Gemfile" "Guardfile" "Rakefile" ".gemspec" "config.ru" "bin/**/*" "**/*.rake" "**/*.rb"
 ----
 
-The `--add` and `--remove` commands default to the current working directory so a path isn’t
-necessary unless you want to run Pragmater on a directory structure other than your current working
+The `--insert` and `--remove` commands default to the current working directory so a path isn’t
+necessary unless you want to run Pragmater in a directory structure other than your current working
 directory.
 
 === Customization
@@ -116,7 +117,7 @@ The default configuration is as follows:
 
 [source,yaml]
 ----
-:add:
+:insert:
   :comments: []
   :includes: []
 :remove:
@@ -128,10 +129,10 @@ Feel free to take the above configuration, modify, and save as your own custom `
 
 The `configuration.yml` file can be configured as follows:
 
-* `add`: Defines global/local comments and/or file include lists when adding pragmas. The `comments`
-  and `includes` options can be either a single string or an array.
+* `insert`: Defines global/local comments and/or file include lists when inserting pragmas. The
+  `comments` and `includes` options can be either a single string or an array of strings.
 * `remove`: Defines global/local comments and/or file include lists when removing pragmas. The
-  `comments` and `includes` options can be either a single string or an array.
+  `comments` and `includes` options can be either a single string or an array of strings.
 
 === Available Pragmas
 
