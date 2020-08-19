@@ -7,7 +7,6 @@ SimpleCov.start { enable_coverage :branch }
 
 require "pry"
 require "pry-byebug"
-require "climate_control"
 require "pragmater"
 
 Dir[File.join(__dir__, "support", "shared_contexts", "**/*.rb")].sort.each(&method(:require))
