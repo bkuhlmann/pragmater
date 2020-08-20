@@ -12,21 +12,13 @@ module Pragmater
 
     package_name Identity::VERSION_LABEL
 
-    # rubocop:disable Metrics/MethodLength
-    def self.configuration
-      Runcom::Config.new "#{Identity::NAME}/configuration.yml",
-                         defaults: {
-                           add: {
-                             comments: "",
-                             includes: []
-                           },
-                           remove: {
-                             comments: "",
-                             includes: []
-                           }
-                         }
+    def self.defaults
+      YAML.load_file(Pathname(__dir__).join("defaults.yml")).freeze
     end
-    # rubocop:enable Metrics/MethodLength
+
+    def self.configuration
+      Runcom::Config.new "#{Identity::NAME}/configuration.yml", defaults: defaults
+    end
 
     def initialize args = [], options = {}, config = {}
       super args, options, config
