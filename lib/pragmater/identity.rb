@@ -7,5 +7,6 @@ module Pragmater
     LABEL = "Pragmater"
     VERSION = "7.2.0"
     VERSION_LABEL = "#{LABEL} #{VERSION}"
+    SUMMARY = "A command line interface for managing/formatting source file pragma comments."
   end
 end

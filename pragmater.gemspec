@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors = ["Brooke Kuhlmann"]
   spec.email = ["brooke@alchemists.io"]
   spec.homepage = "https://www.alchemists.io/projects/pragmater"
-  spec.summary = "A command line interface for managing/formatting source file pragma comments."
+  spec.summary = Pragmater::Identity::SUMMARY
   spec.license = "Apache-2.0"
 
   spec.metadata = {
