@@ -1,6 +1,10 @@
 #! /usr/bin/env ruby
 # frozen_string_literal: true
 
+# TODO: Remove once the Pattern Matching feature is fully supported.
+Warning[:experimental] = false
+
 require "pragmater"
 
 Process.setproctitle Pragmater::Identity::VERSION_LABEL
+Pragmater::CLI::Shell.new.call ARGV
