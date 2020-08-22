@@ -2,8 +2,5 @@
 # frozen_string_literal: true
 
 require "pragmater"
-require "pragmater/cli"
-require "pragmater/identity"
 
 Process.setproctitle Pragmater::Identity::VERSION_LABEL
-Pragmater::CLI.start
