@@ -1,5 +1,38 @@
 = Changes
 
+== 8.0.0 (2020-08-25)
+
+* Added CLI configuration options
+* Added CLI core options
+* Added CLI helper
+* Added CLI insert/remove options
+* Added CLI options assembler
+* Added CLI options merger
+* Added CLI shell
+* Added Guard and Rubocop binstubs
+* Added RSpec Runcom shared context
+* Added Refinements gem
+* Added file pragma parser
+* Added gem identity summary
+* Added general formatter
+* Added inserter processor
+* Added main formatter
+* Added processor handler
+* Added remover processor
+* Added runner context
+* Added shebang formatter
+* Updated CLI to use insert instead of add option
+* Updated comments and writer to use main formatter
+* Updated runner to use context and file parser
+* Updated to Rubocop 0.89.0
+* Removed Climate Control gem
+* Removed Reek irresponsible module setting
+* Removed Thor CLI support
+* Removed formatter
+* Removed writer
+* Refactored CLI defaults to CLI options namespace
+* Refactored CLI to load defaults from YAML file
+
 == 7.2.0 (2020-07-22)
 
 * Fixed Rubocop Lint/NonDeterministicRequireOrder issues

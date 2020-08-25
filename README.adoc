@@ -76,26 +76,31 @@ bin/console
 
 === Command Line Interface (CLI)
 
-From the command line, type: `+pragmater help+`
+From the command line, type: `pragmater --help`
 
 ....
-pragmater -c, [--config]        # Manage gem configuration.
-pragmater -h, [--help=COMMAND]  # Show this message or get help for a command.
-pragmater -i, [--insert=PATH]   # Insert comments into source file(s).
-pragmater -r, [--remove=PATH]   # Remove comments from source file(s).
-pragmater -v, [--version]       # Show gem version.
+Pragmater - A command line interface for managing/formatting source file pragma comments.
+
+USAGE:
+  -v, --version                            Show gem version.
+  -h, --help                               Show this message.
+  -c, --config [options]                   Manage gem configuration.
+  -i, --insert [PATH]                      Insert pragam comments into files.
+  -r, --remove [options]                   Remove pragam comments from files.
+
+OPTIONS:
+
+Insert/Remove:
+      --comments a,b,c                     Add pragma comments.
+      --includes a,b,c                     Add console support.
+
+Configuration:
+      --edit                               Edit configuration.
+      --info                               Print configuration.
 ....
 
-Both the `+--insert+` and `+--remove+` commands support the same options for specifying pragmas
-and/or included files (viewable by running `+pragmater --help --insert+` or `+pragmater --help
---remove+`):
-
-....
--c, [--comments=one two three]  # Define desired comments
--i, [--includes=one two three]  # Include specific files and/or directories
-....
-
-Example:
+Both the `--insert` and `--remove` commands support the same options for specifying pragmas and/or
+included files. Example:
 
 [source,bash]
 ----
@@ -256,17 +261,7 @@ immutable = -"test"
 mutable = +"test"
 ----
 
-Despite Ruby allowing you to do this, it is _not recommended_ to use the above examples as it leads
-to hard to read code. Instead use the following:
-
-[source,ruby]
-----
-immutable = "test".freeze
-mutable = "test"
-----
-
-While this requires extra typing, it expresses intent more clearly. There is a slight caveat to this
-rule in which the use of `+String#-@+` was http://bit.ly/2DGAjgG[enhanced in Ruby 2.5.0] to
+💡 The use of `+String#-@+`, specifically, was http://bit.ly/2DGAjgG[enhanced in Ruby 2.5.0] to
 _deduplicate_ all instances of the same string thus reducing your memory footprint. This can be
 valuable in situations where you are not using the frozen string comment and need to selectively
 freeze strings.
