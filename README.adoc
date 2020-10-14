@@ -45,31 +45,11 @@ image::https://www.alchemists.io/images/screencasts/pragmater/cover.svg[Screenca
 
 == Setup
 
-=== Production
-
 To install, run:
 
 [source,bash]
 ----
 gem install pragmater
-----
-
-=== Development
-
-To contribute, run:
-
-[source,bash]
-----
-git clone https://github.com/bkuhlmann/pragmater.git
-cd pragmater
-bin/setup
-----
-
-You can also use the IRB console for direct access to all objects:
-
-[source,bash]
-----
-bin/console
 ----
 
 == Usage
@@ -283,6 +263,24 @@ presented together for a visual comparison:
 
 One oddity to the above is the use of `# !/usr/bin/env ruby` is not allowed but `#! /usr/bin/env
 ruby` is which is why spacing is slightly different for shell pragmas.
+
+== Development
+
+To contribute, run:
+
+[source,bash]
+----
+git clone https://github.com/bkuhlmann/pragmater.git
+cd pragmater
+bin/setup
+----
+
+You can also use the IRB console for direct access to all objects:
+
+[source,bash]
+----
+bin/console
+----
 
 == Tests
 
