@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = "~> 2.7"
   spec.add_dependency "refinements", "~> 7.11"
   spec.add_dependency "runcom", "~> 6.0"
-  spec.add_development_dependency "bundler-audit", "~> 0.6"
+  spec.add_development_dependency "bundler-audit", "~> 0.7"
   spec.add_development_dependency "bundler-leak", "~> 0.2"
   # spec.add_development_dependency "gemsmith", "~> 14.2"
   # spec.add_development_dependency "git-lint", "~> 1.0"
