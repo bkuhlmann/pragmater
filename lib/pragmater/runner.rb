@@ -19,7 +19,6 @@ module Pragmater
     def call
       Pathname(context.root_dir).files("{#{context.includes.join ","}}").map do |path|
         path.write parser.call(path, context.comments, action: context.action).join
-        path
       end
     end
 
