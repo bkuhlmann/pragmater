@@ -13,7 +13,7 @@ module Pragmater
         def call
           parser.separator "\nOPTIONS:\n"
           parser.separator "\nInsert/Remove:\n"
-          private_methods.grep(/add_/).each(&method(:__send__))
+          private_methods.grep(/add_/).each { |method| __send__ method }
           parser
         end
 

@@ -12,7 +12,7 @@ module Pragmater
 
         def call
           parser.separator "\nConfiguration:\n"
-          private_methods.grep(/add_/).each(&method(:__send__))
+          private_methods.grep(/add_/).each { |method| __send__ method }
           parser
         end
 

@@ -17,17 +17,14 @@ module Pragmater
     end
 
     def call
-      Pathname(context.root_dir).files("{#{context.includes.join ","}}").map(&method(:write))
+      Pathname(context.root_dir).files("{#{context.includes.join ","}}").map do |path|
+        path.write parser.call(path, context.comments, action: context.action).join
+        path
+      end
     end
 
     private
 
     attr_reader :context, :parser
-
-    def write path
-      path.tap do |a_path|
-        a_path.write parser.call(a_path, context.comments, action: context.action).join
-      end
-    end
   end
 end

@@ -13,7 +13,7 @@ module Pragmater
         def call
           parser.banner = "#{Identity::LABEL} - #{Identity::SUMMARY}"
           parser.separator "\nUSAGE:\n"
-          private_methods.grep(/add_/).each(&method(:__send__))
+          private_methods.grep(/add_/).each { |method| __send__ method }
           parser
         end
 
