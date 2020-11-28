@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "refinements/pathnames"
-
 RSpec.shared_context "with Runcom", :runcom do
   using Refinements::Pathnames
 

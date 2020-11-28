@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "spec_helper"
-require "refinements/pathnames"
 
 RSpec.describe Pragmater::CLI::Shell, :runcom do
   using Refinements::Pathnames
