@@ -1,5 +1,17 @@
 = Changes
 
+== 8.3.0 (2020-12-13)
+
+* Fixed spec helper to only require tools
+* Added Amazing Print
+* Added Gemfile groups
+* Added RubyCritic
+* Added RubyCritic configuration
+* Updated Circle CI configuration to skip RubyCritic
+* Updated Gemfile to put Guard RSpec in test group
+* Updated Gemfile to put SimpleCov in code quality group
+* Removed RubyGems requirement from binstubs
+
 == 8.2.0 (2020-11-28)
 
 * Fixed Rubocop Performance/MethodObjectAsBlock issues
