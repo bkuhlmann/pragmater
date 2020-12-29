@@ -13,7 +13,7 @@ module Pragmater
         \s?     # Space - optional.
         [\w-]+  # Value - One or more word or dash characters.
         \Z      # End of line.
-      /x.freeze
+      /x
 
       def initialize string, pattern: PATTERN
         @string = string

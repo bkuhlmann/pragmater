@@ -4,7 +4,7 @@ module Pragmater
   module Formatters
     # Formats shebang pragmas in a consistent manner.
     class Shebang
-      PATTERN = %r(\A\#!\s?/.*ruby\Z).freeze
+      PATTERN = %r(\A\#!\s?/.*ruby\Z)
 
       def initialize string, pattern: PATTERN
         @string = string
