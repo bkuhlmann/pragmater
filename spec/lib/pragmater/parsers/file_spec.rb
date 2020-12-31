@@ -2,8 +2,10 @@
 
 require "spec_helper"
 
-RSpec.describe Pragmater::Parsers::File, :temp_dir do
+RSpec.describe Pragmater::Parsers::File do
   subject(:parser) { described_class.new }
+
+  include_context "with temporary directory"
 
   let(:test_path) { temp_dir.join "test.rb" }
 

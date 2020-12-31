@@ -2,10 +2,12 @@
 
 require "spec_helper"
 
-RSpec.describe Pragmater::Runner, :temp_dir do
-  using Refinements::Pathnames
-
+RSpec.describe Pragmater::Runner do
   subject(:runner) { described_class.new context }
+
+  include_context "with temporary directory"
+
+  using Refinements::Pathnames
 
   let :context do
     Pragmater::Context[
