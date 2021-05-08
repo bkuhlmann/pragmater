@@ -4,10 +4,7 @@ module Pragmater
   module Processors
     # Handles the insertion or removal of pragma comments.
     class Handler
-      DEFAULTS = {
-        insert: Inserter,
-        remove: Remover
-      }.freeze
+      DEFAULTS = {insert: Inserter, remove: Remover}.freeze
 
       def initialize processors: DEFAULTS
         @processors = processors

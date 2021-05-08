@@ -34,9 +34,7 @@ RSpec.describe Pragmater::Processors::Inserter do
       let(:body) { [] }
 
       it "doesn't add new line" do
-        expect(processor.call).to contain_exactly(
-          "# frozen_string_literal: true\n"
-        )
+        expect(processor.call).to contain_exactly("# frozen_string_literal: true\n")
       end
     end
   end

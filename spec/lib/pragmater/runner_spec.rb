@@ -10,11 +10,7 @@ RSpec.describe Pragmater::Runner do
   using Refinements::Pathnames
 
   let :context do
-    Pragmater::Context[
-      action: :insert,
-      root_dir: temp_dir,
-      comments: ["# encoding: UTF-8"]
-    ]
+    Pragmater::Context[action: :insert, root_dir: temp_dir, comments: ["# encoding: UTF-8"]]
   end
 
   describe ".for" do

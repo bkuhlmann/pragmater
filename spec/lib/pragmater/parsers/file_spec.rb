@@ -57,11 +57,7 @@ RSpec.describe Pragmater::Parsers::File do
       it "does not add duplicates" do
         body = parser.call test_path, "#! /usr/bin/env ruby", action: :insert
 
-        expect(body).to contain_exactly(
-          "#! /usr/bin/env ruby\n",
-          "\n",
-          "puts RUBY_VERSION\n"
-        )
+        expect(body).to contain_exactly("#! /usr/bin/env ruby\n", "\n", "puts RUBY_VERSION\n")
       end
     end
 
