@@ -17,7 +17,6 @@ module Pragmater
           in config:, edit:, **remainder then edit_configuration
           in config:, info:, **remainder then print_configuration
           in version:, **remainder then print_version
-          in help:, **remainder then print_usage
           else print_usage
         end
       end
