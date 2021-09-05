@@ -11,9 +11,9 @@ image::https://img.shields.io/badge/code_style-alchemists-brightgreen.svg[Alchem
 [link=https://circleci.com/gh/bkuhlmann/pragmater]
 image::https://circleci.com/gh/bkuhlmann/pragmater.svg?style=svg[Circle CI Status]
 
-A command line interface for managing/formatting source file
-https://en.wikipedia.org/wiki/Directive_(programming)[directive pragmas] (a.k.a. _magic comments_).
-Examples:
+A command line interface that does one thing well by being entirely focused on managing/formatting
+source file https://en.wikipedia.org/wiki/Directive_(programming)[directive pragmas] (a.k.a. _magic
+comments_). Examples:
 
 [source,ruby]
 ----
