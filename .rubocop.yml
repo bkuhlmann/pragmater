@@ -4,9 +4,6 @@ inherit_from:
   - https://raw.githubusercontent.com/bkuhlmann/code_quality/main/configurations/rubocop/performance.yml
   - https://raw.githubusercontent.com/bkuhlmann/code_quality/main/configurations/rubocop/rspec.yml
 
-Lint/Void:
-  CheckForMethodsWithNoSideEffects: false
-
 Style/FrozenStringLiteralComment:
   Exclude:
-    - spec/fixtures/**/*
+    - spec/support/fixtures/**/*

@@ -13,7 +13,7 @@ RSpec.describe Pragmater::Parsers::File do
 
   describe "#call" do
     context "when adding to file with existing comments" do
-      let(:fixture_path) { Bundler.root.join "spec", "fixtures", "with_comments.rb" }
+      let(:fixture_path) { Bundler.root.join "spec/support/fixtures/with_comments.rb" }
 
       it "formats, adds comments, and spacing to top of file" do
         body = parser.call test_path, "# frozen_string_literal: true", action: :insert
@@ -28,7 +28,7 @@ RSpec.describe Pragmater::Parsers::File do
     end
 
     context "when adding to file with existing comments and spacing" do
-      let(:fixture_path) { Bundler.root.join "spec", "fixtures", "with_comments_and_spacing.rb" }
+      let(:fixture_path) { Bundler.root.join "spec/support/fixtures/with_comments_and_spacing.rb" }
 
       it "formats and adds comments with no extra spacing to top of file" do
         body = parser.call test_path, "# frozen_string_literal: true", action: :insert
@@ -52,7 +52,7 @@ RSpec.describe Pragmater::Parsers::File do
     end
 
     context "when adding to file with duplicates" do
-      let(:fixture_path) { Bundler.root.join "spec", "fixtures", "with_comments.rb" }
+      let(:fixture_path) { Bundler.root.join "spec/support/fixtures/with_comments.rb" }
 
       it "does not add duplicates" do
         body = parser.call test_path, "#! /usr/bin/env ruby", action: :insert
@@ -62,7 +62,7 @@ RSpec.describe Pragmater::Parsers::File do
     end
 
     context "when removing from file with existing comments" do
-      let(:fixture_path) { Bundler.root.join "spec", "fixtures", "with_comments.rb" }
+      let(:fixture_path) { Bundler.root.join "spec/support/fixtures/with_comments.rb" }
 
       it "formats and removes comments" do
         body = parser.call test_path, "#! /usr/bin/env ruby", action: :remove
@@ -71,7 +71,7 @@ RSpec.describe Pragmater::Parsers::File do
     end
 
     context "when removing from file with existing comments and spacing" do
-      let(:fixture_path) { Bundler.root.join "spec", "fixtures", "with_comments_and_spacing.rb" }
+      let(:fixture_path) { Bundler.root.join "spec/support/fixtures/with_comments_and_spacing.rb" }
 
       it "formats, removes comments, and removes trailing space" do
         body = parser.call test_path, "#! /usr/bin/env ruby", action: :remove
