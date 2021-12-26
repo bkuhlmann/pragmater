@@ -29,7 +29,7 @@ module Pragmater
         end
 
         def call arguments = []
-          sections.each { |section| section.new(options, parser: parser).call }
+          sections.each { |section| section.new(options, parser:).call }
           parser.parse! arguments
           options
         rescue *EXCEPTIONS

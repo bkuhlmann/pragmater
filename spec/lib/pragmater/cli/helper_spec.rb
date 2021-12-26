@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Pragmater::CLI::Helper do
-  subject(:helper) { described_class.new commander: commander, logger: logger }
+  subject(:helper) { described_class.new commander:, logger: }
 
   let(:commander) { class_spy Open3 }
   let(:logger) { instance_spy Logger }

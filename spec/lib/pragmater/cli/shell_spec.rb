@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe Pragmater::CLI::Shell, :runcom do
   using Refinements::Pathnames
 
-  subject(:shell) { described_class.new merger: merger, helper: helper }
+  subject(:shell) { described_class.new merger:, helper: }
 
   let(:merger) { Pragmater::CLI::Options::Merger.new runcom_configuration }
   let(:helper) { instance_spy Pragmater::CLI::Helper }
