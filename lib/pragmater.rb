@@ -1,20 +1,11 @@
 # frozen_string_literal: true
 
-require "pragmater/identity"
-require "pragmater/formatters/general"
-require "pragmater/formatters/shebang"
-require "pragmater/formatters/main"
-require "pragmater/parsers/comments"
-require "pragmater/parsers/file"
-require "pragmater/processors/inserter"
-require "pragmater/processors/remover"
-require "pragmater/processors/handler"
-require "pragmater/context"
-require "pragmater/runner"
-require "pragmater/cli/options/configuration"
-require "pragmater/cli/options/insert_remove"
-require "pragmater/cli/options/core"
-require "pragmater/cli/options/assembler"
-require "pragmater/cli/options/merger"
-require "pragmater/cli/helper"
-require "pragmater/cli/shell"
+require "zeitwerk"
+
+Zeitwerk::Loader.for_gem
+                .tap { |loader| loader.inflector.inflect "cli" => "CLI" }
+                .setup
+
+# Main namespace.
+module Pragmater
+end

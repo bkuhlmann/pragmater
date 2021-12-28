@@ -7,6 +7,7 @@ require "simplecov"
 SimpleCov.start { enable_coverage :branch }
 
 require "pragmater"
+require "refinements"
 
 using Refinements::Pathnames
 
