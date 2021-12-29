@@ -3,35 +3,12 @@
 require "spec_helper"
 
 RSpec.describe Pragmater::Runner do
-  subject(:runner) { described_class.new context }
+  subject(:runner) { described_class.new }
 
-  include_context "with temporary directory"
+  include_context "with application container"
 
   using Refinements::Pathnames
-
-  let :context do
-    Pragmater::Context[action: :insert, root_dir: temp_dir, comments: ["# encoding: UTF-8"]]
-  end
-
-  describe ".for" do
-    let :attributes do
-      {
-        action: :insert,
-        root_dir: temp_dir,
-        comments: ["# encoding: UTF-8"],
-        includes: ["*.rb"]
-      }
-    end
-
-    it "runner with valid attributes" do
-      expect(described_class.for(**attributes)).to be_a(described_class)
-    end
-
-    it "fails with invalid attribute" do
-      expectation = proc { described_class.for(**attributes.merge(bogus: true)) }
-      expect(&expectation).to raise_error(ArgumentError, /bogus/)
-    end
-  end
+  using Refinements::Structs
 
   describe "#call" do
     let :test_files do
@@ -44,55 +21,84 @@ RSpec.describe Pragmater::Runner do
 
     before { test_files.each(&:make_ancestors).each(&:touch) }
 
-    it "modifies a single with matching extension" do
-      context.includes = ["*.rb"]
-      runner.call
+    shared_examples "a runner" do
+      it "yields when given a block" do
+        kernel = class_spy Kernel
+        runner.call(test_configuration) { |path| kernel.print path }
 
-      expect(test_files.map(&:read)).to contain_exactly("", "", "# encoding: UTF-8\n")
+        expect(kernel).to have_received(:print).with(temp_dir.join("test.rb"))
+      end
+
+      it "logs error when action is unknown" do
+        expectation = proc { runner.call configuration.merge!(includes: ["*.rb"]) }
+        expect(&expectation).to output(/Unknown run action/m).to_stdout
+      end
+
+      it "answers processed files" do
+        expect(runner.call(test_configuration)).to contain_exactly(temp_dir.join("test.rb"))
+      end
     end
 
-    it "modifies multiple files with matching extensions" do
-      context.includes = ["*.rb", "*.txt"]
-      runner.call
+    context "with insert" do
+      let :test_configuration do
+        configuration.merge! action_insert: true,
+                             includes: ["*.rb"],
+                             comments: ["# encoding: UTF-8"]
+      end
 
-      expect(test_files.map(&:read)).to contain_exactly(
-        "",
-        "# encoding: UTF-8\n",
-        "# encoding: UTF-8\n"
-      )
+      it_behaves_like "a runner"
+
+      it "modifies a single file with matching extension" do
+        runner.call test_configuration
+        expect(test_files.map(&:read)).to contain_exactly("", "", "# encoding: UTF-8\n")
+      end
+
+      it "modifies multiple files with matching extensions" do
+        runner.call test_configuration.merge!(includes: ["*.rb", "*.txt"])
+
+        expect(test_files.map(&:read)).to contain_exactly(
+          "",
+          "# encoding: UTF-8\n",
+          "# encoding: UTF-8\n"
+        )
+      end
+
+      it "modifies files with matching nested extensions" do
+        runner.call test_configuration.merge!(includes: ["**/*.rake"])
+        expect(test_files.map(&:read)).to contain_exactly("# encoding: UTF-8\n", "", "")
+      end
+
+      it "doesn't modify files when patterns are included" do
+        runner.call test_configuration.merge!(includes: [])
+        expect(test_files.map(&:read)).to contain_exactly("", "", "")
+      end
+
+      it "doesn't modify files when when extensions don't match" do
+        runner.call test_configuration.merge!(includes: ["*.md"])
+        expect(test_files.map(&:read)).to contain_exactly("", "", "")
+      end
+
+      it "doesn't modify files with invalid extensions" do
+        runner.call test_configuration.merge!(includes: ["bogus", "~#}*^"])
+        expect(test_files.map(&:read)).to contain_exactly("", "", "")
+      end
     end
 
-    it "modifies files with matching nested extensions" do
-      context.includes = ["**/*.rake"]
-      runner.call
+    context "with remove" do
+      let :test_configuration do
+        configuration.merge! action_remove: true,
+                             includes: ["*.rb"],
+                             comments: ["# encoding: UTF-8"]
+      end
 
-      expect(test_files.map(&:read)).to contain_exactly("# encoding: UTF-8\n", "", "")
-    end
+      it_behaves_like "a runner"
 
-    it "doesn't modify files when no files are included" do
-      context.includes = []
-      runner.call
+      it "modify files with matching extensions" do
+        temp_dir.join("test.rb").rewrite { |body| "# encoding: UTF-8\n#{body}" }
+        runner.call test_configuration
 
-      expect(test_files.map(&:read)).to contain_exactly("", "", "")
-    end
-
-    it "doesn't modify files when when extensions don't match" do
-      context.includes = ["*.md"]
-      runner.call
-
-      expect(test_files.map(&:read)).to contain_exactly("", "", "")
-    end
-
-    it "doesn't modify files with invalid extensions" do
-      context.includes = ["bogus", "~#}*^"]
-      runner.call
-
-      expect(test_files.map(&:read)).to contain_exactly("", "", "")
-    end
-
-    it "answers files processed" do
-      context.includes = ["*.rb"]
-      expect(runner.call).to contain_exactly(temp_dir.join("test.rb"))
+        expect(test_files.map(&:read)).to contain_exactly("", "", "")
+      end
     end
   end
 end
