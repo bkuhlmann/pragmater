@@ -5,6 +5,7 @@ module Pragmater
     # Formats all pragmas in a consistent manner.
     class Main
       FORMATTERS = [General, Shebang].freeze
+
       PATTERN = FORMATTERS.map { |formatter| formatter::PATTERN }
                           .then { |patterns| Regexp.union(*patterns) }
                           .freeze
