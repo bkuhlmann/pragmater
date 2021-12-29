@@ -10,21 +10,15 @@ module Pragmater
         @newer = format newer
       end
 
-      def insert
-        older.union newer
-      end
+      def insert = older.union(newer)
 
-      def remove
-        older - older.intersection(newer)
-      end
+      def remove = older - older.intersection(newer)
 
       private
 
       attr_reader :formatter, :older, :newer
 
-      def format pragmas
-        Array(pragmas).map { |pragma| formatter.new(pragma).call }
-      end
+      def format(pragmas) = Array(pragmas).map { |pragma| formatter.new(pragma).call }
     end
   end
 end

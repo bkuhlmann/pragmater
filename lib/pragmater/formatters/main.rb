@@ -14,9 +14,7 @@ module Pragmater
         @formatters = formatters
       end
 
-      def call
-        formatters.reduce(string) { |pragma, formatter| formatter.new(pragma).call }
-      end
+      def call = formatters.reduce(string) { |pragma, formatter| formatter.new(pragma).call }
 
       private
 

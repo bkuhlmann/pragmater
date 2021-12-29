@@ -10,9 +10,7 @@ module Pragmater
         @processors = processors
       end
 
-      def call action, comments, body
-        processors.fetch(action).new(comments, body).call
-      end
+      def call(action, comments, body) = processors.fetch(action).new(comments, body).call
 
       private
 
