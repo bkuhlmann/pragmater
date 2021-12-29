@@ -2,61 +2,42 @@
 
 module Pragmater
   module CLI
-    # The command line interface for this gem.
+    # The main Command Line Interface (CLI) object.
     class Shell
-      def initialize merger: Options::Merger.new, runner: Runner, helper: Helper.new
-        @merger = merger
-        @runner = runner
-        @helper = helper
+      ACTIONS = {config: Actions::Config.new, run: Actions::Run.new}.freeze
+
+      def initialize parser: Parser.new, actions: ACTIONS, container: Container
+        @parser = parser
+        @actions = actions
+        @container = container
       end
 
       def call arguments = []
-        case merger.call arguments
-          in insert: path, **options then insert_pragmas options, path
-          in remove: path, **options then remove_pragmas options, path
-          in config:, edit:, **remainder then edit_configuration
-          in config:, info:, **remainder then print_configuration
-          in version:, **remainder then print_version
-          else print_usage
-        end
+        perform parser.call(arguments)
+      rescue OptionParser::ParseError => error
+        logger.error { error.message }
       end
 
       private
 
-      attr_reader :merger, :runner, :helper
+      attr_reader :parser, :actions, :container
 
-      def insert_pragmas options, path
-        runner.for(**options.merge(action: :insert, root_dir: path))
-              .call
-              .map { |file| helper.info "Processed: #{file}." }
-      end
-
-      def remove_pragmas options, path
-        runner.for(**options.merge(action: :remove, root_dir: path))
-              .call
-              .map { |file| helper.info "Processed: #{file}." }
-      end
-
-      def edit_configuration
-        helper.run "#{ENV["EDITOR"]} #{merger.configuration_path}"
-      end
-
-      def print_configuration
-        merger.configuration_path.then do |path|
-          return helper.info "No configuration found." unless path
-
-          helper.info "#{path}\n"
-          helper.info path.read
+      def perform configuration
+        case configuration
+          in action_config: Symbol => action then config action
+          in {action_insert: true} | {action_remove: true} then run configuration
+          in action_version: true then logger.info Identity::VERSION_LABEL
+          else usage
         end
       end
 
-      def print_version
-        helper.info Identity::VERSION_LABEL
-      end
+      def config(action) = actions.fetch(__method__).call(action)
 
-      def print_usage
-        helper.info merger.usage
-      end
+      def run(configuration) = actions.fetch(__method__).call(configuration)
+
+      def usage = logger.unknown(parser.to_s)
+
+      def logger = container[__method__]
     end
   end
 end

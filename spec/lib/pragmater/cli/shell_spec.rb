@@ -2,13 +2,12 @@
 
 require "spec_helper"
 
-RSpec.describe Pragmater::CLI::Shell, :runcom do
+RSpec.describe Pragmater::CLI::Shell do
   using Refinements::Pathnames
 
-  subject(:shell) { described_class.new merger:, helper: }
+  subject(:shell) { described_class.new }
 
-  let(:merger) { Pragmater::CLI::Options::Merger.new runcom_configuration }
-  let(:helper) { instance_spy Pragmater::CLI::Helper }
+  include_context "with application container"
 
   describe "#call" do
     let(:test_path) { temp_dir.join "test.rb" }
@@ -21,6 +20,16 @@ RSpec.describe Pragmater::CLI::Shell, :runcom do
         "--includes",
         "*.rb"
       ]
+    end
+
+    it "edits configuration" do
+      shell.call %w[--config edit]
+      expect(kernel).to have_received(:system).with(include("EDITOR"))
+    end
+
+    it "views configuration" do
+      shell.call %w[--config view]
+      expect(kernel).to have_received(:system).with(include("cat"))
     end
 
     it "inserts pragma into file" do
@@ -37,38 +46,24 @@ RSpec.describe Pragmater::CLI::Shell, :runcom do
       expect(test_path.read).to eq("")
     end
 
-    it "edits configuration" do
-      shell.call ["--config", "--edit"]
-      expect(helper).to have_received(:run).with(/.+\s.+configuration.yml/)
+    it "prints version" do
+      expectation = proc { shell.call %w[--version] }
+      expect(&expectation).to output(/Pragmater\s\d+\.\d+\.\d+/).to_stdout
     end
 
-    it "prints configuration when it exists" do
-      shell.call ["--config", "--info"]
-      expect(helper).to have_received(:info).with(/configuration.yml/)
+    it "prints help (usage)" do
+      expectation = proc { shell.call %w[--help] }
+      expect(&expectation).to output(/Pragmater.+USAGE.+OPTIONS/m).to_stdout
     end
 
-    context "when configuration doesn't exist" do
-      let(:gem_configuration_path) { temp_dir.join "invalid.yml" }
-
-      it "prints configuration not found info" do
-        shell.call ["--config", "--info"]
-        expect(helper).to have_received(:info).with(/no configuration/i)
-      end
+    it "prints usage when no options are given" do
+      expectation = proc { shell.call }
+      expect(&expectation).to output(/Pragmater.+USAGE.+OPTIONS.+/m).to_stdout
     end
 
-    it "displays version" do
-      shell.call ["--version"]
-      expect(helper).to have_received(:info).with(/\d+\.\d+\.\d+\Z/)
-    end
-
-    it "displays help" do
-      shell.call ["--help"]
-      expect(helper).to have_received(:info).with(/Pragmater.+USAGE.+OPTIONS.+/m)
-    end
-
-    it "displays help without any options" do
-      shell.call
-      expect(helper).to have_received(:info).with(/Pragmater.+USAGE.+OPTIONS.+/m)
+    it "prints error with invalid option" do
+      expectation = proc { shell.call %w[--bogus] }
+      expect(&expectation).to output(/invalid option.+bogus/).to_stdout
     end
   end
 end
