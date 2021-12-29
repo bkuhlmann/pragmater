@@ -1,5 +1,47 @@
 = Changes
 
+== 10.0.0 (2021-12-29)
+
+* Fixed Hippocratic license structure - Brooke Kuhlmann
+* Fixed README changes and credits sections - Brooke Kuhlmann
+* Fixed contributing documentation - Brooke Kuhlmann
+* Fixed core parser to use quoted default paths - Brooke Kuhlmann
+* Added CLI config action - Brooke Kuhlmann
+* Added CLI core parser - Brooke Kuhlmann
+* Added CLI flag parser - Brooke Kuhlmann
+* Added CLI parser - Brooke Kuhlmann
+* Added CLI run action - Brooke Kuhlmann
+* Added Dry Container gem - Brooke Kuhlmann
+* Added RSpec parser shared example - Brooke Kuhlmann
+* Added Rakefile Bundler gem tasks - Brooke Kuhlmann
+* Added Zeitwerk - Brooke Kuhlmann
+* Added application container - Brooke Kuhlmann
+* Added configuration content - Brooke Kuhlmann
+* Added configuration defaults - Brooke Kuhlmann
+* Added configuration loader - Brooke Kuhlmann
+* Added main formatter spacing between constants - Brooke Kuhlmann
+* Added project citation information - Brooke Kuhlmann
+* Updated GitHub issue template - Brooke Kuhlmann
+* Updated Rubocop sub-project gem dependencies - Brooke Kuhlmann
+* Updated runner to accept configuration - Brooke Kuhlmann
+* Updated to Amazing Print 1.4.0 - Brooke Kuhlmann
+* Updated to Debug 1.4.0 - Brooke Kuhlmann
+* Updated to Git Lint 3.0.0 - Brooke Kuhlmann
+* Updated to Hippocratic License 3.0.0 - Brooke Kuhlmann
+* Updated to Refinements 9.0.0 - Brooke Kuhlmann
+* Updated to Rubocop 1.24.0 - Brooke Kuhlmann
+* Updated to Ruby 3.0.3 - Brooke Kuhlmann
+* Updated to Ruby 3.1.0 - Brooke Kuhlmann
+* Updated to Runcom 8.0.0 - Brooke Kuhlmann
+* Updated to SimpleCov 0.21.2 - Brooke Kuhlmann
+* Removed CLI options - Brooke Kuhlmann
+* Removed Gemsmith depenendecy - Brooke Kuhlmann
+* Removed context - Brooke Kuhlmann
+* Refactored RSpec temporary directory shared context - Brooke Kuhlmann
+* Refactored implementation to use endlesss methods - Brooke Kuhlmann
+* Refactored implementation to use punning - Brooke Kuhlmann
+* Refactored shell to use parser and actions - Brooke Kuhlmann
+
 == 9.3.0 (2021-11-20)
 
 * Added README community link - Brooke Kuhlmann

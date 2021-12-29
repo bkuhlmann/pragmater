@@ -36,11 +36,6 @@ toc::[]
 * Ensures duplicate pragmas never exist.
 * Ensures pragmas are consistently formatted.
 
-== Screencasts
-
-[link=https://www.alchemists.io/screencasts/pragmater]
-image::https://www.alchemists.io/images/screencasts/pragmater/cover.svg[Screencast,600,240,role=focal_point]
-
 == Requirements
 
 . https://www.ruby-lang.org[Ruby]
@@ -61,24 +56,16 @@ gem install pragmater
 From the command line, type: `pragmater --help`
 
 ....
-Pragmater - A command line interface for managing/formatting source file pragma comments.
-
 USAGE:
-  -v, --version                            Show gem version.
+  -c, --config ACTION                      Manage gem configuration: edit or view.
   -h, --help                               Show this message.
-  -c, --config [options]                   Manage gem configuration.
-  -i, --insert [PATH]                      Insert pragam comments into files.
-  -r, --remove [options]                   Remove pragam comments from files.
+  -i, --insert [PATH]                      Insert pragmas. Default: ".".
+  -r, --remove [PATH]                      Remove pragmas. Default: ".".
+  -v, --version                            Show gem version.
 
 OPTIONS:
-
-Insert/Remove:
-      --comments a,b,c                     Add pragma comments.
-      --includes a,b,c                     Add console support.
-
-Configuration:
-      --edit                               Edit configuration.
-      --info                               Print configuration.
+      --comments a,b,c                     Add pragma comments. Default: [].
+      --includes a,b,c                     Add include patterns. Default: [].
 ....
 
 Both the `--insert` and `--remove` commands support the same options for specifying pragmas and/or
@@ -104,22 +91,21 @@ The default configuration is as follows:
 
 [source,yaml]
 ----
-:insert:
-  :comments: []
-  :includes: []
-:remove:
-  :comments: []
-  :includes: []
+:comments: []
+:includes: []
+:root_dir: "."
 ----
 
 Feel free to take the above configuration, modify, and save as your own custom `configuration.yml`.
 
 The `configuration.yml` file can be configured as follows:
 
-* `insert`: Defines global/local comments and/or file include lists when inserting pragmas. The
-  `comments` and `includes` options can be either a single string or an array of strings.
-* `remove`: Defines global/local comments and/or file include lists when removing pragmas. The
-  `comments` and `includes` options can be either a single string or an array of strings.
+* `comments`: Defines the array of pragmas you want to insert into your source files. Whatever is
+  defined here will be the default used for insert and remove operations.
+* `includes`: Defines the array file patterns to apply to. Whatever is defined here will be the
+  default used for insert and remove operations.
+* `root_dir`: Defines the root directory to apply the `includes` patterns too. By default, this will
+  be the current directory you are running Pragmater from but can be a different directory entirely.
 
 === Available Pragmas
 
