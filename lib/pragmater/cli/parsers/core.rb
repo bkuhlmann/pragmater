@@ -40,13 +40,13 @@ module Pragmater
         end
 
         def add_insert
-          client.on "-i", "--insert [PATH]", %(Insert pragmas. Default: #{root_dir}.) do |path|
+          client.on "-i", "--insert [PATH]", %(Insert pragmas. Default: "#{root_dir}".) do |path|
             configuration.merge! action_insert: true, root_dir: path || root_dir
           end
         end
 
         def add_remove
-          client.on "-r", "--remove [PATH]", %(Remove pragmas. Default: #{root_dir}.) do |path|
+          client.on "-r", "--remove [PATH]", %(Remove pragmas. Default: "#{root_dir}".) do |path|
             configuration.merge! action_remove: true, root_dir: path || root_dir
           end
         end
