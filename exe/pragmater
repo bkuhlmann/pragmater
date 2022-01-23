@@ -3,5 +3,4 @@
 
 require "pragmater"
 
-Process.setproctitle Pragmater::Identity::VERSION_LABEL
 Pragmater::CLI::Shell.new.call ARGV
