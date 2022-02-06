@@ -26,7 +26,7 @@ module Pragmater
         case configuration
           in action_config: Symbol => action then config action
           in {action_insert: true} | {action_remove: true} then run configuration
-          in action_version: true then logger.info { "Pragmater #{specification.version}" }
+          in action_version: true then logger.info { specification.labeled_version }
           else usage
         end
       end
