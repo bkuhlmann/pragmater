@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.email = ["brooke@alchemists.io"]
   spec.homepage = "https://www.alchemists.io/projects/pragmater"
   spec.summary = "A command line interface for managing/formatting source file pragma comments."
-  spec.license = "Hippocratic-3.0"
+  spec.license = "Hippocratic-2.1"
 
   spec.metadata = {
     "bug_tracker_uri" => "https://github.com/bkuhlmann/pragmater/issues",
