@@ -5,14 +5,16 @@ require "refinements/pathnames"
 module Pragmater
   # Adds/removes pragma comments for files in given path.
   class Runner
+    include Import[:logger]
+
     using Refinements::Pathnames
 
-    def initialize parser: Parsers::File.new, container: Container
+    def initialize parser: Parsers::File.new, **dependencies
+      super(**dependencies)
       @parser = parser
-      @container = container
     end
 
-    def call configuration = Configuration::Loader.call
+    def call configuration = Container[:configuration]
       Pathname(configuration.root_dir).files("{#{configuration.includes.join ","}}").map do |path|
         yield path if block_given?
 
@@ -26,12 +28,10 @@ module Pragmater
 
     private
 
-    attr_reader :parser, :container
+    attr_reader :parser
 
     def write path, configuration, action
       path.write parser.call(path, configuration.comments, action:).join
     end
-
-    def logger = container[__method__]
   end
 end

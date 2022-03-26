@@ -4,10 +4,15 @@ require "spec_helper"
 
 RSpec.describe Pragmater::CLI::Shell do
   using Refinements::Pathnames
+  using AutoInjector::Stub
 
   subject(:shell) { described_class.new }
 
   include_context "with application container"
+
+  before { Pragmater::CLI::Actions::Import.stub configuration:, kernel:, logger: }
+
+  after { Pragmater::CLI::Actions::Import.unstub :configuration, :kernel, :logger }
 
   describe "#call" do
     let(:test_path) { temp_dir.join "test.rb" }
