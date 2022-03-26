@@ -3,12 +3,12 @@
 require "spec_helper"
 
 RSpec.describe Pragmater::Runner do
+  using Refinements::Pathnames
+  using Refinements::Structs
+
   subject(:runner) { described_class.new }
 
   include_context "with application container"
-
-  using Refinements::Pathnames
-  using Refinements::Structs
 
   describe "#call" do
     let :test_files do
@@ -30,8 +30,8 @@ RSpec.describe Pragmater::Runner do
       end
 
       it "logs error when action is unknown" do
-        expectation = proc { runner.call configuration.merge!(includes: ["*.rb"]) }
-        expect(&expectation).to output(/Unknown run action/m).to_stdout
+        runner.call configuration.merge!(includes: ["*.rb"])
+        expect(logger.reread).to match(/Unknown run action/m)
       end
 
       it "answers processed files" do

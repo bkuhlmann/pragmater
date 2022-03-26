@@ -20,8 +20,8 @@ RSpec.describe Pragmater::CLI::Actions::Run do
     before { test_path.touch }
 
     it "logs runner activity" do
-      expectation = proc { action.call test_configuration }
-      expect(&expectation).to output("#{test_path}\n").to_stdout
+      action.call test_configuration
+      expect(logger.reread).to eq("#{test_path}\n")
     end
   end
 end

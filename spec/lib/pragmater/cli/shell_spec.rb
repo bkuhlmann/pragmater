@@ -47,23 +47,23 @@ RSpec.describe Pragmater::CLI::Shell do
     end
 
     it "prints version" do
-      expectation = proc { shell.call %w[--version] }
-      expect(&expectation).to output(/Pragmater\s\d+\.\d+\.\d+/).to_stdout
+      shell.call %w[--version]
+      expect(logger.reread).to match(/Pragmater\s\d+\.\d+\.\d+/)
     end
 
     it "prints help (usage)" do
-      expectation = proc { shell.call %w[--help] }
-      expect(&expectation).to output(/Pragmater.+USAGE.+OPTIONS/m).to_stdout
+      shell.call %w[--help]
+      expect(logger.reread).to match(/Pragmater.+USAGE.+OPTIONS/m)
     end
 
     it "prints usage when no options are given" do
-      expectation = proc { shell.call }
-      expect(&expectation).to output(/Pragmater.+USAGE.+OPTIONS.+/m).to_stdout
+      shell.call
+      expect(logger.reread).to match(/Pragmater.+USAGE.+OPTIONS.+/m)
     end
 
     it "prints error with invalid option" do
-      expectation = proc { shell.call %w[--bogus] }
-      expect(&expectation).to output(/invalid option.+bogus/).to_stdout
+      shell.call %w[--bogus]
+      expect(logger.reread).to match(/invalid option.+bogus/)
     end
   end
 end
