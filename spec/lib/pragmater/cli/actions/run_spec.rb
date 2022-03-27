@@ -8,7 +8,7 @@ RSpec.describe Pragmater::CLI::Actions::Run do
 
   subject(:action) { described_class.new }
 
-  include_context "with application container"
+  include_context "with application dependencies"
 
   describe "#call" do
     let(:test_path) { temp_dir.join("test.rb") }

@@ -8,7 +8,7 @@ RSpec.describe Pragmater::Runner do
 
   subject(:runner) { described_class.new }
 
-  include_context "with application container"
+  include_context "with application dependencies"
 
   describe "#call" do
     let :test_files do
