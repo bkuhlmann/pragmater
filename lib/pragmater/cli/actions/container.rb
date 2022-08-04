@@ -9,8 +9,6 @@ module Pragmater
       module Container
         extend Dry::Container::Mixin
 
-        config.registry = ->(container, key, value, _options) { container[key.to_s] = value }
-
         merge Pragmater::Container
 
         register(:config) { Config.new }
