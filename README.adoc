@@ -251,7 +251,7 @@ To contribute, run:
 
 [source,bash]
 ----
-git clone https://github.com/bkuhlmann/pragmater.git
+git clone https://github.com/bkuhlmann/pragmater
 cd pragmater
 bin/setup
 ----
