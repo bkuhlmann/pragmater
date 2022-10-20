@@ -203,7 +203,9 @@ Ruby 2.3.0 also added the following methods to the `String` class:
 ----
 immutable = "test".freeze
 mutable = +immutable
-mutable.capitalize! # => "Test"
+
+mutable.frozen?      # false
+mutable.capitalize!  # "Test"
 ----
 * `String#-@`: Answers a immutable string if not already frozen. Example:
 +
@@ -211,7 +213,9 @@ mutable.capitalize! # => "Test"
 ----
 mutable = "test"
 immutable = -mutable
-immutable.capitalize! # => FrozenError
+
+immutable.frozen?     # true
+immutable.capitalize! # FrozenError
 ----
 
 You can also use the methods, shown above, for variable initialization. Example:
@@ -220,6 +224,9 @@ You can also use the methods, shown above, for variable initialization. Example:
 ----
 immutable = -"test"
 mutable = +"test"
+
+immutable.frozen?  # true
+mutable.frozen?    # false
 ----
 
 💡 The use of `+String#-@+`, specifically, was http://bit.ly/2DGAjgG[enhanced in Ruby 2.5.0] to
