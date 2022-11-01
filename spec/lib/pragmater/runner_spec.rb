@@ -19,7 +19,7 @@ RSpec.describe Pragmater::Runner do
       ]
     end
 
-    before { test_files.each(&:make_ancestors).each(&:touch) }
+    before { test_files.each { |path| path.make_ancestors.touch } }
 
     shared_examples "a runner" do
       it "yields when given a block" do
