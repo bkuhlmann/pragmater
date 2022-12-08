@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "forwardable"
-require "open3"
 require "logger"
+require "open3"
 
 module Pragmater
   module CLI
