@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "core"
 require "refinements/structs"
 
 module Pragmater
@@ -16,7 +17,7 @@ module Pragmater
           @client = client
         end
 
-        def call arguments = []
+        def call arguments = ::Core::EMPTY_ARRAY
           client.separator "\nOPTIONS:\n"
           collate
           client.parse arguments
