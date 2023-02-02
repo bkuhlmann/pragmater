@@ -7,8 +7,8 @@ module Pragmater
       class Run
         include Pragmater::Import[:logger]
 
-        def initialize runner: Runner.new, **dependencies
-          super(**dependencies)
+        def initialize(runner: Runner.new, **)
+          super(**)
           @runner = runner
         end
 

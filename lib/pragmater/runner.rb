@@ -9,8 +9,8 @@ module Pragmater
 
     using Refinements::Pathnames
 
-    def initialize parser: Parsers::File.new, **dependencies
-      super(**dependencies)
+    def initialize(parser: Parsers::File.new, **)
+      super(**)
       @parser = parser
     end
 
