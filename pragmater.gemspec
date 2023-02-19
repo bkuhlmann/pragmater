@@ -5,14 +5,14 @@ Gem::Specification.new do |spec|
   spec.version = "12.1.1"
   spec.authors = ["Brooke Kuhlmann"]
   spec.email = ["brooke@alchemists.io"]
-  spec.homepage = "https://www.alchemists.io/projects/pragmater"
+  spec.homepage = "https://alchemists.io/projects/pragmater"
   spec.summary = "A command line interface for managing/formatting source file pragma comments."
   spec.license = "Hippocratic-2.1"
 
   spec.metadata = {
     "bug_tracker_uri" => "https://github.com/bkuhlmann/pragmater/issues",
-    "changelog_uri" => "https://www.alchemists.io/projects/pragmater/versions",
-    "documentation_uri" => "https://www.alchemists.io/projects/pragmater",
+    "changelog_uri" => "https://alchemists.io/projects/pragmater/versions",
+    "documentation_uri" => "https://alchemists.io/projects/pragmater",
     "funding_uri" => "https://github.com/sponsors/bkuhlmann",
     "label" => "Pragmater",
     "rubygems_mfa_required" => "true",
