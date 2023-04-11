@@ -31,7 +31,7 @@ RSpec.describe Pragmater::Runner do
 
       it "logs error when action is unknown" do
         runner.call configuration.merge!(includes: ["*.rb"])
-        expect(logger.reread).to match(/Unknown run action/m)
+        expect(logger.reread).to match(/🛑.+Unknown run action/m)
       end
 
       it "answers processed files" do

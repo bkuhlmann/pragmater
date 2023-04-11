@@ -21,7 +21,7 @@ RSpec.describe Pragmater::CLI::Actions::Run do
 
     it "logs runner activity" do
       action.call test_configuration
-      expect(logger.reread).to eq("#{test_path}\n")
+      expect(kernel).to have_received(:puts).with(test_path)
     end
   end
 end

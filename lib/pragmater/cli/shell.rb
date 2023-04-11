@@ -6,7 +6,7 @@ module Pragmater
   module CLI
     # The main Command Line Interface (CLI) object.
     class Shell
-      include Actions::Import[:config, :run, :specification, :logger]
+      include Actions::Import[:config, :kernel, :logger, :run, :specification]
 
       def initialize(parser: Parser.new, **)
         super(**)
@@ -27,8 +27,8 @@ module Pragmater
         case configuration
           in action_config: Symbol => action then config.call action
           in {action_insert: true} | {action_remove: true} then run.call configuration
-          in action_version: true then logger.info { specification.labeled_version }
-          else logger.any { parser.to_s }
+          in action_version: true then kernel.puts specification.labeled_version
+          else kernel.puts parser.to_s
         end
       end
     end

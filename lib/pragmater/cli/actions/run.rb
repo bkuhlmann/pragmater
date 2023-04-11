@@ -5,14 +5,14 @@ module Pragmater
     module Actions
       # Handles insert or remove actions.
       class Run
-        include Pragmater::Import[:logger]
+        include Pragmater::Import[:kernel]
 
         def initialize(runner: Runner.new, **)
           super(**)
           @runner = runner
         end
 
-        def call(configuration) = runner.call(configuration) { |path| logger.info { path } }
+        def call(configuration) = runner.call(configuration) { |path| kernel.puts path }
 
         private
 
