@@ -58,27 +58,30 @@ gem install pragmater
 From the command line, type: `pragmater --help`
 
 ....
-USAGE:
-  -c, --config ACTION                      Manage gem configuration: edit or view.
-  -h, --help                               Show this message.
-  -i, --insert [PATH]                      Insert pragmas. Default: ".".
-  -r, --remove [PATH]                      Remove pragmas. Default: ".".
-  -v, --version                            Show gem version.
+USAGE
+  pragmater [OPTIONS]
+  pragmater COMMAND [OPTIONS]
 
-OPTIONS:
-      --comments a,b,c                     Add pragma comments. Default: [].
-      --includes a,b,c                     Add include patterns. Default: [].
+OPTIONS
+  -v, --version            Show version.
+  -h, --help [COMMAND]     Show this message.
+
+COMMANDS
+  config                   Manage configuration.
+                           Path is dynamic per current directory.
+  insert                   Insert pragma comments.
+  remove                   Remove pragma comments.
 ....
 
-Both the `--insert` and `--remove` commands support the same options for specifying pragmas and/or
+Both the `insert` and `remove` commands support the same options for specifying pragmas and/or
 included files. Example:
 
 [source,bash]
 ----
-pragmater --insert --comments "# frozen_string_literal: true" --includes "Gemfile" "Guardfile" "Rakefile" ".gemspec" "config.ru" "bin/**/*" "**/*.rake" "**/*.rb"
+pragmater insert --comments "# frozen_string_literal: true" --includes "Gemfile" "Guardfile" "Rakefile" ".gemspec" "config.ru" "bin/**/*" "**/*.rake" "**/*.rb"
 ----
 
-The `--insert` and `--remove` commands default to the current working directory so a path isn’t
+The `insert` and `remove` commands default to the current working directory so a path isn’t
 necessary unless you want to run Pragmater in a directory structure other than your current working
 directory.
 
@@ -93,9 +96,9 @@ The default configuration is as follows:
 
 [source,yaml]
 ----
-:comments: []
-:includes: []
-:root_dir: "."
+comments: []
+patterns: []
+root_dir: "."
 ----
 
 Feel free to take the above configuration, modify, and save as your own custom `configuration.yml`.
@@ -246,7 +249,7 @@ freeze strings.
 === Consistency
 
 As an added bonus, this gem ensures pragmas for all analyzed files are formatted in a consistent
-style. This means there is always a space after the octothorpe (`#`). Here are multiple pragmas
+style. This means there is always a space after the octothorp (`#`). Here are multiple pragmas
 presented together for a visual comparison:
 
 [source,ruby]

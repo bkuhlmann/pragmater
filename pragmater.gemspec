@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |spec|
   spec.name = "pragmater"
-  spec.version = "12.2.0"
+  spec.version = "13.0.0"
   spec.authors = ["Brooke Kuhlmann"]
   spec.email = ["brooke@alchemists.io"]
   spec.homepage = "https://alchemists.io/projects/pragmater"
-  spec.summary = "A command line interface for managing/formatting source file pragma comments."
+  spec.summary = "A command line interface for managing pragma comments."
   spec.license = "Hippocratic-2.1"
 
   spec.metadata = {
