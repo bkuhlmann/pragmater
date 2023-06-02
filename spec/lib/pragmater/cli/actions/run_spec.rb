@@ -11,7 +11,7 @@ RSpec.describe Pragmater::CLI::Actions::Run do
   include_context "with application dependencies"
 
   describe "#call" do
-    let(:test_path) { temp_dir.join("test.rb") }
+    let(:test_path) { temp_dir.join "test.rb" }
 
     let :test_configuration do
       configuration.merge! action_insert: true, includes: ["*.rb"], comments: ["# encoding: UTF-8"]
