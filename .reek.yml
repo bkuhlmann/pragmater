@@ -1,0 +1,10 @@
+exclude_paths:
+  - tmp
+  - vendor
+
+detectors:
+  LongParameterList:
+    enabled: false
+  TooManyStatements:
+    exclude:
+      - "Pragmater::CLI::Shell#cli"
