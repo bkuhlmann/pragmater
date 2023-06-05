@@ -4,18 +4,14 @@ module Pragmater
   module Configuration
     # Defines the content of the configuration for use throughout the gem.
     Model = Struct.new(
-      :action_config,
-      :action_help,
-      :action_insert,
-      :action_remove,
-      :action_version,
       :comments,
-      :includes,
+      :patterns,
       :root_dir
     ) do
       def initialize(**)
         super
-        freeze
+        self[:comments] = Array comments
+        self[:patterns] = Array patterns
       end
     end
   end
