@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Pragmater::Configuration::Content do
+RSpec.describe Pragmater::Configuration::Model do
   subject(:content) { described_class.new }
 
   describe "#initialize" do

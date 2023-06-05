@@ -3,7 +3,7 @@
 module Pragmater
   module Configuration
     # Defines the content of the configuration for use throughout the gem.
-    Content = Struct.new(
+    Model = Struct.new(
       :action_config,
       :action_help,
       :action_insert,
@@ -11,10 +11,9 @@ module Pragmater
       :action_version,
       :comments,
       :includes,
-      :root_dir,
-      keyword_init: true
+      :root_dir
     ) do
-      def initialize *arguments
+      def initialize(**)
         super
         freeze
       end

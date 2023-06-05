@@ -5,11 +5,11 @@ require "spec_helper"
 RSpec.describe Pragmater::Configuration::Loader do
   subject(:configuration) { described_class.with_defaults }
 
-  let(:content) { Pragmater::Configuration::Content[comments: [], includes: [], root_dir: "."] }
+  let(:content) { Pragmater::Configuration::Model[comments: [], includes: [], root_dir: "."] }
 
   describe ".call" do
     it "answers default configuration" do
-      expect(described_class.call).to be_a(Pragmater::Configuration::Content)
+      expect(described_class.call).to be_a(Pragmater::Configuration::Model)
     end
   end
 
