@@ -8,7 +8,7 @@ module Pragmater
     module Actions
       # Stores pragma comments.
       class Comment < Sod::Action
-        include Import[:inputs]
+        include Import[:input]
 
         using Refinements::Structs
 
@@ -18,7 +18,7 @@ module Pragmater
 
         default { Container[:configuration].patterns }
 
-        def call(comments = default) = inputs.merge! comments: Array(comments)
+        def call(comments = default) = input.merge! comments: Array(comments)
       end
     end
   end

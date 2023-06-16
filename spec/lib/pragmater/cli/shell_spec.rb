@@ -11,10 +11,7 @@ RSpec.describe Pragmater::CLI::Shell do
 
   include_context "with application dependencies"
 
-  before do
-    Pragmater::Container[:inputs].merge! Pragmater::Container[:configuration].to_h
-    Sod::Import.stub kernel:, logger:
-  end
+  before { Sod::Import.stub kernel:, logger: }
 
   after { Sod::Import.unstub :kernel, :logger }
 

@@ -8,7 +8,7 @@ module Pragmater
     module Actions
       # Stores file patterns.
       class Pattern < Sod::Action
-        include Import[:inputs]
+        include Import[:input]
 
         using Refinements::Structs
 
@@ -18,7 +18,7 @@ module Pragmater
 
         default { Container[:configuration].patterns }
 
-        def call(patterns = default) = inputs.merge! patterns: Array(patterns)
+        def call(patterns = default) = input.merge! patterns: Array(patterns)
       end
     end
   end

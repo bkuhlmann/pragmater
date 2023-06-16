@@ -7,7 +7,7 @@ module Pragmater
     module Commands
       # Inserts pragmas.
       class Insert < Sod::Command
-        include Import[:inputs, :kernel]
+        include Import[:input, :kernel]
 
         handle "insert"
 
@@ -22,7 +22,7 @@ module Pragmater
           @handler = handler
         end
 
-        def call = handler.call(inputs) { |path| kernel.puts path }
+        def call = handler.call(input) { |path| kernel.puts path }
 
         private
 
