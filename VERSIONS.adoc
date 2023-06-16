@@ -2,6 +2,7 @@
 
 == 13.0.0 (2023-06-15)
 
+* Fixed CLI flag documentation typo - Brooke Kuhlmann
 * Fixed RuboCop Style/MethodCallWithArgsParentheses issue - Brooke Kuhlmann
 * Added CLI comment action - Brooke Kuhlmann
 * Added CLI insert command - Brooke Kuhlmann

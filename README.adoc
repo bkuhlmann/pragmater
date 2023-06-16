@@ -78,7 +78,7 @@ included files. Example:
 
 [source,bash]
 ----
-pragmater insert --comments "# frozen_string_literal: true" --includes "Gemfile" "Guardfile" "Rakefile" ".gemspec" "config.ru" "bin/**/*" "**/*.rake" "**/*.rb"
+pragmater insert --comments "# frozen_string_literal: true" --patterns "Gemfile" "Guardfile" "Rakefile" ".gemspec" "config.ru" "bin/**/*" "**/*.rake" "**/*.rb"
 ----
 
 The `insert` and `remove` commands default to the current working directory so a path isn’t
