@@ -3,4 +3,4 @@
 
 require "pragmater"
 
-Pragmater::CLI::Shell.new.call ARGV
+Pragmater::CLI::Shell.new.call
