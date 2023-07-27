@@ -57,21 +57,7 @@ gem install pragmater
 
 From the command line, type: `pragmater --help`
 
-....
-USAGE
-  pragmater [OPTIONS]
-  pragmater COMMAND [OPTIONS]
-
-OPTIONS
-  -v, --version            Show version.
-  -h, --help [COMMAND]     Show this message.
-
-COMMANDS
-  config                   Manage configuration.
-                           Path is dynamic per current directory.
-  insert                   Insert pragma comments.
-  remove                   Remove pragma comments.
-....
+image:https://alchemists.io/images/projects/pragmater/screenshots/usage.png[Usage,width=581,height=345,role=focal_point]
 
 Both the `insert` and `remove` commands support the same options for specifying pragmas and/or
 included files. Example:
