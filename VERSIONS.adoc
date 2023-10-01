@@ -1,5 +1,13 @@
 = Versions
 
+== 13.1.0 (2023-09-30)
+
+* Fixed Zeitwerk loader - Brooke Kuhlmann
+* Added container memoization - Brooke Kuhlmann
+* Added gem loader - Brooke Kuhlmann
+* Added usage screenshot - Brooke Kuhlmann
+* Updated GitHub issue template with simplified sections - Brooke Kuhlmann
+
 == 13.0.3 (2023-07-01)
 
 * Fixed RuboCop Packaging/BundlerSetupInTests issues - Brooke Kuhlmann
