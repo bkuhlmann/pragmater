@@ -15,7 +15,7 @@ RSpec.shared_context "with application dependencies" do
   let(:input) { configuration.dup }
   let(:xdg_config) { Runcom::Config.new Pragmater::Container[:defaults_path] }
   let(:kernel) { class_spy Kernel }
-  let(:logger) { Cogger.new io: StringIO.new, formatter: :emoji }
+  let(:logger) { Cogger.new id: :pragmater, io: StringIO.new }
 
   before { Pragmater::Import.stub configuration:, input:, xdg_config:, kernel:, logger: }
 
