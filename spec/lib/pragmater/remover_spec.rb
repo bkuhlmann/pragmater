@@ -3,8 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Pragmater::Remover do
-  using Refinements::Pathnames
-  using Refinements::Structs
+  using Refinements::Pathname
+  using Refinements::Struct
 
   subject(:remover) { described_class.new }
 

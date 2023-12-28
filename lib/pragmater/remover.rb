@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require "refinements/pathnames"
+require "refinements/pathname"
 
 module Pragmater
   # Removes pragma comments.
   class Remover
-    using Refinements::Pathnames
+    using Refinements::Pathname
 
     def initialize parser: Parsers::File.new
       @parser = parser

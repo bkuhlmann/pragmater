@@ -3,8 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Pragmater::Inserter do
-  using Refinements::Pathnames
-  using Refinements::Structs
+  using Refinements::Pathname
+  using Refinements::Struct
 
   subject(:inserter) { described_class.new }
 
