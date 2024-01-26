@@ -212,8 +212,8 @@ mutable.capitalize!  # "Test"
 mutable = "test"
 immutable = -mutable
 
-immutable.frozen?     # true
-immutable.capitalize! # FrozenError
+immutable.frozen?      # true
+immutable.capitalize!  # FrozenError
 ----
 
 You can also use the methods, shown above, for variable initialization. Example:
@@ -227,10 +227,12 @@ immutable.frozen?  # true
 mutable.frozen?    # false
 ----
 
-💡 The use of `+String#-@+`, specifically, was http://bit.ly/2DGAjgG[enhanced in Ruby 2.5.0] to
+💡 Use of `+String#-@+` was link:https://bugs.ruby-lang.org/issues/13077[enhanced in Ruby 2.5.0] to
 _deduplicate_ all instances of the same string thus reducing your memory footprint. This can be
 valuable in situations where you are not using the frozen string comment and need to selectively
 freeze strings.
+
+💡 Use of `+String#dup+` was link:https://github.com/ruby/ruby/pull/8952[significantly enhanced in Ruby 3.3.0] to be as performant as `pass:[String#+@]` so you can use `+String#dup+` instead of `pass:[String#+@]` since `+String#dup+` is easier to read.
 
 === Consistency
 
