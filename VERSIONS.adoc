@@ -1,5 +1,10 @@
 = Versions
 
+== 14.1.1 (2024-02-15)
+
+* ✅ Fixed setting of default comments for comment action - Brooke Kuhlmann
+* 🔁 Refactored action specs to use consistent terminology - Brooke Kuhlmann
+
 == 14.1.0 (2024-01-28)
 
 * 🟢 Added repl_type_completor gem - Brooke Kuhlmann
