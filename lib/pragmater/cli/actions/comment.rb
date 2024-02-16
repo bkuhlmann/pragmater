@@ -13,7 +13,7 @@ module Pragmater
 
         on %w[-c --comments], argument: "[a,b,c]"
 
-        default { Container[:configuration].patterns }
+        default { Container[:configuration].comments }
 
         def call(comments = nil) = input.comments = Array(comments || default)
       end
