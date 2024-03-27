@@ -1,5 +1,11 @@
 = Versions
 
+== 14.3.0 (2024-03-26)
+
+* 🔼 Updated setup script as a Ruby script - Brooke Kuhlmann
+* 🔼 Updated to Amazing Print 1.6.0 - Brooke Kuhlmann
+* 🔼 Updated to Infusible 3.4.0 - Brooke Kuhlmann
+
 == 14.2.0 (2024-03-03)
 
 * 🔼 Updated RuboCop to use XDG local configuration - Brooke Kuhlmann
