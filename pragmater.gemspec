@@ -25,7 +25,6 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = "~> 3.3"
   spec.add_dependency "cogger", "~> 0.15"
   spec.add_dependency "containable", "~> 0.0"
-  spec.add_dependency "dry-container", "~> 0.11"
   spec.add_dependency "dry-schema", "~> 1.13"
   spec.add_dependency "etcher", "~> 1.0"
   spec.add_dependency "infusible", "~> 3.4"
