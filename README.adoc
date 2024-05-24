@@ -193,7 +193,7 @@ down frozen string literal issues:
 --debug=frozen-string-literal
 ....
 
-Finally, you can use `--debug` (or `$DEBUG=true`) to force all raised exceptions to print to the console whether they are rescued or not. This best used in conjunction with the above.
+Finally, you can use `--debug` (or `$DEBUG=true`) to force all raised exceptions to print to the console whether they are rescued or not. This is best used in conjunction with the above.
 
 Ruby 2.3.0 also added the following methods to the `String` class:
 
