@@ -17,5 +17,6 @@ keywords:
  - script headers
  - formatter
  - comments
-repository-code: https://alchemists.io/projects/pragmater
+repository-code: https://github.com/bkuhlmann/pragmater
 repository-artifact: https://rubygems.org/gems/pragmater
+url: https://alchemists.io/projects/pragmater
