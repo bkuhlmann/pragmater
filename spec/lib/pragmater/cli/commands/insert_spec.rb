@@ -18,7 +18,7 @@ RSpec.describe Pragmater::CLI::Commands::Insert do
 
     it "calls runner with custom arguments" do
       path = temp_dir.join("test.md").touch
-      input.patterns = %w[*.md]
+      settings.patterns = %w[*.md]
       command.call
 
       expect(kernel).to have_received(:puts).with(path)

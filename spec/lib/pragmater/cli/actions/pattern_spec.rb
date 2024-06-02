@@ -10,17 +10,17 @@ RSpec.describe Pragmater::CLI::Actions::Pattern do
   describe "#call" do
     it "answers default patterns" do
       action.call
-      expect(input.patterns).to eq([])
+      expect(settings.patterns).to eq([])
     end
 
     it "answers custom pattern" do
       action.call [".md"]
-      expect(input.patterns).to eq([".md"])
+      expect(settings.patterns).to eq([".md"])
     end
 
     it "answers custom patterns" do
       action.call [".md", "**/*.md"]
-      expect(input.patterns).to eq([".md", "**/*.md"])
+      expect(settings.patterns).to eq([".md", "**/*.md"])
     end
   end
 end

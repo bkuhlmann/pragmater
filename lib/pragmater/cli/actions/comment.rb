@@ -7,15 +7,15 @@ module Pragmater
     module Actions
       # Stores pragma comments.
       class Comment < Sod::Action
-        include Import[:input]
+        include Import[:settings]
 
         description "Set pragma comments."
 
         on %w[-c --comments], argument: "[a,b,c]"
 
-        default { Container[:configuration].comments }
+        default { Container[:settings].comments }
 
-        def call(comments = nil) = input.comments = Array(comments || default)
+        def call(comments = nil) = settings.comments = Array(comments || default)
       end
     end
   end

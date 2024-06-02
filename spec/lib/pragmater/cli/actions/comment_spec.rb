@@ -10,17 +10,17 @@ RSpec.describe Pragmater::CLI::Actions::Comment do
   describe "#call" do
     it "answers default comments" do
       action.call
-      expect(input.comments).to eq([])
+      expect(settings.comments).to eq([])
     end
 
     it "answers custom comment" do
       action.call ["# frozen_string_literal: true"]
-      expect(input.comments).to eq(["# frozen_string_literal: true"])
+      expect(settings.comments).to eq(["# frozen_string_literal: true"])
     end
 
     it "answers custom comments" do
       action.call ["# auto_register: false", "# frozen_string_literal: true"]
-      expect(input.comments).to eq(["# auto_register: false", "# frozen_string_literal: true"])
+      expect(settings.comments).to eq(["# auto_register: false", "# frozen_string_literal: true"])
     end
   end
 end

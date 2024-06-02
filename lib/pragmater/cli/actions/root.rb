@@ -7,15 +7,15 @@ module Pragmater
     module Actions
       # Stores root path.
       class Root < Sod::Action
-        include Import[:input]
+        include Import[:settings]
 
         description "Set root directory."
 
         on %w[-r --root], argument: "[PATH]"
 
-        default { Container[:configuration].root_dir }
+        default { Container[:settings].root_dir }
 
-        def call(path = nil) = input.root_dir = Pathname(path || default)
+        def call(path = nil) = settings.root_dir = Pathname(path || default)
       end
     end
   end

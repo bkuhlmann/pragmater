@@ -5,16 +5,19 @@ require "refinements/pathname"
 module Pragmater
   # Inserts pragma comments.
   class Inserter
+    include Import[:settings]
+
     using Refinements::Pathname
 
-    def initialize parser: Parsers::File.new
+    def initialize(parser: Parsers::File.new, **)
       @parser = parser
+      super(**)
     end
 
-    def call configuration = Container[:configuration]
-      Pathname(configuration.root_dir).files("{#{configuration.patterns.join ","}}").map do |path|
+    def call
+      Pathname(settings.root_dir).files("{#{settings.patterns.join ","}}").map do |path|
         yield path if block_given?
-        path.write parser.call(path, configuration.comments, action: :insert).join
+        path.write parser.call(path, settings.comments, action: :insert).join
       end
     end
 

@@ -10,12 +10,12 @@ RSpec.describe Pragmater::CLI::Actions::Root do
   describe "#call" do
     it "answers default root directory" do
       action.call
-      expect(input.root_dir).to eq(temp_dir)
+      expect(settings.root_dir).to eq(temp_dir)
     end
 
     it "answers custom root directory" do
       action.call "a/path"
-      expect(input.root_dir).to eq(Pathname("a/path"))
+      expect(settings.root_dir).to eq(Pathname("a/path"))
     end
   end
 end

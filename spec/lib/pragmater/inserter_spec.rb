@@ -19,30 +19,30 @@ RSpec.describe Pragmater::Inserter do
       ]
     end
 
-    let :test_configuration do
-      configuration.merge! comments: ["# encoding: UTF-8"], patterns: ["*.rb"]
+    before do
+      settings.merge! comments: ["# encoding: UTF-8"], patterns: ["*.rb"]
+      test_files.each { |path| path.make_ancestors.touch }
     end
-
-    before { test_files.each { |path| path.make_ancestors.touch } }
 
     it "yields when given a block" do
       kernel = class_spy Kernel
-      inserter.call(test_configuration) { |path| kernel.print path }
+      inserter.call { |path| kernel.print path }
 
       expect(kernel).to have_received(:print).with(temp_dir.join("test.rb"))
     end
 
     it "answers processed files" do
-      expect(inserter.call(test_configuration)).to contain_exactly(temp_dir.join("test.rb"))
+      expect(inserter.call).to contain_exactly(temp_dir.join("test.rb"))
     end
 
     it "modifies a single file with matching extension" do
-      inserter.call test_configuration
+      inserter.call
       expect(test_files.map(&:read)).to contain_exactly("", "", "# encoding: UTF-8\n")
     end
 
     it "modifies multiple files with matching extensions" do
-      inserter.call test_configuration.merge!(patterns: ["*.rb", "*.txt"])
+      settings.patterns = ["*.rb", "*.txt"]
+      inserter.call
 
       expect(test_files.map(&:read)).to contain_exactly(
         "",
@@ -52,22 +52,30 @@ RSpec.describe Pragmater::Inserter do
     end
 
     it "modifies files with matching nested extensions" do
-      inserter.call test_configuration.merge!(patterns: ["**/*.rake"])
+      settings.patterns = ["**/*.rake"]
+      inserter.call
+
       expect(test_files.map(&:read)).to contain_exactly("# encoding: UTF-8\n", "", "")
     end
 
     it "doesn't modify files when patterns are included" do
-      inserter.call test_configuration.merge!(patterns: [])
+      settings.patterns = []
+      inserter.call
+
       expect(test_files.map(&:read)).to contain_exactly("", "", "")
     end
 
     it "doesn't modify files when when extensions don't match" do
-      inserter.call test_configuration.merge!(patterns: ["*.md"])
+      settings.patterns = ["*.md"]
+      inserter.call
+
       expect(test_files.map(&:read)).to contain_exactly("", "", "")
     end
 
     it "doesn't modify files with invalid extensions" do
-      inserter.call test_configuration.merge!(patterns: ["bogus", "~#}*^"])
+      settings.patterns = ["bogus", "~#}*^"]
+      inserter.call
+
       expect(test_files.map(&:read)).to contain_exactly("", "", "")
     end
   end

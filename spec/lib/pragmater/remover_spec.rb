@@ -19,26 +19,25 @@ RSpec.describe Pragmater::Remover do
       ]
     end
 
-    let :test_configuration do
-      configuration.merge! patterns: ["*.rb"], comments: ["# encoding: UTF-8"]
+    before do
+      settings.merge! patterns: ["*.rb"], comments: ["# encoding: UTF-8"]
+      test_files.each { |path| path.make_ancestors.touch }
     end
-
-    before { test_files.each { |path| path.make_ancestors.touch } }
 
     it "yields when given a block" do
       kernel = class_spy Kernel
-      remover.call(test_configuration) { |path| kernel.print path }
+      remover.call { |path| kernel.print path }
 
       expect(kernel).to have_received(:print).with(temp_dir.join("test.rb"))
     end
 
     it "answers processed files" do
-      expect(remover.call(test_configuration)).to contain_exactly(temp_dir.join("test.rb"))
+      expect(remover.call).to contain_exactly(temp_dir.join("test.rb"))
     end
 
     it "modify files with matching extensions" do
       temp_dir.join("test.rb").rewrite { |body| "# encoding: UTF-8\n#{body}" }
-      remover.call test_configuration
+      remover.call
 
       expect(test_files.map(&:read)).to contain_exactly("", "", "")
     end
