@@ -7,7 +7,7 @@ module Pragmater
     module Commands
       # Removes pragmas.
       class Remove < Sod::Command
-        include Import[:settings, :kernel]
+        include Import[:settings, :io]
 
         handle "remove"
 
@@ -22,7 +22,7 @@ module Pragmater
           @handler = handler
         end
 
-        def call = handler.call { |path| kernel.puts path }
+        def call = handler.call { |path| io.puts path }
 
         private
 

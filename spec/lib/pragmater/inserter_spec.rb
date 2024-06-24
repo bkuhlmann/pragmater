@@ -5,6 +5,7 @@ require "spec_helper"
 RSpec.describe Pragmater::Inserter do
   using Refinements::Pathname
   using Refinements::Struct
+  using Refinements::StringIO
 
   subject(:inserter) { described_class.new }
 
@@ -25,10 +26,8 @@ RSpec.describe Pragmater::Inserter do
     end
 
     it "yields when given a block" do
-      kernel = class_spy Kernel
-      inserter.call { |path| kernel.print path }
-
-      expect(kernel).to have_received(:print).with(temp_dir.join("test.rb"))
+      inserter.call { |path| io.print path }
+      expect(io.reread).to eq(temp_dir.join("test.rb").to_s)
     end
 
     it "answers processed files" do

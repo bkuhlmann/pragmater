@@ -5,12 +5,13 @@ require "spec_helper"
 RSpec.describe Pragmater::CLI::Shell do
   using Refinements::Pathname
   using Refinements::Struct
+  using Refinements::StringIO
 
   subject(:shell) { described_class.new }
 
   include_context "with application dependencies"
 
-  before { Sod::Container.stub! kernel:, logger: }
+  before { Sod::Container.stub! logger:, io: }
 
   after { Sod::Container.restore }
 
@@ -30,7 +31,7 @@ RSpec.describe Pragmater::CLI::Shell do
 
     it "prints configuration usage" do
       shell.call %w[config]
-      expect(kernel).to have_received(:puts).with(/Manage configuration.+/m)
+      expect(io.reread).to match(/Manage configuration.+/m)
     end
 
     it "inserts pragma into file" do
@@ -49,12 +50,12 @@ RSpec.describe Pragmater::CLI::Shell do
 
     it "prints version" do
       shell.call %w[--version]
-      expect(kernel).to have_received(:puts).with(/Pragmater\s\d+\.\d+\.\d+/)
+      expect(io.reread).to match(/Pragmater\s\d+\.\d+\.\d+/)
     end
 
     it "prints help" do
       shell.call %w[--help]
-      expect(kernel).to have_received(:puts).with(/Pragmater.+USAGE.+/m)
+      expect(io.reread).to match(/Pragmater.+USAGE.+/m)
     end
   end
 end

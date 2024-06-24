@@ -5,6 +5,7 @@ require "spec_helper"
 RSpec.describe Pragmater::Remover do
   using Refinements::Pathname
   using Refinements::Struct
+  using Refinements::StringIO
 
   subject(:remover) { described_class.new }
 
@@ -25,10 +26,8 @@ RSpec.describe Pragmater::Remover do
     end
 
     it "yields when given a block" do
-      kernel = class_spy Kernel
-      remover.call { |path| kernel.print path }
-
-      expect(kernel).to have_received(:print).with(temp_dir.join("test.rb"))
+      remover.call { |path| io.print path }
+      expect(io.reread).to eq(temp_dir.join("test.rb").to_s)
     end
 
     it "answers processed files" do

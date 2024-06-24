@@ -22,6 +22,6 @@ module Pragmater
     register(:defaults_path) { Pathname(__dir__).join("configuration/defaults.yml") }
     register(:xdg_config) { Runcom::Config.new "pragmater/configuration.yml" }
     register(:logger) { Cogger.new id: :pragmater }
-    register :kernel, Kernel
+    register :io, STDOUT
   end
 end

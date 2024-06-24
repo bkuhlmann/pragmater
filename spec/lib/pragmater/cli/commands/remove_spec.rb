@@ -5,6 +5,7 @@ require "spec_helper"
 RSpec.describe Pragmater::CLI::Commands::Remove do
   using Refinements::Struct
   using Refinements::Pathname
+  using Refinements::StringIO
 
   subject(:command) { described_class.new }
 
@@ -21,7 +22,7 @@ RSpec.describe Pragmater::CLI::Commands::Remove do
       settings.patterns = %w[*.md]
       command.call
 
-      expect(kernel).to have_received(:puts).with(path)
+      expect(io.reread).to eq("#{path}\n")
     end
   end
 end
