@@ -3,11 +3,6 @@ exclude_paths:
   - vendor
 
 detectors:
-  ControlParameter:
-    exclude:
-      - "Pragmater::CLI::Actions::Comment#call"
-      - "Pragmater::CLI::Actions::Pattern#call"
-      - "Pragmater::CLI::Actions::Root#call"
   LongParameterList:
     enabled: false
   TooManyStatements:

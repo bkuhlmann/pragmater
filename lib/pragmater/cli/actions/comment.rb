@@ -15,7 +15,7 @@ module Pragmater
 
         default { Container[:settings].comments }
 
-        def call(comments = nil) = settings.comments = Array(comments || default)
+        def call(comments = default) = settings.comments = Array(comments)
       end
     end
   end
