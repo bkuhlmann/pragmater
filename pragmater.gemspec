@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.metadata = {
     "bug_tracker_uri" => "https://github.com/bkuhlmann/pragmater/issues",
     "changelog_uri" => "https://alchemists.io/projects/pragmater/versions",
-    "documentation_uri" => "https://alchemists.io/projects/pragmater",
+    "homepage_uri" => "https://alchemists.io/projects/pragmater",
     "funding_uri" => "https://github.com/sponsors/bkuhlmann",
     "label" => "Pragmater",
     "rubygems_mfa_required" => "true",
