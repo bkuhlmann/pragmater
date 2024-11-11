@@ -3,5 +3,5 @@
 require "infusible"
 
 module Pragmater
-  Import = Infusible[Container]
+  Dependencies = Infusible[Container]
 end

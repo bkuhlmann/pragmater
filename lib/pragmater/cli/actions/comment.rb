@@ -7,7 +7,7 @@ module Pragmater
     module Actions
       # Stores pragma comments.
       class Comment < Sod::Action
-        include Import[:settings]
+        include Dependencies[:settings]
 
         description "Set pragma comments."
 

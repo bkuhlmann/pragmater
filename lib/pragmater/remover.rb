@@ -5,7 +5,7 @@ require "refinements/pathname"
 module Pragmater
   # Removes pragma comments.
   class Remover
-    include Import[:settings]
+    include Dependencies[:settings]
 
     using Refinements::Pathname
 

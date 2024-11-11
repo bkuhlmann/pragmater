@@ -5,7 +5,7 @@ require "refinements/pathname"
 module Pragmater
   # Inserts pragma comments.
   class Inserter
-    include Import[:settings]
+    include Dependencies[:settings]
 
     using Refinements::Pathname
 

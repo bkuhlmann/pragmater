@@ -7,7 +7,7 @@ module Pragmater
     module Actions
       # Stores file patterns.
       class Pattern < Sod::Action
-        include Import[:settings]
+        include Dependencies[:settings]
 
         description "Set file patterns."
 

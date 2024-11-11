@@ -7,7 +7,7 @@ module Pragmater
     module Commands
       # Removes pragmas.
       class Remove < Sod::Command
-        include Import[:settings, :io]
+        include Dependencies[:settings, :io]
 
         handle "remove"
 

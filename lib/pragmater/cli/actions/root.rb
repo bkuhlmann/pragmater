@@ -7,7 +7,7 @@ module Pragmater
     module Actions
       # Stores root path.
       class Root < Sod::Action
-        include Import[:settings]
+        include Dependencies[:settings]
 
         description "Set root directory."
 

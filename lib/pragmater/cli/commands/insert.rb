@@ -7,7 +7,7 @@ module Pragmater
     module Commands
       # Inserts pragmas.
       class Insert < Sod::Command
-        include Import[:settings, :io]
+        include Dependencies[:settings, :io]
 
         handle "insert"
 
