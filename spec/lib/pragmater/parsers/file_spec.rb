@@ -43,7 +43,7 @@ RSpec.describe Pragmater::Parsers::File do
     end
 
     context "when adding to file with no comments" do
-      let(:fixture_path) { Pathname "/dev/null" }
+      let(:fixture_path) { Pathname File::NULL }
 
       it "adds formatted comments to top of file" do
         body = parser.call test_path, "# frozen_string_literal: true", action: :insert
@@ -80,7 +80,7 @@ RSpec.describe Pragmater::Parsers::File do
     end
 
     context "when remmoving from file with no comments" do
-      let(:fixture_path) { Pathname "/dev/null" }
+      let(:fixture_path) { Pathname File::NULL }
 
       it "does nothing" do
         body = parser.call test_path, "# frozen_string_literal: true", action: :remove
