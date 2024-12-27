@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.cert_chain = [Gem.default_cert_path]
 
   spec.required_ruby_version = "~> 3.4"
-  spec.add_dependency "cogger", "~> 0.31"
+  spec.add_dependency "cogger", "~> 1.0"
   spec.add_dependency "containable", "~> 1.0"
   spec.add_dependency "dry-schema", "~> 1.13"
   spec.add_dependency "etcher", "~> 2.7"
