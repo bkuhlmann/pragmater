@@ -12,6 +12,6 @@ end
 # Main namespace.
 module Pragmater
   def self.loader registry = Zeitwerk::Registry
-    @loader ||= registry.loaders.find { |loader| loader.tag == File.basename(__FILE__, ".rb") }
+    @loader ||= registry.loaders.each.find { |loader| loader.tag == File.basename(__FILE__, ".rb") }
   end
 end
