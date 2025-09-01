@@ -10,7 +10,7 @@ RSpec.shared_context "with application dependencies" do
   let(:io) { StringIO.new }
 
   before do
-    settings.merge! Etcher.call(
+    settings.with! Etcher.call(
       Pragmater::Container[:registry].remove_loader(1),
       root_dir: temp_dir
     )

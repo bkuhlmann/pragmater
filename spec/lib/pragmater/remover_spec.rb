@@ -21,7 +21,7 @@ RSpec.describe Pragmater::Remover do
     end
 
     before do
-      settings.merge! patterns: ["*.rb"], comments: ["# encoding: UTF-8"]
+      settings.with! patterns: ["*.rb"], comments: ["# encoding: UTF-8"]
       test_files.each { |path| path.make_ancestors.touch }
     end
 

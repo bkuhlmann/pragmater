@@ -21,7 +21,7 @@ RSpec.describe Pragmater::Inserter do
     end
 
     before do
-      settings.merge! comments: ["# encoding: UTF-8"], patterns: ["*.rb"]
+      settings.with! comments: ["# encoding: UTF-8"], patterns: ["*.rb"]
       test_files.each { |path| path.make_ancestors.touch }
     end
 
