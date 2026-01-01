@@ -2,9 +2,9 @@ cff-version: 1.2.0
 message: Please use the following metadata when citing this project in your work.
 title: Pragmater
 abstract: A command line interface for managing pragma comments.
-version: 16.5.0
+version: 17.0.0
 license: Hippocratic-2.1
-date-released: 2025-11-07
+date-released: 2026-01-01
 authors:
   - family-names: Kuhlmann
     given-names: Brooke
