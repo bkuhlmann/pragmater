@@ -22,7 +22,7 @@ RSpec.describe Pragmater::Parsers::File do
           "#! /usr/bin/env ruby\n",
           "# frozen_string_literal: true\n",
           "\n",
-          "puts RUBY_VERSION\n"
+          "RUBY_VERSION\n"
         )
       end
     end
@@ -37,7 +37,7 @@ RSpec.describe Pragmater::Parsers::File do
           "#! /usr/bin/env ruby\n",
           "# frozen_string_literal: true\n",
           "\n",
-          "puts RUBY_VERSION\n"
+          "RUBY_VERSION\n"
         )
       end
     end
@@ -57,7 +57,7 @@ RSpec.describe Pragmater::Parsers::File do
       it "does not add duplicates" do
         body = parser.call test_path, "#! /usr/bin/env ruby", action: :insert
 
-        expect(body).to contain_exactly("#! /usr/bin/env ruby\n", "\n", "puts RUBY_VERSION\n")
+        expect(body).to contain_exactly("#! /usr/bin/env ruby\n", "\n", "RUBY_VERSION\n")
       end
     end
 
@@ -66,7 +66,7 @@ RSpec.describe Pragmater::Parsers::File do
 
       it "formats and removes comments" do
         body = parser.call test_path, "#! /usr/bin/env ruby", action: :remove
-        expect(body).to contain_exactly("puts RUBY_VERSION\n")
+        expect(body).to contain_exactly("RUBY_VERSION\n")
       end
     end
 
@@ -75,7 +75,7 @@ RSpec.describe Pragmater::Parsers::File do
 
       it "formats, removes comments, and removes trailing space" do
         body = parser.call test_path, "#! /usr/bin/env ruby", action: :remove
-        expect(body).to contain_exactly("puts RUBY_VERSION\n")
+        expect(body).to contain_exactly("RUBY_VERSION\n")
       end
     end
 
