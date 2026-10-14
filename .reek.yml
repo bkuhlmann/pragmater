@@ -8,3 +8,5 @@ detectors:
   TooManyStatements:
     exclude:
       - "Pragmater::CLI::Shell#cli"
+  UnusedParameters:
+    enabled: false
